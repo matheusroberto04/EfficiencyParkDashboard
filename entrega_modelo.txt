@@ -1,0 +1,16 @@
+GLOBAL SOLUTION 2026.2 - SERS
+Projeto: Efficiency Park - Neighborhood Action Dashboard / CitizenTech
+
+INTEGRANTES
+Matheus Roberto - RM575653
+Gustavo Oliveira Baptista - RM575597
+Ana Luísa Santos - RM574806
+
+GITHUB
+https://github.com/matheusroberto04/Efficiency-Park---Dashboard-
+
+YOUTUBE - VÍDEO NÃO LISTADO, ATÉ 3 MINUTOS
+PREENCHER_COM_O_LINK_DO_VIDEO_APOS_PUBLICAR
+
+Antes de enviar: substituir o marcador pelo link real e verificar o acesso aos dois links.
+Enviar APENAS este arquivo .txt no Portal, após preencher e conferir.

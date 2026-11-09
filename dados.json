@@ -1,0 +1,133 @@
+{
+  "projeto": "Efficiency Park",
+  "disciplina": "Soluções em Energias Renováveis e Sustentáveis (SERS)",
+  "consulta": "2026-11-09",
+  "integrantes": [
+    {
+      "nome": "Matheus Roberto",
+      "rm": "575653"
+    },
+    {
+      "nome": "Gustavo Oliveira Baptista",
+      "rm": "575597"
+    },
+    {
+      "nome": "Ana Luísa Santos",
+      "rm": "574806"
+    }
+  ],
+  "valores": {
+    "quantidade": 10,
+    "potencia_atual": 125.0,
+    "perda_reator": 0.0,
+    "potencia_led": 50.0,
+    "horas": 12.0,
+    "dias": 30,
+    "tarifa": 0.43416,
+    "painel_wp": 420.0,
+    "hsp": 4.5,
+    "rendimento_solar": 0.7,
+    "bateria_v": 24.0,
+    "bateria_ah": 93.0,
+    "descarga": 0.5,
+    "rendimento_descarga": 0.85,
+    "inversor_w": 300.0,
+    "preco_led": 428.11,
+    "preco_kit": 2801.88,
+    "preco_inversor": 1439.0,
+    "instalacao_led": 0.1,
+    "instalacao_solar": 0.2,
+    "reserva_rede": 0.02,
+    "reserva_solar": 0.05
+  },
+  "fontes": [
+    {
+      "id": "F1",
+      "titulo": "Philips / Signify - HPL-N 125 W",
+      "url": "https://www.assets.lighting.philips.com/is/content/PhilipsLighting/fp928052007395-pss-pt_br",
+      "uso": "125 W nominais e 50 lm/W; fluxo aproximado calculado de 6.250 lm. Não inclui perdas externas do reator."
+    },
+    {
+      "id": "F2",
+      "titulo": "Santa Iluminação - oferta Ourolux SI05126A",
+      "url": "https://www.santailuminacao.com.br/produtos/luminaria-publica-led-50w-ip66-bivolt-150lm-w-7-pinos-4000k-m4/",
+      "uso": "Oferta do vendedor: 50 W, 7.500 lm, bivolt, R$ 428,11 sem desconto Pix e sem frete. Equivalência fotométrica não certificada pelo simulador."
+    },
+    {
+      "id": "F3",
+      "titulo": "Enel São Paulo - tarifas B4a",
+      "url": "https://www.enel.com.br/pt-saopaulo/Para_Voce/tarifa-de-energia-eletrica.html",
+      "uso": "Tabela vigente desde 04/07/2026: TUSD 259,83 + TE 174,33 R$/MWh; soma / 1.000 = R$ 0,43416/kWh. Sem adicionais. Enquadramento B4a assumido para a praça de referência."
+    },
+    {
+      "id": "F4",
+      "titulo": "Energy Shop - kit off-grid 750 Wh/dia, 24 V",
+      "url": "https://www.energyshop.com.br/kit-energia-solar/kit-solar-off-grid/kit-energia-solar-off-grid-ate-750-wh-dia-24v",
+      "uso": "R$ 2.402,88 sem desconto à vista e sem frete; painel 210 Wp, controlador, duas baterias 12 V / 93 Ah e acessórios. Não inclui o inversor da proposta. Usamos os componentes, não 750 Wh/dia como garantia."
+    },
+    {
+      "id": "F5",
+      "titulo": "JC Network - inversor Volt senoidal 300 W, 24 V / 127 V",
+      "url": "https://jcnetworktelecom.com.br/produto/inversor-senoidal-300w-24v-127vac-volt",
+      "uso": "R$ 1.439,00 sem desconto à vista e sem frete; 300 W contínuos. Referência CC/CA; exige abrigo e validação de consumo em vazio e compatibilidade."
+    },
+    {
+      "id": "F6",
+      "titulo": "MME - Sistemas Híbridos: Soluções Energéticas para a Amazônia",
+      "url": "https://www.gov.br/mme/pt-br/arquivos/solucoes-energeticas-para-a-amazonia-sistemas-hibridos.pdf",
+      "uso": "Fundamentos de HSP, perdas, armazenamento e dimensionamento: seções 2.5, 5, 6 e 8.8-8.10. Não fornece os coeficientes de ensaio escolhidos pela equipe."
+    },
+    {
+      "id": "F7",
+      "titulo": "Streamlit - instalação",
+      "url": "https://docs.streamlit.io/get-started/installation/command-line",
+      "uso": "Instalação e execução da ferramenta de dashboard."
+    },
+    {
+      "id": "F8",
+      "titulo": "Energy Shop - painel Resun 210 Wp adicional",
+      "url": "https://www.energyshop.com.br/painel-solar/potencia-maior-que-150w/resun-210w",
+      "uso": "R$ 399,00 sem desconto e sem frete; Vmp 20,05 V e Voc 23,95 V. Segundo módulo proposto em série: arranjo de 420 Wp, Vmp 40,10 V e Voc 47,90 V nas condições nominais."
+    },
+    {
+      "id": "F9",
+      "titulo": "Energy Shop - controlador MPPT120D 20 A",
+      "url": "https://www.energyshop.com.br/controlador-de-carga/sun-energy-mppt120d-20a",
+      "uso": "Já incluído no kit F4; entrada nominal declarada de até 520 W para banco de 24 V. Arranjo proposto de 420 Wp fica abaixo desse limite. Confirmar faixa MPPT, Voc no frio, corrente e manual na implantação."
+    }
+  ],
+  "premissas": [
+    {
+      "parametro": "quantidade, horas, dias",
+      "origem": "Cenário simulado: 10 pontos, 12 h/dia e 30 dias. Mesma necessidade e horário nas duas alternativas."
+    },
+    {
+      "parametro": "perda_reator",
+      "origem": "0 W adicional como limite inferior conservador, por não haver medição do reator. Não significa ausência física de perdas. Editar após medição."
+    },
+    {
+      "parametro": "hsp",
+      "origem": "4,5 h/dia é condição de ensaio, não dado meteorológico de São Paulo. Testar também 1 e 2 h/dia; na implantação consultar o recurso solar local e o pior mês."
+    },
+    {
+      "parametro": "rendimento_solar",
+      "origem": "70% é hipótese global do painel até a carga, incluindo controlador, armazenamento, inversor e perdas auxiliares. Não é eficiência medida de produto."
+    },
+    {
+      "parametro": "descarga, rendimento_descarga",
+      "origem": "50% de descarga de ensaio e 85% de aproveitamento da saída do banco são hipóteses, não recomendações do fabricante. Usadas só na checagem do banco; não são reaplicadas à geração, que já usa rendimento global."
+    },
+    {
+      "parametro": "instalacao_led, instalacao_solar",
+      "origem": "Provisões de 10% e 20% dos equipamentos. Solar recebe provisão maior por montagem, abrigo e proteções adicionais. Não são cotações de mão de obra. Postes novos, obras civis e frete não incluídos. Testar sensibilidade."
+    },
+    {
+      "parametro": "reserva_rede, reserva_solar",
+      "origem": "Reserva anual: 2% do preço de reposição das luminárias para atual/A; 5% dos equipamentos para B, pelo banco e eletrônica adicionais. Rateio /12 e dias/30. Hipótese financeira; não comprova cobertura de reposições nem vida útil."
+    },
+    {
+      "parametro": "configuracao",
+      "origem": "Um kit F4 + um painel extra F8 + um inversor por ponto. Dois painéis 210 Wp em série: 420 Wp e Vmp nominal 40,10 V. Um painel de Vmp 20,05 V não sustenta carga do banco 24 V. Duas baterias 12 V em série = 24 V, mantendo 93 Ah. O controlador F9 já está no kit. Sem rede de apoio. Verificar limites de tensão, temperatura e manual na implantação."
+    }
+  ]
+}

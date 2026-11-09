@@ -1,24 +1,30 @@
-# Praça Eficiente
-Projeto desenvolvido para solução da Global Solution da faculdade FIAP! 
-## O problema
+# Efficiency Park
 
-Uma praça comunitária precisa de iluminação noturna. Uma instalação com potência elevada pode consumir mais energia do que uma alternativa eficiente, aumentando o gasto de operação.
+Módulo energético do **Neighborhood Action Dashboard — CitizenTech**.
+Global Solution 2026.2 | Ciência da Computação | **Soluções em Energias Renováveis e Sustentáveis (SERS)**.
 
-Este trabalho considera uma **praça de referência simulada**, sem afirmar que foi realizada uma visita ou medição. O público beneficiado seriam os moradores que utilizam o espaço e os responsáveis por sua manutenção. O problema concreto analisado é a demanda de energia da iluminação durante a noite.
+## Integrantes
 
-**Pergunta:** como reduzir essa demanda e comparar o fornecimento pela rede elétrica com uma alternativa solar?
+| Nome | RM |
+| --- | --- |
+| Matheus Roberto | 575653 |
+| Gustavo Oliveira Baptista | 575597 |
+| Ana Luísa Santos | 574806 |
 
-## Nossa solução
+## Problema comunitário e objetivo
 
-Um painel em Python calcula o consumo e compara três cenários para a mesma quantidade de luminárias, tempo de funcionamento e necessidade de iluminação:
+Uma praça comunitária precisa de iluminação noturna adequada, mas tecnologias menos eficientes aumentam a demanda elétrica. O Efficiency Park compara alternativas para reduzir essa demanda e avaliar a utilização de energia solar, apoiando decisões de moradores e responsáveis pela manutenção.
 
-1. **Atual:** luminárias de referência alimentadas pela rede.
-2. **Alternativa A:** substituição por LED alimentado pela rede.
-3. **Alternativa B:** LED alimentado por um kit com painel solar e bateria.
+O estudo usa uma **praça de referência simulada**, com 10 pontos e 12 horas de iluminação por dia. Não houve visita, medição ou orçamento de implantação. São Paulo é apenas o contexto da tarifa de referência; não afirmamos que uma praça real foi diagnosticada.
 
-O cenário atual é a referência. A e B são as duas alternativas de melhoria. Não há redução de horas nem sensor de presença nesta versão: a economia energética vem da potência informada para o LED. Um controle de horário é apenas uma condição operacional proposta, comum às alternativas, e não é executado pelo software.
+Comparamos o cenário atual (lâmpadas convencionais na rede) com duas melhorias:
 
-**Estágio atual:** simulador funcional, com entrada manual, cálculos, tabela, gráfico e indicadores. Não é uma instalação física nem um sistema de monitoramento em tempo real.
+- **A — LED na rede:** substituição das luminárias, aproveitando a infraestrutura existente.
+- **B — LED solar isolado:** uma luminária, um conjunto com dois painéis/controlador/baterias e um inversor por ponto, sem conexão à rede.
+
+As alternativas usam a mesma quantidade de pontos e o mesmo horário. A comparação pressupõe iluminação adequada: fluxo luminoso é uma triagem, não uma validação fotométrica. Não há redução de horas ou economia atribuída a sensores.
+
+**Estágio atual:** simulador em Python/Streamlit, com entradas manuais, indicadores, tabela, gráfico, diagrama, checagem solar, alertas de déficit, fontes e exportação JSON. Não é monitoramento em tempo real e não controla luminárias. Este é o módulo de SERS do integrador; não afirma integrar módulos de outras disciplinas já existentes.
 
 ## Primeiro acesso: baixar, instalar e testar
 
@@ -37,7 +43,7 @@ Não é necessário instalar banco de dados, criar conta no Streamlit ou ter equ
 
 1. Na página do repositório no GitHub, clique no botão **Code** e selecione **Download ZIP**.
 2. Extraia o arquivo ZIP para uma pasta do computador. No Windows, use **Extrair Tudo**; no macOS, abra o ZIP para descompactar.
-3. Localize a pasta que contém `app.py`, `requirements.txt` e `diagrama.svg`. Dependendo de como o repositório foi organizado, esses arquivos podem estar dentro de uma subpasta chamada `praca_eficiente`.
+3. Localize a pasta que contém `app.py`, `calculos.py`, `dados.json`, `requirements.txt` e `diagrama.svg`. Mantenha esses arquivos juntos e abra a pasta principal do projeto.
 4. No VS Code, selecione **Arquivo/File → Abrir Pasta/Open Folder** e escolha essa pasta.
 5. Abra **Terminal → Novo Terminal/New Terminal**.
 
@@ -119,166 +125,188 @@ Abra esse endereço no navegador do mesmo computador. Se o terminal indicar outr
 
 Mantenha o terminal aberto enquanto utiliza o painel. Para encerrar o sistema, pressione **Ctrl + C** no terminal; no Mac, também é a tecla Control.
 
-### 6. Como testar o projeto
+## Dados, fontes e premissas
 
-1. Observe os indicadores, a tabela e o gráfico com os valores iniciais.
-2. Na barra lateral, altere a quantidade de luminárias e observe o recálculo automático.
-3. Altere o número de horas ligadas por dia para verificar a mudança de consumo.
-4. Expanda **Custos por luminária** para simular outros investimentos e reservas de manutenção.
-5. Abra **Ver o funcionamento da solução** e **Ver as contas** para consultar o diagrama e as fórmulas.
+O arquivo [`dados.json`](dados.json) é a base de referência: contém integrantes, valores iniciais, fontes específicas e premissas. O painel apresenta essas informações e permite exportar entradas/resultados em JSON. As alterações feitas na interface não sobrescrevem a base; uma nova sessão usa os valores iniciais.
 
-Com os valores iniciais de **10 luminárias, 150 W atuais, 50 W LED, 12 horas/dia, 30 dias e tarifa de R$ 1,00/kWh**, confira:
+Referências consultadas em **09/11/2026**. Ofertas são registros de preço do vendedor na consulta, sem frete ou descontos especiais; não são médias de mercado, recomendações de compra ou orçamentos completos. A disponibilidade pode mudar.
 
-| Resultado esperado | Valor |
-| --- | --- |
-| Consumo atual | 540 kWh no período |
-| Consumo com LED | 180 kWh no período |
-| Economia energética | 360 kWh, aproximadamente 66,7% |
-| Economia somente na energia comprada — alternativa A | R$ 360 no período |
+| Entrada de referência | Valor | Origem e interpretação |
+| --- | --- | --- |
+| Quantidade e operação | 10 pontos, 12 h/dia, 30 dias | Cenário didático delimitado pela equipe. Não representa medição. |
+| Lâmpada atual | 125 W; cerca de 6.250 lm | F1: potência nominal × eficiência luminosa de 50 lm/W. A estimativa não inclui perdas externas do reator. |
+| Perdas adicionais do reator | 0 W no ensaio inicial | Limite inferior por falta de medição, não afirmação de perda física zero. O usuário pode informar perdas para uma comparação mais completa. |
+| LED | 50 W, 7.500 lm; R$ 428,11/un. | F2: oferta de luminária pública Ourolux SI05126A. Fluxo é referência de triagem, não prova de iluminância equivalente. |
+| Tarifa | R$ 0,43416/kWh | F3: B4a Enel São Paulo, tabela vigente desde 04/07/2026. `(259,83 + 174,33) / 1.000`. Sem tributos/adicionais separados, bandeiras ou custos fixos. Confirmar enquadramento antes de implantar. |
+| Conjunto solar por ponto | R$ 2.801,88 | Kit F4 de R$ 2.402,88 + painel adicional F8 de R$ 399,00. Total: dois módulos de 210 Wp, controlador, duas baterias 12 V / 93 Ah e acessórios. Sem inversor. |
+| Banco por ponto | 24 V e 93 Ah | Duas baterias de 12 V em série: a tensão soma, os Ah permanecem 93. Energia nominal = 2,232 kWh/ponto. |
+| Inversor por ponto | 300 W contínuos; R$ 1.439,00 | F5: Volt, senoidal, 24 V / 127 V. Faz a conversão para a luminária CA. Deve ficar protegido do tempo e ter compatibilidade verificada. |
+| Sol equivalente (HSP) | 4,5 h/dia | Condição de ensaio escolhida, não uma média meteorológica local. Testamos também 1 e 2 h/dia. Na implantação consultar recurso local e pior mês. |
+| Rendimento solar global | 70% | Hipótese de perdas totais até a carga, incluindo armazenamento, conversão e auxiliares; não é eficiência medida. |
+| Descarga / aproveitamento da saída | 50% / 85% | Hipóteses para estimar energia útil do banco inicialmente cheio. Não são limites certificados para a bateria. Não são multiplicadas novamente na geração, que já usa rendimento global. |
+| Instalação A / B | 10% / 20% dos equipamentos | Provisão de escopo: B exige montagem, abrigo e proteção adicionais. Não é cotação de serviço. Sem postes novos, obras civis ou frete. |
+| Reserva anual atual e A | 2% do custo de reposição das luminárias LED | Hipótese comum aos cenários na rede para não atribuir vantagem artificial de manutenção ao LED. Não é custo histórico da instalação atual. |
+| Reserva anual B | 5% dos equipamentos solares e luminárias | Hipótese maior pela presença de baterias e eletrônica. Não é garantia de cobertura das reposições. Rateio mensal por 12. |
 
-Se você mudar apenas a quantidade de 10 para 20, os consumos devem dobrar para 1.080 kWh e 360 kWh. Ao informar zero horas de funcionamento, o consumo deve ficar zero.
+Valores de referência e hipóteses são diferentes: F1–F5, F8 e F9 sustentam características/ofertas/tarifa; **não validam** HSP, rendimentos, percentuais de instalação ou reservas. F6 fundamenta os conceitos do modelo, não seus coeficientes. As hipóteses estão explicitadas e são editáveis para análise de sensibilidade.
 
-**Os dados iniciais são fictícios.** A alternativa solar supõe um kit capaz de atender toda a demanda; o programa não dimensiona painel ou bateria nem comprova essa capacidade. Consulte as premissas e limitações abaixo.
+## Mesma necessidade de iluminação
 
-### 7. Como abrir novamente em outro dia
+A e B usam o mesmo LED e horário. A referência convencional tem fluxo nominal aproximado de 6.250 lm e a oferta LED declara 7.500 lm. Isso indica uma possibilidade a estudar, mas lúmens não são lux na praça: óptica, altura, espaçamento, perdas da luminária, envelhecimento e uniformidade mudam o resultado. O simulador não certifica equivalência luminosa nem atendimento às normas. Uma implantação depende dessa verificação. O consumo atual nominal é conservador por excluir o reator não medido.
 
-Abra o terminal na mesma pasta do projeto e execute somente o comando correspondente ao seu sistema:
+## Cálculos de consumo e custos
 
-**Windows:**
+Todos os resultados de consumo e operação usam **o mesmo período selecionado**. A reserva mensal é proporcional a `dias / 30`, adotando um mês contábil de 30 dias; não é extrapolação meteorológica anual.
 
-```powershell
-.\.venv\Scripts\python.exe -m streamlit run app.py
+```text
+E_atual = quantidade × (potência atual + perda do reator) × horas/dia × dias / 1.000
+E_LED = quantidade × potência LED × horas/dia × dias / 1.000
+Economia = E_atual - E_LED
+Economia (%) = Economia / E_atual × 100
+Custo de compra = energia da rede × tarifa
+Materiais A = quantidade × preço LED
+Materiais B = quantidade × (preço LED + preço conjunto solar + preço inversor)
+Implantação = materiais × (1 + percentual de instalação)
+Reserva atual/A = materiais A × percentual anual rede / 12 × dias / 30
+Reserva B = materiais B × percentual anual solar / 12 × dias / 30
+Operação = compra de energia + reserva de manutenção/reposição
 ```
 
-**macOS:**
+Sem consumo atual, a economia percentual é 0% por convenção. A economia financeira destacada nos indicadores considera somente energia comprada; a tabela inclui também provisões. O investimento inicial é separado. Sem análise de retorno, taxa de desconto, inflação ou garantia de reposições futuras.
 
-```bash
-.venv/bin/python -m streamlit run app.py
+## Checagem solar simplificada
+
+O modelo considera **carga noturna, conjuntos idênticos por ponto e repetição de um dia de referência**, sem crédito por carga inicial de bateria. B não recebe energia da rede. O uso de inversor é necessário porque a luminária de referência é CA e o banco é CC.
+
+O conjunto proposto adapta a referência comercial: **dois módulos de 210 Wp em série por ponto**, somando 420 Wp e Vmp nominal de 40,10 V. Um só módulo tem Vmp de 20,05 V e não sustenta a carga de um banco de 24 V. O módulo adicional de R$ 399,00 está incluído no custo. Os 420 Wp ficam abaixo dos 520 W declarados para o controlador em 24 V. A faixa MPPT, o Voc em baixa temperatura e os demais limites elétricos ainda precisam de validação no manual; não se trata de esquema de instalação.
+
+```text
+Demanda_LED_dia = quantidade × potência LED × horas/dia / 1.000
+Potencial_solar_útil_dia = quantidade × painel_Wp × HSP × rendimento_global / 1.000
+Banco_nominal = quantidade × tensão_banco × Ah / 1.000
+Banco_útil = Banco_nominal × descarga × aproveitamento_saída
+Limite_inversores_dia = quantidade × potência_contínua_inversor × horas/dia / 1.000
+Solar_atendida_dia = mínimo(demanda, potencial útil, banco útil, limite inversores)
+Déficit_período = (demanda_dia - solar_atendida_dia) × dias
+Cobertura_solar (%) = solar_atendida / demanda_LED × 100
+Autonomia_teórica (h) = banco_útil / potência_total_LED_em_kW
 ```
 
-Não é necessário recriar o ambiente ou reinstalar as bibliotecas a cada uso. Se você baixar uma nova cópia do projeto em outra pasta, repita a instalação nessa nova pasta. Se o `requirements.txt` for atualizado, execute novamente o comando de instalação das bibliotecas.
+O limite de inversor é apenas um teto de energia; uma potência insuficiente também impede o atendimento integral instantâneo. A energia parcialmente atendida representa limite agregado do estudo, não prova de que o driver opera normalmente com alimentação insuficiente. A autonomia pressupõe banco cheio, inversor compatível e os coeficientes de ensaio.
 
-As alterações feitas no painel não são salvas em arquivo: uma nova sessão começa com os valores de exemplo.
+**Não há soma de energia da bateria à geração:** a bateria armazena energia, não a cria. O rendimento global já inclui as perdas do caminho solar; o aproveitamento de saída é usado somente na checagem independente de capacidade do banco. Não se descontam as mesmas perdas duas vezes.
 
-### 8. Problemas comuns
+No padrão: demanda de 6 kWh/dia; potencial útil de 13,230 kWh/dia; banco nominal de 22,32 kWh e útil de 9,486 kWh. Autonomia teórica de 18,972 horas na potência de 500 W, aproximadamente 1,58 noites de 12 h, partindo de banco cheio. Isso **não comprova autonomia meteorológica**, confiabilidade ou operação durante várias noites sem recarga.
 
-| Mensagem ou situação | Como resolver |
-| --- | --- |
-| `Could not open requirements file` | Confirme que o terminal está na pasta do arquivo e que o comando usa exatamente `requirements.txt`, sem `~` no final. No PowerShell, use `dir`; no macOS, `ls` para conferir os arquivos. |
-| `No module named streamlit` | Repita a instalação das bibliotecas e execute o painel com o Python da `.venv`, usando os comandos do seu sistema acima. |
-| `py`, `python` ou `python3` não reconhecido | Confira a instalação do Python, reabra o terminal e use o comando correspondente ao seu sistema. |
-| O caminho `.venv` não foi encontrado | Confirme a pasta atual e execute o passo de criação do ambiente virtual. |
-| O navegador não abriu automaticamente | Copie a **Local URL** exibida no terminal e abra no navegador. |
-| O painel parou de responder depois de fechar o terminal | Abra novamente o terminal na pasta do projeto e execute o comando de inicialização. |
-| Erro ao carregar `diagrama.svg` | Confira se o arquivo está na mesma pasta de `app.py`; extraia todos os arquivos do projeto. |
-| Erro de compilação de dependência no Mac | Confira a versão do Python e se as ferramentas de linha de comando do Xcode estão instaladas, conforme a documentação do Streamlit. O comando `xcode-select --install` inicia a instalação dessas ferramentas quando necessário. |
-| Erro com versão de Python ou `No matching distribution found` | Confira os requisitos da versão indicada no arquivo e a versão mostrada pelo Python; atualize para uma versão compatível e crie novamente o ambiente virtual. |
+A referência comercial “até 750 Wh/dia” do kit não é usada como garantia. Calculamos com a potência dos componentes e as premissas. Em 1 HSP/dia, o potencial útil cai a 2,94 kWh/dia: somente 49% da demanda diária. Em 2 HSP/dia, a cobertura é 98% e ainda existe déficit. O painel mostra o déficit e bloqueia a indicação de economia operacional de B em serviço equivalente.
 
-Se o erro continuar, registre o comando executado e a mensagem completa para facilitar a identificação do problema.
+Não há simulação temporal do estado de carga, eventos climáticos, temperatura, envelhecimento, corrente de partida, limite real de descarga ou consumo em vazio. O estudo precisa ser validado com fichas completas, série solar e profissional habilitado antes de uma implantação. O título de atendimento no modelo é sempre condicional.
 
-## Arquivos
+## Resultados no cenário de referência (30 dias)
 
-| Arquivo | Finalidade |
-| --- | --- |
-| `app.py` | Código principal, separado em cinco blocos comentados. |
-| `requirements.txt` | Biblioteca necessária para executar o painel. |
-| `diagrama.svg` | Diagrama conceitual mostrado no painel. |
-| `README.md` | Problema, dados, contas, comparação, referências e limitações. |
-| `entrega_modelo.txt` | Modelo do único arquivo a enviar no Portal, após preencher os links e os integrantes. |
+| Item | Atual | A — LED na rede | B — LED solar isolado |
+| --- | ---: | ---: | ---: |
+| Demanda das luminárias (kWh) | 450,00 | 180,00 | 180,00 |
+| Energia atendida (kWh) | 450,00 | 180,00 | 180,00 |
+| Déficit no modelo (kWh) | 0,00 | 0,00 | 0,00 |
+| Compra de energia da rede (kWh) | 450,00 | 180,00 | 0,00 |
+| Compra de energia (R$) | 195,37 | 78,15 | 0,00 |
+| Reserva para manutenção/reposição (R$) | 7,14 | 7,14 | 194,54 |
+| Compra + reserva (R$) | 202,51 | 85,28 | 194,54 |
+| Novo investimento estimado (R$) | 0,00 | 4.709,21 | 56.027,88 |
 
-## Dados utilizados e premissas
+As diferenças são calculadas antes do arredondamento. A economia energética com LED é **270 kWh, ou 60%**. A economia na energia comprada de A é **R$ 117,22**. B cobre 100% da demanda no ensaio inicial, mas custa mais para implantar e provisiona mais manutenção. Compra zero de energia não significa consumo ou operação zero.
 
-**Todos os valores iniciais são hipóteses didáticas**, escolhidas para permitir cálculos fáceis de conferir. Não são preços pesquisados, valores médios de mercado, tarifas oficiais ou características de produtos específicos. Os links de referência ao final não são a fonte desses números.
+O investimento atual é zero por ser a instalação existente, não por ser gratuita. Não foi feita avaliação patrimonial do sistema atual. A provisão atual de manutenção é uma convenção de comparação, não um levantamento de despesas.
 
-| Entrada inicial | Valor | Justificativa e origem |
+## Comparação técnica, ambiental e comunitária
+
+| Aspecto | A — LED na rede | B — LED solar isolado |
 | --- | --- | --- |
-| Luminárias | 10 | Praça hipotética pequena, delimitada para o exercício. |
-| Potência atual por luminária | 150 W | Hipótese para representar uma instalação de maior demanda. |
-| Potência LED por luminária | 50 W | Hipótese de melhoria; equivalência luminosa ainda precisa de verificação técnica. |
-| Funcionamento | 12 h/dia | Hipótese simplificada de funcionamento noturno constante. |
-| Período | 30 dias | Mês de referência; o painel permite mudar entre 1 e 31 dias. |
-| Tarifa | R$ 1,00/kWh | Valor redondo para demonstrar a multiplicação, sem pretensão de representar uma distribuidora. |
-| LED instalado | R$ 350 por ponto | Hipótese: R$ 300 para equipamento e R$ 50 para instalação. |
-| Kit solar instalado | R$ 1.650 por ponto | Hipótese: R$ 1.500 para conjunto LED/painel/bateria/controlador e R$ 150 para instalação. |
-| Reserva para manutenção LED | R$ 2 por ponto/mês | Provisão didática para comparar operação, sem histórico de falhas. |
-| Reserva para manutenção solar | R$ 5 por ponto/mês | Provisão didática maior, incluindo necessidade futura de manutenção do conjunto e bateria. Não é uma vida útil calculada. |
-| Cobertura solar | 100% da demanda útil do LED | Hipótese condicional de um kit adequado; não é resultado de dimensionamento ou simulação meteorológica. |
+| Implantação | Menor investimento no exemplo; reaproveitar suportes e rede compatíveis. | Maior investimento; montagem dos painéis, abrigo, proteção e verificação estrutural. |
+| Atendimento | Depende da rede e da iluminação adequada entregue. | Depende de recurso solar, carga, armazenamento, conversão e manutenção. Déficit invalida comparação financeira com serviço integral. |
+| Eficiência | Reduz demanda de 450 para 180 kWh no exemplo. | Mesma demanda LED; a origem solar muda o fornecimento, não elimina o consumo. |
+| Impactos | Menor demanda elétrica; destinação das lâmpadas convencionais, que podem conter mercúrio. | Fonte renovável direta; fabricação e destinação de baterias, painéis e eletrônica também causam impactos. |
+| Benefícios esperados | Menor gasto e apoio à manutenção de iluminação adequada. | Uso local de renovável e estudo de opção para locais sem rede. |
+| Limitações | Continuidade depende da rede; investimento e desempenho precisam de verificação local. | Maior complexidade e custo; autonomia não comprovada por este balanço. |
 
-Os custos são por ponto e multiplicados pela quantidade. Supõe-se aproveitamento da infraestrutura de suporte existente. Obras civis, troca de postes e adaptação da rede não foram orçadas. Os cenários usam a mesma praça e o mesmo período.
+**Decisão no exemplo:** A é a opção inicial mais simples e de menor investimento para a praça com rede existente. B é uma alternativa renovável relevante quando autonomia em relação à rede é prioridade, sujeita à validação técnica e ao orçamento. Não existe vencedora universal. A comparação não demonstra aumento medido de segurança ou satisfação dos moradores.
 
-Para fortalecer a fundamentação antes de entregar, substituam as hipóteses de potência e custo por fichas técnicas e uma pesquisa simples de equipamentos/instalação, ou expliquem com o professor a aceitação do cenário inteiramente simulado. Registrem link, data, itens incluídos e contexto de cada valor. Para a tarifa, usem uma fonte aplicável à iluminação pública local: uma conta residencial pode não representar esse serviço.
+Não calculamos CO₂ evitado por não ter sido adotado fator de emissão. Não atribuímos 0% de renováveis à rede e não chamamos B de “impacto zero”. Uma análise de ciclo de vida não foi realizada.
 
-## Cálculos
+## Indicadores integrados ao dashboard
 
-Fórmula do consumo, seguindo o enunciado:
-
-`Energia (kWh) = quantidade × potência (W) × horas por dia × dias ÷ 1000`
-
-Com os valores iniciais:
-
-- Atual: `10 × 150 × 12 × 30 ÷ 1000 = 540 kWh` em 30 dias.
-- LED: `10 × 50 × 12 × 30 ÷ 1000 = 180 kWh` em 30 dias.
-- Economia de energia: `540 − 180 = 360 kWh` em 30 dias.
-- Economia percentual: `360 ÷ 540 × 100 = 66,67%`.
-- Custo atual da energia: `540 × 1,00 = R$ 540`.
-- Custo da energia no LED da rede: `180 × 1,00 = R$ 180`.
-- Economia somente na energia comprada, alternativa A: `540 − 180 = R$ 360`.
-
-Na alternativa solar, **as luminárias continuam consumindo 180 kWh**. A hipótese do modelo é que toda essa energia útil seja fornecida pelo kit solar, sem compra da rede. A geração bruta necessária será maior devido às perdas; ela não é calculada nesta versão. Não se deve apresentar a tabela como prova de que um painel ou bateria específicos atendem à demanda.
-
-`Implantação = quantidade × custo instalado por ponto`
-
-`Operação em 30 dias = custo da energia no período ÷ dias × 30 + quantidade × reserva mensal de manutenção`
-
-A normalização mantém a operação em 30 dias, mesmo se o usuário selecionar outro período para o consumo.
-
-## Comparação no exemplo de 30 dias
-
-| Critério | Atual | A — LED na rede | B — LED solar com bateria |
-| --- | --- | --- | --- |
-| Consumo útil das luminárias | 540 kWh | 180 kWh | 180 kWh |
-| Energia comprada da rede | 540 kWh | 180 kWh | 0 kWh, sob a hipótese solar |
-| Custo variável da energia | R$ 540 | R$ 180 | R$ 0, sob a hipótese solar |
-| Novo investimento | R$ 0 | R$ 3.500 | R$ 16.500 |
-| Reserva de manutenção em 30 dias | Não estimada | R$ 20 | R$ 50 |
-| Operação em 30 dias | Não comparada por falta de manutenção atual | R$ 200 | R$ 50 |
-
-O custo de energia é uma aproximação variável, não uma fatura completa. Não inclui encargos fixos, tributos separados ou um regime tarifário específico. Custo zero de compra da rede no cenário solar não significa custo zero de operação. Não calculamos retorno do investimento, pois seria necessário detalhar custos, manutenção e reposições.
-
-### Viabilidade e impactos
-
-| Aspecto | A — LED na rede | B — LED solar com bateria |
+| Indicador | Unidade | Como é obtido |
 | --- | --- | --- |
-| Condição técnica | Rede e instalação compatíveis; verificar a iluminação entregue. | Área sem sombreamento relevante, suporte adequado, painel/controlador/bateria dimensionados para as horas e a iluminação necessárias. |
-| Benefício no modelo | Menor demanda elétrica e menor investimento inicial do que B no exemplo. | Menor demanda elétrica e substituição da compra de energia da rede por fonte renovável no cenário idealizado. |
-| Limitação | Continua dependente da rede. | O modelo não comprova autonomia; clima e bateria afetam o atendimento. |
-| Questão ambiental | Menor demanda, condicionada à equivalência de iluminação; destinação das lâmpadas retiradas. | Uso de fonte renovável; fabricação e destinação de painéis, eletrônicos e baterias precisam ser consideradas. |
+| Consumo atual e demanda LED | kWh/período | Quantidade × potência × tempo. |
+| Economia de energia | kWh/período e % | Diferença entre atual e LED. |
+| Economia na energia comprada de A | R$/período | Diferença dos consumos × tarifa. |
+| Cobertura solar direta de B | % da demanda LED | Energia atendida pelo sistema solar / demanda. É indicador de uso de fonte renovável, não de emissões. |
+| Déficit solar | kWh/período | Demanda LED - energia atendida. |
+| Investimento e operação | R$ e R$/período | Equipamentos, provisões e compra da rede. |
 
-Não estimamos emissões evitadas porque não foi selecionado um fator de emissão. Não atribuímos 0% de renováveis à rede: sua composição não foi analisada. Os 100% exibidos referem-se somente ao fornecimento solar direto hipotético da alternativa B.
-
-Não há uma vencedora universal. A escolha depende de orçamento, infraestrutura e validação técnica. O simulador organiza essa decisão e não substitui um projeto de engenharia.
+Consumo e economia são indicadores energéticos; cobertura renovável e redução de demanda são os indicadores de sustentabilidade adotados. Gráfico e tabela mostram energia atendida e déficit, evitando apresentar falta de iluminação como eficiência. Indicadores correspondem às contas do módulo; o dashboard não é genérico.
 
 ## Diagrama conceitual
 
-![Fontes, luminárias, entrada manual, cálculos e indicadores](diagrama.svg)
+![Fontes, conversão, luminárias e dados manuais do Efficiency Park](diagrama.svg)
 
-As setas contínuas superiores representam energia. As setas tracejadas representam informações. O usuário digita os dados da iluminação; o programa calcula os resultados e alimenta o dashboard. O software não comanda as luminárias nem lê sensores reais.
+Setas contínuas: energia proposta. Setas tracejadas: dados digitados e processados. Sensores, temporizadores e automação física não estão implementados. O horário é um dado de operação assumido, comum às alternativas.
 
-## Indicadores e ligação com o dashboard
+## Como conferir e demonstrar
 
-| Indicador | Unidade | Origem |
-| --- | --- | --- |
-| Consumo atual e com LED | kWh por período | Quantidade, potência e tempo. |
-| Economia energética | kWh por período e % | Diferença entre atual e LED. |
-| Economia na compra de energia com LED | R$ por período | Diferença dos consumos multiplicada pela tarifa. |
-| Participação solar no cenário B | % | Energia útil solar assumida dividida pela demanda do cenário B. Com demanda zero, exibimos 0% por convenção. |
+1. Execute o painel e confira os resultados de referência acima.
+2. Dobre os pontos para 20: os consumos, custos e capacidades totais devem dobrar.
+3. Em “Sistema solar por ponto”, mude HSP para 1: cobertura de 49%, déficit de 91,8 kWh em 30 dias e alerta de serviço incompleto.
+4. Informe zero horas: consumo e cobertura percentual ficam zero; reservas fixas permanecem.
+5. Se alterar equipamentos, revise os preços e a iluminação entregue. O painel avisa dessa necessidade.
+6. Baixe o JSON para registrar exatamente as entradas, saídas, fontes e premissas usadas.
 
-O gráfico compara energia da rede. A tabela também mostra o consumo das luminárias para não confundir origem da energia com eficiência. Este painel representa o módulo energético do Neighborhood Action Dashboard; não presume que outros módulos ou integrações já existam.
+Testes dos cálculos, sem biblioteca adicional:
 
-## Referências e origem
+```bash
+python -m unittest discover -s tests -v
+```
 
-Consultadas em 09/11/2026:
+No Mac, use `python3` ou `.venv/bin/python`. Os testes cobrem consumo, custos, déficit por falta de sol/bateria/inversor, ausência de demanda, perdas do reator, escala e coerência do período. A interface também possui teste de execução e mudanças de entradas em `tests/test_interface.py`, que usa o Streamlit instalado.
 
-1. **[Streamlit — documentação oficial](https://docs.streamlit.io/).** Referência da ferramenta. [Instalação por linha de comando](https://docs.streamlit.io/get-started/installation/command-line) e [gráfico de barras](https://docs.streamlit.io/develop/api-reference/charts/st.bar_chart).
-2. **[ANEEL — Tarifas](https://www.gov.br/aneel/pt-br/assuntos/tarifas).** Referência institucional para entender e pesquisar tarifas. Não valida o valor fictício de R$ 1,00/kWh.
-3. **[Inmetro — Tabelas de eficiência energética](https://www.gov.br/inmetro/pt-br/assuntos/regulamentacao/avaliacao-da-conformidade/programa-brasileiro-de-etiquetagem/tabelas-de-eficiencia-energetica).** Ponto de partida para pesquisar características de equipamentos quando aplicável. Não comprova equivalência luminosa entre as potências do exemplo.
+## Arquivos e contribuição de SERS
+
+| Arquivo | Função |
+| --- | --- |
+| `app.py` | Interface Streamlit, entradas, resultados e exportação. |
+| `calculos.py` | Cálculos de energia, checagem solar e custos. |
+| `dados.json` | Valores de referência, integrantes, fontes e premissas. |
+| `diagrama.svg` | Funcionamento conceitual da solução. |
+| `requirements.txt` | Dependência para execução. |
+| `tests/` | Testes de cálculo e execução da interface. |
+| `roteiro_video.md` | Sugestão de demonstração técnica de até 3 minutos. |
+| `entrega_modelo.txt` | Integrantes, GitHub e campo a preencher com vídeo real. |
+
+## Entrega e próximos passos
+
+- [x] Identificação do grupo, problema, duas alternativas e fonte renovável.
+- [x] Cálculos, origem dos dados, hipóteses, limitações, diagrama e indicadores.
+- [x] Código para o módulo energético e testes de cenários críticos.
+- [ ] Gravar e publicar vídeo **não listado no YouTube, com no máximo 3 minutos**.
+- [ ] Preencher o link real do vídeo no `entrega_modelo.txt`, verificar ambos os links e enviar **apenas o .txt** no Portal, no prazo informado pelo professor.
+
+O vídeo deve mostrar problema, análise energética, alternativas, diagrama, dashboard, benefícios e limites. O roteiro é apoio: não substitui a gravação.
+
+Em uma etapa de implantação: selecionar a praça real, ouvir a comunidade, medir cargas e perdas, conferir tarifa, validar iluminação e estrutura, obter orçamentos completos, analisar o pior mês solar e definir manutenção e descarte. Esses itens são próximos passos de campo, não realizações deste protótipo.
+
+## Referências
+
+Os links completos e a aplicação de cada fonte estão em [`dados.json`](dados.json), também visíveis no painel:
+
+- **F1:** Philips/Signify, ficha HPL-N 125 W — potência e eficiência luminosa nominal.
+- **F2:** Santa Iluminação, oferta Ourolux SI05126A — referência de LED e preço de venda.
+- **F3:** Enel São Paulo, tabela de tarifas — referência B4a e conversão de R$/MWh para R$/kWh.
+- **F4:** Energy Shop, kit solar 24 V — componentes e preço da oferta.
+- **F5:** JC Network, inversor Volt 300 W — conversão senoidal e preço da oferta.
+- **F6:** Ministério de Minas e Energia, *Sistemas Híbridos: Soluções Energéticas para a Amazônia*, 2008 — conceitos de geração, armazenamento e perdas.
+- **F7:** Streamlit, documentação oficial — instalação e execução.
+- **F8:** Energy Shop, módulo Resun 210 Wp — preço do painel adicional e tensões de referência.
+- **F9:** Energy Shop, MPPT120D — limite nominal de potência em 24 V; já incluído no kit.
+
+As fontes comerciais são referências de características declaradas e ofertas, sem endosso de fornecedor. A checagem de compatibilidade e o orçamento de engenharia continuam necessários para uso real.
