@@ -51,8 +51,9 @@ No Terminal ou no terminal do VS Code, dentro da pasta extraída:
 
 ```bash
 python3 -m venv .venv
-.venv/bin/python -m pip install -r requirements.txt
-.venv/bin/python -m streamlit run app.py
+source .venv/bin/activate
+pip install -r requirements.txt
+python -m streamlit run app.py
 ```
 
 Abra a **Local URL** informada no terminal, normalmente `http://localhost:8501`. Mantenha o terminal aberto; Control+C encerra o painel. Para abrir em outro dia, execute somente o último comando. Não é necessário banco de dados, conta no Streamlit ou equipamento físico.
