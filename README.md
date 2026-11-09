@@ -11,7 +11,7 @@ Global Solution 2026.2 | Ciência da Computação | **Soluções em Energias Ren
 
 1. Baixe o repositório como ZIP (**Code → Download ZIP**) e extraia a pasta.
 2. Abra o arquivo **`apresentacao.html`**, que está na raiz do projeto, no Chrome, Edge, Firefox ou Safari.
-3. Clique em **Apresentar para o vídeo**. Use as setas para passar as oito cenas; F alterna tela cheia.
+3. Clique em **Apresentar para o vídeo**. Use as setas para passar as nove cenas; F alterna tela cheia.
 4. Na página de indicadores ou nas cenas de checagem solar e dashboard, selecione **Ensaio: 1 HSP/dia**. Com os valores de referência, a cobertura cai para **49%**, com déficit de **91,8 kWh** em 30 dias. Volte a **Referência** para restaurar o caso inicial.
 
 O HTML funciona sozinho e offline, com dados e fontes embutidos. Não precisa de Python ou PowerPoint. Ao abrir o arquivo pela página do GitHub, o GitHub mostra o código: baixe o arquivo e abra a cópia local no navegador para executar os controles.
@@ -20,7 +20,7 @@ O HTML funciona sozinho e offline, com dados e fontes embutidos. Não precisa de
 
 Para alterar livremente quantidade, potência, período, tarifa, capacidades e custos, siga a instalação de Windows ou macOS abaixo e execute o Streamlit. O painel permite exportar JSON e baixar uma apresentação HTML com os valores da sessão.
 
-O botão **Abrir dashboard local** dentro do HTML só funciona quando o Streamlit estiver iniciado no mesmo computador, normalmente em `http://localhost:8501`. A apresentação HTML permanece utilizável mesmo sem iniciar o Python.
+O botão **Abrir dashboard local** dentro do HTML só funciona quando o Streamlit estiver iniciado no mesmo computador, normalmente em `http://localhost:8501`. A apresentação HTML permanece utilizável mesmo sem iniciar o Python. A simulação de sensores de presença está na capa e na terceira cena; ela é visual e não altera os cálculos energéticos.
 
 ## Integrantes
 
@@ -314,7 +314,9 @@ No Mac, use `python3` ou `.venv/bin/python`. Os testes cobrem consumo, custos, d
 
 ## Apresentação HTML integrada
 
-Abra `apresentacao.html` no navegador. Há uma página de indicadores, modo apresentação em oito cenas e roteiro com cronômetro. As setas passam as cenas; F alterna tela cheia, R mostra as notas e H oculta os controles. O HTML é autossuficiente e não precisa de internet para exibir conteúdo. O botão **Abrir dashboard local** depende do Streamlit iniciado em `http://localhost:8501`.
+Abra `apresentacao.html` no navegador. Há uma página de indicadores, modo apresentação em nove cenas e roteiro com cronômetro. As setas passam as cenas; F alterna tela cheia, R mostra as notas e H oculta os controles. A capa e a cena **Simulação de sensores de presença** recuperam o movimento e a reação das lâmpadas do HTML original. O botão **Pausar animação** interrompe e retoma a demonstração. Os dez pontos luminosos aumentam o brilho por proximidade; os percentuais de espera e presença são apenas parâmetros visuais. A economia dos sensores não é somada aos indicadores, e não há hardware conectado.
+
+O HTML é autossuficiente e não precisa de internet para exibir conteúdo. O botão **Abrir dashboard local** depende do Streamlit iniciado em `http://localhost:8501`.
 
 O HTML não refaz os cálculos em JavaScript: incorpora entradas e resultados de `calculos.py`. O gerador inclui a referência e um ensaio com HSP = 1; o déficit do ensaio é calculado para a mesma quantidade e o mesmo período. O modo **Importar JSON do dashboard** usa a simulação exportada e atualiza indicadores e falas. Para voltar aos dados embutidos, use **Restaurar referência**. Importar um arquivo não altera o Python ou `dados.json`.
 
@@ -353,3 +355,4 @@ Os links completos e a aplicação de cada fonte estão em [`dados.json`](dados.
 - **F9:** Energy Shop, MPPT120D — limite nominal de potência em 24 V; já incluído no kit.
 
 As fontes comerciais são referências de características declaradas e ofertas, sem endosso de fornecedor. A checagem de compatibilidade e o orçamento de engenharia continuam necessários para uso real.
+
