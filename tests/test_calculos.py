@@ -1,4 +1,3 @@
-"""Conferência dos casos em que uma comparação energética pode enganar."""
 import json
 from pathlib import Path
 import sys
@@ -6,86 +5,104 @@ import unittest
 
 PASTA = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PASTA))
-from calculos import calcular
+from calculos import calcular, simular_dias
 
 
 class TestCalculos(unittest.TestCase):
     def setUp(self):
-        self.dados = json.loads((PASTA / "dados.json").read_text(encoding="utf-8"))["valores"]
+        self.dados = json.loads((PASTA/'dados.json').read_text(encoding='utf-8'))['valores']
+        self.original = json.loads((PASTA/'referencias/html_original_dados.json').read_text(encoding='utf-8'))
 
-    def test_exemplo_de_referencia(self):
+    def test_reproduz_os_resultados_principais_do_html_original(self):
         r = calcular(self.dados)
-        self.assertAlmostEqual(r["consumo_atual"], 450)
-        self.assertAlmostEqual(r["consumo_led"], 180)
-        self.assertAlmostEqual(r["economia_percentual"], 60)
-        self.assertAlmostEqual(r["custo_energia_led"], 78.1488)
-        self.assertAlmostEqual(r["investimento_led"], 4709.21)
-        self.assertAlmostEqual(r["investimento_solar"], 56027.88)
-        self.assertAlmostEqual(r["geracao_util_dia"], 13.23)
-        self.assertAlmostEqual(r["bateria_nominal"], 22.32)
-        self.assertAlmostEqual(r["bateria_util"], 9.486)
-        self.assertAlmostEqual(r["autonomia_horas"], 18.972)
-        self.assertTrue(r["atende"])
+        campos = ['energia_demandada_kwh_mes','consumo_rede_kwh_mes','custo_energia_ano','custo_energia_mes',
+                  'capex','om_ano','reposicoes_horizonte','participacao_renovavel_pct','reducao_demanda_pct',
+                  'economia_rs_mes','payback_anos','custo_total_10_anos','emissoes_evitadas_kgco2_ano']
+        for novo, antigo in zip(r['cenarios'],self.original['cenarios']):
+            for campo in campos:
+                with self.subTest(cenario=novo['codigo'],campo=campo):
+                    if antigo[campo] is None:
+                        self.assertIsNone(novo[campo])
+                    else:
+                        self.assertAlmostEqual(novo[campo],antigo[campo],places=7)
 
-    def test_dia_com_pouco_sol_nao_vira_falsa_economia(self):
-        self.dados["hsp"] = 1
+    def test_postes_escalam_cargas_mas_nao_o_quiosque(self):
+        base = calcular(self.dados)
+        self.dados['pontos'] = 24
         r = calcular(self.dados)
-        self.assertAlmostEqual(r["solar_atendida"], 88.2)
-        self.assertAlmostEqual(r["deficit_solar"], 91.8)
-        self.assertAlmostEqual(r["participacao_solar"], 49)
-        self.assertFalse(r["atende"])
-        self.assertIsNone(r["economia_operacao_solar"])
+        self.assertAlmostEqual(r['cenarios'][0]['energia_demandada_kwh_mes'],base['cenarios'][0]['energia_demandada_kwh_mes']*2)
+        self.assertAlmostEqual(r['cenarios'][3]['capex'],31000)
+        self.assertEqual(r['cenarios'][3]['geracao_fv_kwh_ano'],base['cenarios'][3]['geracao_fv_kwh_ano'])
 
-    def test_banco_insuficiente_limita_carga_noturna(self):
-        self.dados["bateria_ah"] = 10
+    def test_presenca_alta_reduz_economia(self):
+        base = calcular(self.dados)
+        self.dados['presenca_pct'] = 100
         r = calcular(self.dados)
-        self.assertAlmostEqual(r["solar_atendida"], 30.6)
-        self.assertFalse(r["atende"])
+        self.assertGreater(r['cenarios'][1]['energia_demandada_kwh_mes'],base['cenarios'][1]['energia_demandada_kwh_mes'])
+        self.assertEqual(r['parametros']['horas_dimerizado'],0)
 
-    def test_inversor_insuficiente_limita_atendimento(self):
-        self.dados["inversor_w"] = 25
+    def test_espera_total_equivale_a_ausencia_de_dimerizacao(self):
+        self.dados['dim_pct'] = 100
+        a = calcular(self.dados)
+        self.dados['presenca_pct'] = 100
+        b = calcular(self.dados)
+        self.assertAlmostEqual(a['cenarios'][1]['energia_demandada_kwh_mes'],b['cenarios'][1]['energia_demandada_kwh_mes'])
+
+    def test_sem_sol_nao_chama_falta_de_luz_de_economia(self):
+        self.dados['hsp_pior_mes'] = 0
+        a2 = calcular(self.dados)['cenarios'][2]
+        self.assertFalse(a2['atende_demanda'])
+        self.assertGreater(a2['deficit_kwh_mes'],0)
+        self.assertEqual(a2['consumo_rede_kwh_mes'],0)
+        self.assertIsNone(a2['economia_rs_mes'])
+        self.assertIsNone(a2['payback_anos'])
+        self.assertIsNone(a2['emissoes_evitadas_kgco2_ano'])
+
+    def test_bateria_zero_tambem_impede_carga_noturna(self):
+        self.dados['bateria_kwh'] = 0
+        self.assertFalse(calcular(self.dados)['cenarios'][2]['atende_demanda'])
+
+    def test_a3_nao_diminui_importacao_fisica_com_credito(self):
         r = calcular(self.dados)
-        self.assertAlmostEqual(r["participacao_solar"], 50)
-        self.assertFalse(r["atende"])
+        a1,a3 = r['cenarios'][1],r['cenarios'][3]
+        self.assertEqual(a1['consumo_rede_kwh_mes'],a3['consumo_rede_kwh_mes'])
+        self.assertGreater(a1['custo_energia_mes'],a3['custo_energia_mes'])
+        self.dados['valor_credito_rs_kwh'] = 100
+        self.assertEqual(calcular(self.dados)['cenarios'][3]['custo_energia_mes'],0)
 
-    def test_sem_sol_nao_inventa_carga_inicial(self):
-        self.dados["hsp"] = 0
-        r = calcular(self.dados)
-        self.assertEqual(r["solar_atendida"], 0)
-        self.assertEqual(r["deficit_solar"], 180)
+    def test_periodo_muda_energia_sem_mudar_custos_anuais(self):
+        a=calcular(self.dados)
+        self.dados['dias_mes']=31
+        b=calcular(self.dados)
+        self.assertAlmostEqual(b['cenarios'][1]['operacao_periodo'],a['cenarios'][1]['operacao_periodo']*31/30)
+        self.assertEqual(b['cenarios'][1]['payback_anos'],a['cenarios'][1]['payback_anos'])
 
-    def test_sem_demanda_nao_divide_por_zero(self):
-        self.dados["horas"] = 0
-        r = calcular(self.dados)
-        self.assertEqual(r["consumo_atual"], 0)
-        self.assertEqual(r["economia_percentual"], 0)
-        self.assertEqual(r["participacao_solar"], 0)
-        self.assertGreater(r["operacao_solar"], 0)
+    def test_sem_noite_ainda_contabiliza_iot(self):
+        self.dados['horas_noite']=0
+        r=calcular(self.dados)
+        self.assertEqual(r['cenarios'][0]['energia_demandada_kwh_mes'],0)
+        self.assertAlmostEqual(r['cenarios'][1]['energia_demandada_kwh_mes'],4.32)
+        self.assertEqual(r['cenarios'][1]['reducao_demanda_pct'],0)
+        self.assertEqual(r['parametros']['horas_uso_intenso'],0)
 
-    def test_mudar_periodo_mantem_custos_na_mesma_base(self):
-        r30 = calcular(self.dados)
-        self.dados["dias"] = 31
-        r31 = calcular(self.dados)
-        self.assertAlmostEqual(r31["operacao_led"], r30["operacao_led"] * 31 / 30)
-        self.assertAlmostEqual(r31["operacao_solar"], r30["operacao_solar"] * 31 / 30)
-        self.assertEqual(r31["investimento_solar"], r30["investimento_solar"])
+    def test_reposicoes_nao_incluem_fim_do_horizonte(self):
+        self.assertEqual(calcular(self.dados)['cenarios'][2]['reposicoes_horizonte'],24000)
+        self.dados['horizonte_anos']=4
+        self.assertEqual(calcular(self.dados)['cenarios'][2]['reposicoes_horizonte'],0)
+        self.dados['horizonte_anos']=5
+        self.assertEqual(calcular(self.dados)['cenarios'][2]['reposicoes_horizonte'],12000)
 
-    def test_escala_dos_pontos_e_reator(self):
-        self.dados["quantidade"] = 20
-        self.dados["perda_reator"] = 10
-        r = calcular(self.dados)
-        self.assertAlmostEqual(r["consumo_atual"], 972)
-        self.assertAlmostEqual(r["consumo_led"], 360)
-        self.assertAlmostEqual(r["bateria_nominal"], 44.64)
+    def test_serie_recalcula_presenca_e_datas(self):
+        self.dados['dias_mes']=31
+        serie=simular_dias(self.dados,self.original['monitoramento_simulado'])
+        self.assertAlmostEqual(serie[0]['fracao_presenca_madrugada'],0.323)
+        self.assertEqual(serie[-1]['data'],'2026-12-01')
+        self.assertTrue(all(0<=x['soc_bateria_poste_pct']<=100 for x in serie))
 
-    def test_led_mais_potente_e_tarifa_zero(self):
-        self.dados["potencia_led"] = 200
-        self.dados["tarifa"] = 0
-        r = calcular(self.dados)
-        self.assertLess(r["economia_energia"], 0)
-        self.assertEqual(r["custo_energia_led"], 0)
-        self.assertGreater(r["operacao_led"], 0)
+    def test_rejeita_percentuais_invalidos(self):
+        self.dados['dim_pct']=101
+        with self.assertRaises(ValueError):calcular(self.dados)
 
 
-if __name__ == "__main__":
+if __name__=='__main__':
     unittest.main()

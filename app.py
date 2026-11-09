@@ -3,133 +3,199 @@ import json
 
 import streamlit as st
 
-from calculos import calcular
+from calculos import calcular, simular_dias
 from apresentacao import montar_html
 
-
-# 1. Identificação e dados de referência
 PASTA = Path(__file__).parent
-base = json.loads((PASTA / "dados.json").read_text(encoding="utf-8"))
-d = base["valores"].copy()
+base = json.loads((PASTA / 'dados.json').read_text(encoding='utf-8'))
+original = json.loads((PASTA / 'referencias/html_original_dados.json').read_text(encoding='utf-8'))
+PADRAO = base['valores']
 
 
-def numero(valor, casas=2):
-    return f"{valor:,.{casas}f}".replace(",", "X").replace(".", ",").replace("X", ".")
+def numero(n, casas=2):
+    if n is None:
+        return '—'
+    return f'{n:,.{casas}f}'.replace(',', 'X').replace('.', ',').replace('X', '.')
 
 
-st.set_page_config(page_title="Efficiency Park", page_icon="💡", layout="wide")
-st.title("💡 Efficiency Park")
-st.write("Módulo energético do Neighborhood Action Dashboard / CitizenTech")
-st.caption("Global Solution 2026.2 | Ciência da Computação | " + base["disciplina"])
-st.info("Simulação acadêmica: referências de equipamentos e tarifa + premissas editáveis. Sem medições ou controle de equipamentos.")
-with st.expander("Equipe e problema comunitário"):
-    for pessoa in base["integrantes"]:
-        st.write(f"{pessoa['nome']} · RM{pessoa['rm']}")
-    st.write("Praça de referência simulada: comparar a iluminação convencional com LED na rede (A) e LED solar com bateria (B), mantendo quantidade e horário. Beneficiários: moradores, usuários da praça e responsáveis pela manutenção.")
+def entrada(chave, titulo, maximo=None, passo=None, formato=None):
+    valor = PADRAO[chave]
+    inteiro = isinstance(valor, int)
+    if chave not in st.session_state:
+        st.session_state[chave] = valor
+    opcoes = dict(min_value=(1 if chave in ['pontos','dias_mes','intervalo_reposicao_anos','horizonte_anos'] else 0) if inteiro else 0.0, key=chave)
+    if maximo is not None:
+        opcoes['max_value'] = int(maximo) if inteiro else float(maximo)
+    if passo is not None:
+        opcoes['step'] = int(passo) if inteiro else float(passo)
+    if formato:
+        opcoes['format'] = formato
+    return st.number_input(titulo, **opcoes)
 
-# 2. Entradas manuais; origens e premissas também aparecem no painel.
-st.sidebar.header("Dados da praça")
-d["quantidade"] = st.sidebar.number_input("Quantidade de luminárias", 1, 100, d["quantidade"])
-d["potencia_atual"] = st.sidebar.number_input("Potência da lâmpada atual (W)", 1.0, 1000.0, d["potencia_atual"])
-d["perda_reator"] = st.sidebar.number_input("Perda adicional do reator (W/ponto)", 0.0, 200.0, d["perda_reator"])
-d["potencia_led"] = st.sidebar.number_input("Potência LED (W/ponto)", 1.0, 1000.0, d["potencia_led"])
-d["horas"] = st.sidebar.number_input("Horas ligadas por dia", 0.0, 24.0, d["horas"], step=0.5)
-d["dias"] = st.sidebar.number_input("Dias do período", 1, 31, d["dias"])
-d["tarifa"] = st.sidebar.number_input("Tarifa de referência (R$/kWh)", 0.0, 10.0, d["tarifa"], step=0.01, format="%.5f")
-st.sidebar.caption("Inicial: B4a Enel SP, TUSD + TE, sem adicionais. Consulte a origem dos dados abaixo.")
 
-with st.sidebar.expander("Sistema solar por ponto"):
-    d["painel_wp"] = st.number_input("Arranjo FV (Wp/ponto)", 0.0, 2000.0, d["painel_wp"])
-    d["hsp"] = st.number_input("Sol equivalente - HSP (h/dia)", 0.0, 8.0, d["hsp"], step=0.5)
-    d["rendimento_solar"] = st.number_input("Rendimento global até a carga (%)", 0.0, 100.0, d["rendimento_solar"] * 100) / 100
-    d["bateria_v"] = st.number_input("Banco por ponto (V)", 1.0, 96.0, d["bateria_v"])
-    d["bateria_ah"] = st.number_input("Banco por ponto (Ah)", 0.0, 1000.0, d["bateria_ah"])
-    d["descarga"] = st.number_input("Descarga máxima de ensaio (%)", 0.0, 100.0, d["descarga"] * 100) / 100
-    d["rendimento_descarga"] = st.number_input("Aproveitamento da saída do banco (%)", 0.0, 100.0, d["rendimento_descarga"] * 100) / 100
-    d["inversor_w"] = st.number_input("Inversor - potência contínua (W/ponto)", 0.0, 3000.0, d["inversor_w"])
-    st.caption("Um kit, um painel extra e um inversor por ponto. Alterar capacidade exige rever preços. Coeficientes são hipóteses de ensaio.")
+st.set_page_config(page_title='Efficiency Park', page_icon='💡', layout='wide')
+st.title('💡 Efficiency Park')
+st.write('Iluminação comunitária com LED, sensores e energia solar — módulo SERS / CitizenTech')
+st.info('Simulador acadêmico baseado no HTML original. Altere os dados na barra lateral: os resultados, gráficos e a apresentação são recalculados. Sem equipamentos reais conectados.')
 
-with st.sidebar.expander("Custos e provisões"):
-    for chave, rotulo in [("preco_led", "Luminária LED (R$/un.)"), ("preco_kit", "Conjunto solar sem inversor (R$/ponto)"), ("preco_inversor", "Inversor (R$/un.)")]:
-        d[chave] = st.number_input(rotulo, min_value=0.0, value=d[chave], step=10.0)
-    for chave, rotulo in [("instalacao_led", "Instalação A (% dos equipamentos)"), ("instalacao_solar", "Instalação B (% dos equipamentos)"), ("reserva_rede", "Reserva anual atual/A (% das luminárias)"), ("reserva_solar", "Reserva anual B (% dos equipamentos)")]:
-        d[chave] = st.number_input(rotulo, 0.0, 100.0, d[chave] * 100) / 100
-    st.caption("Instalação e reservas são hipóteses orçamentárias. Sem frete, obras civis ou postes novos.")
+st.sidebar.header('Experimente outros valores')
+if st.sidebar.button('Restaurar valores do HTML original'):
+    for chave, valor in PADRAO.items():
+        st.session_state[chave] = valor
 
-# 3. Cálculos separados da interface para facilitar a conferência.
-r = calcular(d)
-periodo = f"{d['dias']} dias"
-st.subheader(f"Resultados projetados em {periodo}")
-c1, c2, c3 = st.columns(3)
-c1.metric("Consumo atual", numero(r["consumo_atual"], 1) + " kWh")
-c2.metric("Demanda com LED", numero(r["consumo_led"], 1) + " kWh")
-c3.metric("Economia energética com LED", numero(r["economia_percentual"], 1) + "%")
-c4, c5, c6 = st.columns(3)
-c4.metric("Energia economizada com LED", numero(r["economia_energia"], 1) + " kWh")
-c5.metric("Economia na energia comprada - A", "R$ " + numero(r["custo_energia_atual"] - r["custo_energia_led"]))
-c6.metric("Demanda coberta por solar - B", numero(r["participacao_solar"], 1) + "%")
-st.caption("Economia financeira do indicador considera só a compra de energia. Cobertura solar é estimativa do balanço, não medição nem garantia de autonomia.")
-if r["economia_energia"] <= 0 and r["consumo_atual"] > 0:
-    st.warning("As potências informadas não produzem economia com LED.")
-if any(d[chave] != base["valores"][chave] for chave in ("potencia_atual", "potencia_led", "painel_wp", "bateria_v", "bateria_ah", "inversor_w")):
-    st.warning("Capacidades alteradas: as referências e os preços iniciais podem deixar de representar os equipamentos simulados. Atualize o orçamento e verifique a iluminação entregue.")
+with st.sidebar.expander('Carregar uma simulação salva'):
+    arquivo = st.file_uploader('JSON exportado por esta versão do dashboard', type=['json'])
+    if arquivo and st.button('Aplicar arquivo'):
+        try:
+            salvo = json.loads(arquivo.getvalue())
+            novos = salvo['entradas']
+            if salvo.get('versao_modelo') != 2 or set(novos) != set(PADRAO):
+                raise ValueError('Use um JSON exportado pelo modelo atual, baseado no HTML original.')
+            calcular(novos)
+            for chave, valor in novos.items():
+                if isinstance(PADRAO[chave], int) and int(valor) != valor:
+                    raise ValueError('Valor inteiro necessário: ' + chave)
+            for chave, valor in novos.items():
+                st.session_state[chave] = int(valor) if isinstance(PADRAO[chave], int) else float(valor)
+            st.success('Simulação carregada.')
+        except (ValueError, KeyError, TypeError) as erro:
+            st.error(str(erro))
 
-# 4. Comparação para o mesmo serviço e período
-st.subheader("Comparação energética e financeira")
-tabela = {
-    "Cenário": ["Atual - rede", "A - LED na rede", "B - LED solar isolado"],
-    "Demanda (kWh/período)": [r["consumo_atual"], r["consumo_led"], r["consumo_led"]],
-    "Energia atendida (kWh/período)": [r["consumo_atual"], r["consumo_led"], r["solar_atendida"]],
-    "Déficit (kWh/período)": [0.0, 0.0, r["deficit_solar"]],
-    "Compra da rede (kWh/período)": [r["consumo_atual"], r["consumo_led"], 0.0],
-    "Compra de energia (R$/período)": [r["custo_energia_atual"], r["custo_energia_led"], 0.0],
-    "Provisão manutenção/reposição (R$/período)": [r["reserva_rede"], r["reserva_rede"], r["reserva_solar"]],
-    "Energia + provisão (R$/período)": [r["operacao_atual"], r["operacao_led"], r["operacao_solar"]],
-    "Novo investimento (R$)": [0.0, r["investimento_led"], r["investimento_solar"]]
-}
-st.dataframe(tabela, hide_index=True)
-st.caption("Provisões são reservas estimadas. Investimento atual = zero porque a instalação existente é a referência. Toda operação usa o período selecionado.")
-st.bar_chart(tabela, x="Cenário", y=["Energia atendida (kWh/período)", "Déficit (kWh/período)"])
-st.write(f"Economia operacional estimada de A: R$ {numero(r['economia_operacao_led'])} em {periodo}.")
-if r["atende"]:
-    st.write(f"Saldo operacional atual menos B: R$ {numero(r['economia_operacao_solar'])} em {periodo}. Valor negativo indica custo maior para B.")
-else:
-    st.error(f"B apresenta déficit de {numero(r['deficit_solar'])} kWh. Não atende à mesma necessidade: seu menor gasto não pode ser apresentado como economia de um serviço equivalente.")
+with st.sidebar:
+    with st.expander('Praça e consumo', expanded=True):
+        entrada('pontos', 'Quantidade de postes', 100, 1)
+        entrada('p_lampada_w', 'Potência da lâmpada atual (W)', 1000, 5)
+        entrada('p_reator_w', 'Potência do reator (W/ponto)', 200, 1)
+        entrada('p_led_w', 'Potência LED (W/ponto)', 1000, 5)
+        entrada('horas_noite', 'Horas ligadas por noite', 24, 0.25, '%.4f')
+        entrada('dias_mes', 'Dias do período', 31, 1)
+        entrada('tarifa_rs_kwh', 'Tarifa (R$/kWh)', 10, 0.01, '%.5f')
+    with st.expander('Sensores e dimerização'):
+        entrada('horas_uso_intenso', 'Horas de luz total por noite', 24, 0.5)
+        entrada('dim_pct', 'Potência no modo de espera (%)', 100, 5)
+        entrada('presenca_pct', 'Presença estimada na madrugada (%)', 100, 5)
+        entrada('p_iot_w', 'Potência do módulo IoT (W/ponto)', 100, 0.1)
+        entrada('horas_iot', 'Horas de operação do IoT por dia', 24, 1)
+        st.caption('Potência proporcional à dimerização é uma hipótese; validar driver e iluminação mínima.')
+    with st.expander('Solar e bateria'):
+        entrada('painel_wp', 'Painel por poste A2 (Wp)', 5000, 50)
+        entrada('bateria_kwh', 'Bateria nominal por poste A2 (kWh)', 100, 0.1)
+        entrada('descarga_pct', 'Descarga máxima de ensaio (%)', 100, 5)
+        entrada('eficiencia_bateria_pct', 'Aproveitamento da saída do banco (%)', 100, 1)
+        entrada('autonomia_desejada', 'Noites de autonomia desejadas', 30, 0.5)
+        entrada('kwp_quiosque', 'Potência FV no quiosque A3 (kWp)', 1000, 0.1)
+        entrada('hsp_pior_mes', 'HSP de ensaio conservador A2 (h/dia)', 8, 0.1)
+        entrada('hsp_media', 'HSP média de ensaio A3 (h/dia)', 8, 0.1)
+        entrada('rendimento_fv_pct', 'Rendimento FV global até a carga (%)', 100, 1)
+        entrada('valor_credito_rs_kwh', 'Crédito hipotético A3 (R$/kWh)', 10, 0.01, '%.6f')
+    with st.expander('Investimento, manutenção e reposições'):
+        entrada('capex_a1_ponto', 'A1 instalado (R$/ponto)', passo=25)
+        entrada('capex_a2_ponto', 'A2 instalado (R$/ponto)', passo=100)
+        entrada('capex_fv_kwp', 'FV A3 instalado (R$/kWp)', passo=100)
+        entrada('manut_atual_ponto_ano', 'Manutenção atual (R$/ponto/ano)', passo=5)
+        entrada('manut_a1_ponto_ano', 'Manutenção A1 (R$/ponto/ano)', passo=5)
+        entrada('manut_a2_ponto_ano', 'Manutenção A2 (R$/ponto/ano)', passo=5)
+        entrada('manut_fv_kwp_ano', 'Manutenção FV A3 (R$/kWp/ano)', passo=5)
+        entrada('reposicao_a2_ponto', 'Reposição A2 por evento (R$/ponto)', passo=100)
+        entrada('intervalo_reposicao_anos', 'Intervalo de reposição de ensaio (anos)', 50, 1)
+        entrada('horizonte_anos', 'Horizonte de comparação (anos)', 50, 1)
+    with st.expander('Referências ambientais e de iluminação'):
+        entrada('fator_emissao', 'Fator de emissão adotado (kg CO₂/kWh)', 10, 0.001, '%.4f')
+        entrada('fluxo_sodio_lm', 'Fluxo nominal da referência (lm)', passo=100)
+        entrada('fluxo_led_lm', 'Fluxo nominal LED (lm)', passo=100)
+        entrada('mercurio_mg', 'Mercúrio informado na referência (mg)', passo=1)
+        entrada('adicional_tarifa', 'Adicional tarifário de ensaio (R$/kWh)', 10, 0.01, '%.5f')
 
-st.subheader("Checagem simplificada da opção solar")
-st.write(f"Demanda LED: {numero(r['demanda_dia'], 3)} kWh/dia. Potencial útil solar: {numero(r['geracao_util_dia'], 3)} kWh/dia.")
-st.write(f"Banco total: {numero(r['bateria_nominal'], 3)} kWh nominais e {numero(r['bateria_util'], 3)} kWh úteis de ensaio.")
-if d["horas"] > 0:
-    st.write(f"Autonomia teórica com banco inicialmente cheio: {numero(r['autonomia_horas'], 1)} horas na potência LED, condicionada ao inversor e às hipóteses.")
-else:
-    st.write("Sem demanda de iluminação: cobertura solar = 0% por convenção; não há economia de energia.")
-st.warning("Balanço de dias iguais e carga noturna. Não acompanha estado de carga, sequência de dias nublados, envelhecimento ou consumo em vazio real. Atendimento no modelo não comprova confiabilidade de uma instalação.")
+# Todas as entradas partem dos mesmos padrões do HTML e são efetivamente editáveis.
+d = {chave: st.session_state[chave] for chave in PADRAO}
+try:
+    r = calcular(d)
+except (ValueError, KeyError) as erro:
+    st.error(str(erro))
+    st.stop()
+c = {item['codigo']: item for item in r['cenarios']}
+periodo = f"{d['dias_mes']} dias"
+if d['horas_uso_intenso'] > d['horas_noite']:
+    st.warning('As horas de luz total foram limitadas à duração da noite para evitar tempo negativo na madrugada.')
 
-# 5. Diagrama, explicação, fontes e exportação
-with st.expander("Benefícios, viabilidade e limites"):
-    st.write("Arranjo de referência: dois módulos 210 Wp em série, total de 420 Wp por ponto. O segundo módulo está incluído no preço do conjunto solar; um único módulo de Vmp 20,05 V não sustenta a carga do banco de 24 V. Limites elétricos finais dependem da validação do controlador.")
-    st.write("A aproveita a rede existente e tem menor investimento no exemplo. B usa fonte renovável direta e armazenamento, com maior investimento e necessidade de abrigo, área sem sombra e manutenção das baterias.")
-    st.write("Referência luminosa: cerca de 6.250 lm na lâmpada convencional e 7.500 lm na oferta LED. Fluxo luminoso sugere uma alternativa plausível, mas não comprova iluminância, uniformidade ou atendimento a normas. Verificar altura, espaçamento, óptica e condições da praça.")
-    st.write("Benefícios esperados: reduzir a demanda elétrica mantendo iluminação adequada e apoiar a decisão do gestor. Não medimos segurança ou satisfação dos moradores. Lâmpadas com mercúrio, baterias, painéis e eletrônica exigem destinação adequada.")
-    st.write("Não calculamos CO₂ evitado nem afirmamos que a rede não usa renováveis. A cobertura solar refere-se somente à demanda de B. Sem análise de ciclo de vida, projeto executivo ou retorno do investimento.")
-with st.expander("Diagrama de funcionamento"):
-    st.image(str(PASTA / "diagrama.svg"))
-    st.caption("Fluxo energético proposto e dados manuais. O software não lê sensores nem aciona equipamentos.")
-with st.expander("Cálculos e premissas"):
-    st.write("Consumo = quantidade × potência (W) × horas/dia × dias ÷ 1.000.")
-    st.write("Economia (%) = (consumo atual − demanda LED) ÷ consumo atual × 100; sem consumo atual, usamos 0%.")
-    st.write("Potencial solar útil/dia = quantidade × Wp/ponto × HSP × rendimento global ÷ 1.000.")
-    st.write("Banco útil = quantidade × V × Ah × descarga × aproveitamento de saída ÷ 1.000.")
-    st.write("Solar atendida/dia = menor valor entre demanda, potencial solar útil, banco útil e limite diário dos inversores. Déficit = demanda − atendida.")
-    st.write("Cobertura solar = energia solar atendida ÷ demanda LED × 100; sem demanda, usamos 0%.")
-    st.write("Implantação = equipamentos × (1 + provisão de instalação). Operação = energia comprada × tarifa + reserva anual de equipamentos ÷ 12 × dias ÷ 30.")
-    for premissa in base["premissas"]:
-        st.markdown(f"**{premissa['parametro']}**: {premissa['origem']}")
-with st.expander("Dados e fontes consultadas"):
-    st.caption("Consulta: " + base["consulta"] + ". Ofertas não são orçamentos de implantação; preços e tarifas podem mudar.")
-    for fonte in base["fontes"]:
-        st.markdown(f"**{fonte['id']} · [{fonte['titulo']}]({fonte['url']})** — {fonte['uso']}")
-st.download_button("Baixar entradas e resultados da simulação (JSON)", json.dumps({"entradas": d, "resultados": r, "referencias": base["fontes"], "premissas": base["premissas"]}, ensure_ascii=False, indent=2), file_name="efficiency_park_simulacao.json", mime="application/json")
+codigo = st.radio('Alternativa para explorar', ['A1', 'A2', 'A3'], index=2,
+                  format_func=lambda k: k + ' — ' + c[k]['nome'], horizontal=True)
+sel = c[codigo]
+st.caption(f"Cenário atual: {d['pontos']} postes, {numero(r['parametros']['p_atual_w'],0)} W/ponto e {numero(d['horas_noite'],4)} h/noite. Período: {periodo}.")
+col = st.columns(4)
+col[0].metric('Consumo atual da rede', numero(c['A0']['consumo_rede_kwh_mes'], 1) + ' kWh')
+col[1].metric('Demanda LED + sensores', numero(c['A1']['energia_demandada_kwh_mes'], 1) + ' kWh')
+col[2].metric('Redução da demanda', numero(c['A1']['reducao_demanda_pct'], 1) + '%')
+col[3].metric('Operação atual', 'R$ ' + numero(c['A0']['operacao_periodo']))
+st.subheader(sel['nome'])
+col = st.columns(4)
+col[0].metric('Compra física da rede', numero(sel['consumo_rede_kwh_mes'], 1) + ' kWh')
+col[1].metric('Economia operacional estimada', 'R$ ' + numero(sel['economia_rs_mes']))
+col[2].metric('FV local no balanço energético', numero(sel['participacao_renovavel_pct'], 1) + '%')
+col[3].metric('Retorno simples', numero(sel['payback_anos'], 1) + ' anos')
+col = st.columns(3)
+col[0].metric('Potencial de CO₂ evitado no balanço', numero(sel['emissoes_evitadas_kgco2_ano'], 1) + ' kg/ano')
+col[1].metric('Tempo estimado em espera', numero(sel['horas_dimerizado_dia'], 2) + ' h/dia')
+col[2].metric('Investimento estimado', 'R$ ' + numero(sel['capex']))
+st.caption('Economia operacional inclui energia e manutenção no período. Payback é simples, sem reposições ou desconto; o custo no horizonte inclui reposições. Percentual FV não descreve a composição renovável da rede.')
 
-st.download_button("Baixar apresentação HTML desta simulação", montar_html(base, d), file_name="Efficiency_Park_Apresentacao.html", mime="text/html; charset=utf-8")
-st.caption("A apresentação usa os mesmos cálculos e as entradas atuais. Abra o HTML baixado no navegador; ele também funciona offline.")
+if not c['A2']['atende_demanda']:
+    st.error('A2 não atende a mesma demanda: déficit de ' + numero(c['A2']['deficit_kwh_mes']) + ' kWh em ' + periodo + '. Economia operacional, retorno e benefício de CO₂ equivalente ficam indisponíveis para A2.')
+if c['A1']['reducao_demanda_pct'] < 0:
+    st.warning('As entradas aumentam a demanda das alternativas em relação ao cenário atual.')
+if codigo == 'A3':
+    st.info('A3 compra energia da rede à noite e gera FV de dia. Os créditos são uma hipótese financeira editável: o balanço anual não é fornecimento solar direto noturno nem fatura garantida.')
+
+st.subheader('Comparação dos quatro cenários')
+linhas = []
+for item in r['cenarios']:
+    linhas.append({'Cenário': item['codigo'], 'Demanda (kWh/período)': item['energia_demandada_kwh_mes'],
+                   'Rede física (kWh/período)': item['consumo_rede_kwh_mes'], 'Déficit (kWh/período)': item['deficit_kwh_mes'],
+                   'Custo energia (R$/período)': item['custo_energia_mes'], 'Energia + manutenção (R$/período)': item['operacao_periodo'],
+                   'FV local no balanço (%)': item['participacao_renovavel_pct'], 'Investimento (R$)': item['capex'],
+                   'Retorno simples (anos)': item['payback_anos'], 'Custo no horizonte (R$)': item['custo_total_10_anos']})
+st.dataframe(linhas, hide_index=True)
+st.caption('A0 é a referência. A1 usa rede; A2 é isolado; A3 usa rede e FV no quiosque. Um custo menor em A2 com déficit não representa serviço equivalente.')
+a, b = st.columns(2)
+a.bar_chart(linhas, x='Cenário', y='Demanda (kWh/período)')
+b.bar_chart(linhas, x='Cenário', y='Energia + manutenção (R$/período)')
+
+with st.expander('Checagem do solar autônomo A2', expanded=codigo == 'A2'):
+    sol = r['dimensionamento_solar']
+    st.write('Demanda por ponto: ' + numero(r['parametros']['e_alt_ponto_dia'], 4) + ' kWh/dia. Geração útil no ensaio: ' + numero(sol['geracao_util_poste_dia'], 4) + ' kWh/dia.')
+    st.write('Painel mínimo no ensaio: ' + numero(sol['painel_necessario_wp'], 1) + ' Wp. Banco nominal necessário para a autonomia desejada: ' + numero(sol['bateria_necessaria_kwh'], 3) + ' kWh/ponto.')
+    st.write('Banco útil: ' + numero(sol['banco_util_kwh'], 3) + ' kWh/ponto. Autonomia teórica partindo de banco cheio: ' + numero(sol['autonomia_noites'], 2) + ' noites.')
+    st.caption('Balanço conceitual: não garante sequência de noites nubladas. Verificar driver, controlador, tensão, corrente, iluminação mínima, bateria e condições locais na implantação.')
+
+with st.expander('Perfil noturno e série diária simulada'):
+    st.write('Perfil de potência das luminárias (IoT contabilizado separadamente na demanda):')
+    st.line_chart(r['perfil_noite'], x='hora', y=['atual_w', 'led_w'])
+    serie = simular_dias(d, original['monitoramento_simulado'])
+    st.write('Série ilustrativa recalculada com as entradas atuais. Não é medição nem a base do dia médio dos indicadores:')
+    st.line_chart(serie, x='data', y=['consumo_atual_kwh', 'consumo_led_sensor_kwh'])
+    st.line_chart(serie, x='data', y='soc_bateria_poste_pct')
+    st.dataframe(serie, hide_index=True)
+
+with st.expander('Diagrama, equipe, cálculos e fontes'):
+    st.image(str(PASTA / 'diagrama.svg'))
+    for p in base['integrantes']:
+        st.write(p['nome'] + ' · RM' + p['rm'])
+    st.code('E_atual/dia = postes × (W_lâmpada + W_reator) × h_noite / 1000\n'
+            'h_equivalentes_LED = h_intenso + h_madrugada × [presença + (1−presença) × espera]\n'
+            'E_LED+IoT/dia = postes × [W_LED × h_equivalentes + W_IoT × h_IoT] / 1000\n'
+            'E_período = E_dia × dias; E_ano = E_dia × 365\n'
+            'FV_ano = kWp × HSP × rendimento × 365\n'
+            'Operação_período = (energia_ano + manutenção_ano) × dias/365\n'
+            'Payback simples = implantação / economia anual recorrente\n'
+            'Custo_horizonte = implantação + operação_ano × anos + reposições', language=None)
+    for p in base['premissas']:
+        st.markdown('**' + p['parametro'] + ':** ' + p['origem'])
+    for f in base['fontes']:
+        url = f['url'] if f['url'].startswith('https://') else 'https://github.com/matheusroberto04/EfficiencyParkDashboard/blob/main/' + f['url']
+        st.markdown('**[' + f['titulo'] + '](' + url + ')** — ' + f['uso'])
+
+st.subheader('Salvar e apresentar esta simulação')
+exportacao = {'versao_modelo': 2, 'entradas': d, 'resultados': r, 'fontes': base['fontes'], 'premissas': base['premissas']}
+st.download_button('Baixar simulação em JSON', json.dumps(exportacao, ensure_ascii=False, indent=2), 'efficiency_park_simulacao.json', 'application/json')
+st.download_button('Baixar apresentação HTML desta simulação', montar_html(base, d), 'Efficiency_Park_Apresentacao.html', 'text/html; charset=utf-8')
+st.caption('As alterações são locais à sessão. Salve o JSON para carregar depois. O botão de restauração recupera os valores do HTML original; o HTML baixado contém os resultados recalculados.')

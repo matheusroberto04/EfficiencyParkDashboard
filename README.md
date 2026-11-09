@@ -1,26 +1,14 @@
 # Efficiency Park
 
-Módulo energético do **Neighborhood Action Dashboard — CitizenTech**.
-Global Solution 2026.2 | Ciência da Computação | **Soluções em Energias Renováveis e Sustentáveis (SERS)**.
+Módulo energético do **Neighborhood Action Dashboard — CitizenTech**. Global Solution 2026.2 | Ciência da Computação | **Soluções em Energias Renováveis e Sustentáveis (SERS)**.
 
 ## Acesso rápido aos dados
 
-**[Apresentação e indicadores — apresentacao.html](apresentacao.html)** · [Código do dashboard Python](app.py) · [Dados e fontes](dados.json) · [Roteiro do vídeo](roteiro_video.md)
+**[Apresentação e animação — apresentacao.html](apresentacao.html)** · [Dashboard Python](app.py) · [Premissas editáveis e fontes](dados.json) · [Valores extraídos do HTML original](referencias/html_original_dados.json) · [Roteiro do vídeo](roteiro_video.md)
 
-### Testar a apresentação HTML
+O dashboard agora parte dos **valores do HTML original**: 12 postes, lâmpada de sódio de 100 W + reator de 15 W, LED de 60 W, sensores, dimerização e três alternativas. O professor pode alterar os parâmetros pela barra lateral, observar o recálculo e restaurar os padrões com um botão.
 
-1. Baixe o repositório como ZIP (**Code → Download ZIP**) e extraia a pasta.
-2. Abra o arquivo **`apresentacao.html`**, que está na raiz do projeto, no Chrome, Edge, Firefox ou Safari.
-3. Clique em **Apresentar para o vídeo**. Use as setas para passar as nove cenas; F alterna tela cheia.
-4. Na página de indicadores ou nas cenas de checagem solar e dashboard, selecione **Ensaio: 1 HSP/dia**. Com os valores de referência, a cobertura cai para **49%**, com déficit de **91,8 kWh** em 30 dias. Volte a **Referência** para restaurar o caso inicial.
-
-O HTML funciona sozinho e offline, com dados e fontes embutidos. Não precisa de Python ou PowerPoint. Ao abrir o arquivo pela página do GitHub, o GitHub mostra o código: baixe o arquivo e abra a cópia local no navegador para executar os controles.
-
-### Testar o dashboard completo em Python
-
-Para alterar livremente quantidade, potência, período, tarifa, capacidades e custos, siga a instalação de Windows ou macOS abaixo e execute o Streamlit. O painel permite exportar JSON e baixar uma apresentação HTML com os valores da sessão.
-
-O botão **Abrir dashboard local** dentro do HTML só funciona quando o Streamlit estiver iniciado no mesmo computador, normalmente em `http://localhost:8501`. A apresentação HTML permanece utilizável mesmo sem iniciar o Python. A simulação de sensores de presença está na capa e na terceira cena; ela é visual e não altera os cálculos energéticos.
+Para usar apenas a apresentação, baixe o ZIP em **Code → Download ZIP**, extraia a pasta e abra `apresentacao.html` no navegador. O GitHub mostra o código do HTML; a cópia local executa os controles. Para alterar as premissas, use o Python conforme as instruções abaixo.
 
 ## Integrantes
 
@@ -30,329 +18,196 @@ O botão **Abrir dashboard local** dentro do HTML só funciona quando o Streamli
 | Gustavo Oliveira Baptista | 575597 |
 | Ana Luísa Santos | 574806 |
 
-## Problema comunitário e objetivo
+## Problema e solução
 
-Uma praça comunitária precisa de iluminação noturna adequada, mas tecnologias menos eficientes aumentam a demanda elétrica. O Efficiency Park compara alternativas para reduzir essa demanda e avaliar a utilização de energia solar, apoiando decisões de moradores e responsáveis pela manutenção.
+Uma praça comunitária precisa de iluminação noturna adequada, com menor desperdício e custos justificáveis. Os beneficiários são moradores, usuários do espaço e responsáveis pela manutenção. Este estudo considera uma **praça simulada de referência**; não houve levantamento de campo, instalação ou medição.
 
-O estudo usa uma **praça de referência simulada**, com 10 pontos e 12 horas de iluminação por dia. Não houve visita, medição ou orçamento de implantação. São Paulo é apenas o contexto da tarifa de referência; não afirmamos que uma praça real foi diagnosticada.
+Comparamos a referência e três alternativas para a mesma necessidade de iluminação, condicionada à validação fotométrica:
 
-Comparamos o cenário atual (lâmpadas convencionais na rede) com duas melhorias:
+| Código | Cenário |
+| --- | --- |
+| A0 | Lâmpadas de sódio e reatores ligados na rede, sem dimerização. |
+| A1 | LED com sensores e dimerização, alimentado pela rede. |
+| A2 | LED com sensores, painel e bateria por poste; sistema isolado. |
+| A3 | A1 + painéis no quiosque, com troca de energia pela rede e crédito financeiro hipotético. |
 
-- **A — LED na rede:** substituição das luminárias, aproveitando a infraestrutura existente.
-- **B — LED solar isolado:** uma luminária, um conjunto com dois painéis/controlador/baterias e um inversor por ponto, sem conexão à rede.
+**Estágio atual:** software de simulação funcional, com campos editáveis, cálculos, gráficos, indicadores, checagens, animação de presença, JSON e apresentação HTML. Sensores físicos, ESP32, comunicação e acionamento automático são a **arquitetura proposta**, ainda não implantada. O modelo estima o efeito energético da presença e da dimerização; a animação não mede movimento real nem determina a fração de presença dos cálculos.
 
-As alternativas usam a mesma quantidade de pontos e o mesmo horário. A comparação pressupõe iluminação adequada: fluxo luminoso é uma triagem, não uma validação fotométrica. Não há redução de horas ou economia atribuída a sensores.
+## Rodar no Windows
 
-**Estágio atual:** simulador em Python/Streamlit, com entradas manuais, indicadores, tabela, gráfico, diagrama, checagem solar, alertas de déficit, fontes e exportação JSON. Não é monitoramento em tempo real e não controla luminárias. Este é o módulo de SERS do integrador; não afirma integrar módulos de outras disciplinas já existentes.
-
-## Primeiro acesso: baixar, instalar e testar
-
-O painel funciona no navegador, mas precisa ser iniciado pelo Python no seu computador. As instruções abaixo estão separadas para **Windows** e **macOS (MacBook)**.
-
-### 1. O que você precisa
-
-- **Python:** use uma versão compatível com o Streamlit do projeto. A documentação consultada informa suporte a Python 3.11 a 3.15. O instalador está no [site oficial do Python](https://www.python.org/downloads/).
-- **Internet durante a instalação:** para baixar as bibliotecas.
-- **Um navegador:** para abrir o painel local.
-- **VS Code, opcional:** facilita abrir a pasta e usar o terminal. Também é possível usar o PowerShell no Windows ou o Terminal no macOS.
-
-Não é necessário instalar banco de dados, criar conta no Streamlit ou ter equipamentos físicos. O Git também é opcional: é possível baixar o projeto como ZIP.
-
-### 2. Baixe e abra o projeto
-
-1. Na página do repositório no GitHub, clique no botão **Code** e selecione **Download ZIP**.
-2. Extraia o arquivo ZIP para uma pasta do computador. No Windows, use **Extrair Tudo**; no macOS, abra o ZIP para descompactar.
-3. Localize a pasta que contém `app.py`, `calculos.py`, `dados.json`, `requirements.txt` e `diagrama.svg`. Mantenha todos os arquivos do projeto juntos, incluindo `apresentacao.py` e `apresentacao_template.html`, e abra a pasta principal.
-4. No VS Code, selecione **Arquivo/File → Abrir Pasta/Open Folder** e escolha essa pasta.
-5. Abra **Terminal → Novo Terminal/New Terminal**.
-
-**Execute os comandos na pasta que contém `app.py` e `requirements.txt`, com o ZIP já extraído.** Digite uma linha por vez e aguarde sua conclusão antes de executar a próxima.
-
-### 3. Instalação e execução no Windows
-
-Use o terminal **PowerShell** do VS Code ou o PowerShell do Windows aberto na pasta do projeto.
-
-**Confira se o Python está instalado:**
-
-```powershell
-py --version
-```
-
-O comando deve mostrar a versão do Python. Se `py` não for reconhecido, tente `python --version`. Se nenhum dos dois funcionar, instale o Python pelo site oficial, feche e abra novamente o terminal.
-
-**Crie o ambiente virtual do projeto:**
+Instale Python 3.11 ou superior compatível com a versão do Streamlit em `requirements.txt`. Baixe e extraia o repositório inteiro e abra o terminal na pasta que contém `app.py`. Mantenha todos os arquivos e subpastas juntos.
 
 ```powershell
 py -m venv .venv
-```
-
-Se o seu computador reconhece apenas `python`, use `python -m venv .venv` nesse passo.
-
-**Instale as bibliotecas:**
-
-```powershell
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
-```
-
-**Inicie o painel:**
-
-```powershell
 .\.venv\Scripts\python.exe -m streamlit run app.py
 ```
 
-Os comandos utilizam diretamente o Python da pasta `.venv`. Por isso, não é necessário executar um comando separado de ativação.
+Se o computador usa `python` em vez de `py`, substitua apenas o comando de criação do ambiente. Não é necessário ativar o ambiente virtual: os demais comandos já usam o executável da `.venv`.
 
-### 4. Instalação e execução no macOS / MacBook
+## Rodar no macOS
 
-Use o terminal do VS Code ou o aplicativo **Terminal**, aberto na pasta do projeto.
-
-**Confira se o Python está instalado:**
-
-```bash
-python3 --version
-```
-
-Se o comando não for reconhecido ou a versão não for compatível, instale uma versão compatível pelo site oficial do Python e abra novamente o terminal.
-
-**Crie o ambiente virtual do projeto:**
+No Terminal ou no terminal do VS Code, dentro da pasta extraída:
 
 ```bash
 python3 -m venv .venv
-```
-
-**Instale as bibliotecas:**
-
-```bash
 .venv/bin/python -m pip install -r requirements.txt
-```
-
-**Inicie o painel:**
-
-```bash
 .venv/bin/python -m streamlit run app.py
 ```
 
-Assim como no Windows, os comandos utilizam diretamente o Python do ambiente virtual.
+Abra a **Local URL** informada no terminal, normalmente `http://localhost:8501`. Mantenha o terminal aberto; Control+C encerra o painel. Para abrir em outro dia, execute somente o último comando. Não é necessário banco de dados, conta no Streamlit ou equipamento físico.
 
-### 5. Abra o painel no navegador
+Se aparecer `Could not open requirements file`, confira se o terminal está na pasta correta e se o ZIP foi extraído. Para `No module named streamlit`, reinstale as dependências usando o Python da `.venv` e execute com esse mesmo Python.
 
-Após iniciar o sistema, o terminal mostrará um endereço chamado **Local URL**, normalmente:
+## Testes que o professor pode fazer na interface
 
-**http://localhost:8501**
+1. Abra o painel e confira o cenário padrão: **491,3 kWh** atuais e **177,6 kWh** com LED + sensores em 30 dias, redução de demanda de **63,9%**.
+2. Altere **Quantidade de postes** de 12 para 24: a demanda e os equipamentos por poste dobram. A capacidade do quiosque é compartilhada e só muda se o campo de kWp for alterado.
+3. Em **Sensores e dimerização**, altere a presença de 20% para 100%: a economia diminui, pois a iluminação fica mais tempo em potência total.
+4. Em **Solar e bateria**, coloque HSP conservadora de A2 em zero: aparece déficit e os indicadores de economia operacional, retorno e benefício ambiental equivalente de A2 ficam indisponíveis.
+5. Altere tarifa, crédito de A3, capacidades ou custos e observe os resultados. Geração FV e compra física da rede são mostradas separadamente.
+6. Clique em **Restaurar valores do HTML original** para recuperar o exemplo.
+7. Salve o JSON e use **Carregar uma simulação salva → Aplicar arquivo** para recuperar exatamente as entradas. O JSON deve pertencer à versão atual do modelo (versão 2).
+8. Baixe a **apresentação HTML desta simulação**. Ela preserva o estilo e a animação do HTML original, mas recebe os resultados recalculados pelo Python.
 
-Abra esse endereço no navegador do mesmo computador. Se o terminal indicar outra porta, use o endereço exibido nele.
+As alterações são locais à sessão e não sobrescrevem `dados.json` nem o GitHub. Uma nova sessão começa com os padrões; para persistir as entradas, salve o JSON.
 
-Mantenha o terminal aberto enquanto utiliza o painel. Para encerrar o sistema, pressione **Ctrl + C** no terminal; no Mac, também é a tecla Control.
+## Valores de referência e sua origem
 
-## Dados, fontes e premissas
+O arquivo `referencias/html_original_dados.json` contém os dados extraídos do primeiro HTML fornecido pela equipe. O arquivo `dados.json` contém as entradas editáveis, integrantes, fontes e justificativas. Os resultados não são armazenados como constantes do dashboard: são recalculados em `calculos.py`.
 
-O arquivo [`dados.json`](dados.json) é a base de referência: contém integrantes, valores iniciais, fontes específicas e premissas. O painel apresenta essas informações e permite exportar entradas/resultados em JSON. As alterações feitas na interface não sobrescrevem a base; uma nova sessão usa os valores iniciais.
-
-Referências consultadas em **09/11/2026**. Ofertas são registros de preço do vendedor na consulta, sem frete ou descontos especiais; não são médias de mercado, recomendações de compra ou orçamentos completos. A disponibilidade pode mudar.
-
-| Entrada de referência | Valor | Origem e interpretação |
+| Parâmetro inicial | Valor | Fundamentação e limite |
 | --- | --- | --- |
-| Quantidade e operação | 10 pontos, 12 h/dia, 30 dias | Cenário didático delimitado pela equipe. Não representa medição. |
-| Lâmpada atual | 125 W; cerca de 6.250 lm | F1: potência nominal × eficiência luminosa de 50 lm/W. A estimativa não inclui perdas externas do reator. |
-| Perdas adicionais do reator | 0 W no ensaio inicial | Limite inferior por falta de medição, não afirmação de perda física zero. O usuário pode informar perdas para uma comparação mais completa. |
-| LED | 50 W, 7.500 lm; R$ 428,11/un. | F2: oferta de luminária pública Ourolux SI05126A. Fluxo é referência de triagem, não prova de iluminância equivalente. |
-| Tarifa | R$ 0,43416/kWh | F3: B4a Enel São Paulo, tabela vigente desde 04/07/2026. `(259,83 + 174,33) / 1.000`. Sem tributos/adicionais separados, bandeiras ou custos fixos. Confirmar enquadramento antes de implantar. |
-| Conjunto solar por ponto | R$ 2.801,88 | Kit F4 de R$ 2.402,88 + painel adicional F8 de R$ 399,00. Total: dois módulos de 210 Wp, controlador, duas baterias 12 V / 93 Ah e acessórios. Sem inversor. |
-| Banco por ponto | 24 V e 93 Ah | Duas baterias de 12 V em série: a tensão soma, os Ah permanecem 93. Energia nominal = 2,232 kWh/ponto. |
-| Inversor por ponto | 300 W contínuos; R$ 1.439,00 | F5: Volt, senoidal, 24 V / 127 V. Faz a conversão para a luminária CA. Deve ficar protegido do tempo e ter compatibilidade verificada. |
-| Sol equivalente (HSP) | 4,5 h/dia | Condição de ensaio escolhida, não uma média meteorológica local. Testamos também 1 e 2 h/dia. Na implantação consultar recurso local e pior mês. |
-| Rendimento solar global | 70% | Hipótese de perdas totais até a carga, incluindo armazenamento, conversão e auxiliares; não é eficiência medida. |
-| Descarga / aproveitamento da saída | 50% / 85% | Hipóteses para estimar energia útil do banco inicialmente cheio. Não são limites certificados para a bateria. Não são multiplicadas novamente na geração, que já usa rendimento global. |
-| Instalação A / B | 10% / 20% dos equipamentos | Provisão de escopo: B exige montagem, abrigo e proteção adicionais. Não é cotação de serviço. Sem postes novos, obras civis ou frete. |
-| Reserva anual atual e A | 2% do custo de reposição das luminárias LED | Hipótese comum aos cenários na rede para não atribuir vantagem artificial de manutenção ao LED. Não é custo histórico da instalação atual. |
-| Reserva anual B | 5% dos equipamentos solares e luminárias | Hipótese maior pela presença de baterias e eletrônica. Não é garantia de cobertura das reposições. Rateio mensal por 12. |
+| Postes / noite / período | 12 / 11,8667 h / 30 dias | Premissas do HTML original, não medições nem duração regulamentar afirmada pelo projeto. |
+| Referência convencional | 100 W + 15 W de reator | Categoria de sódio; 15 W são estimativa do estudo. Fluxo nominal de referência 10.600 lm. |
+| LED | 60 W / 9.000 lm | Categoria existente com especificação declarada pelo vendedor em F4; não comprova equivalência fotométrica ou dimerização do produto. Validar driver, óptica e iluminação mínima. |
+| Uso intenso | 5 h/noite | Hipótese de luz total antes do modo de presença. Limitada automaticamente ao total da noite. |
+| Espera / presença na madrugada | 30% / 20% | Hipóteses editáveis. Potência é aproximada como proporcional ao nível de dimerização. |
+| IoT | 0,5 W por poste, 24 h/dia | Carga auxiliar hipotética, incluída na demanda das alternativas. |
+| Tarifa | R$ 0,43416/kWh | TUSD + TE B4a Enel SP: (259,83 + 174,33) / 1.000, tabela consultada em 09/11/2026. Sem adicionais; confirmar enquadramento. |
+| FV A2 / bateria | 200 Wp / 1,28 kWh por ponto | Capacidade de ensaio do HTML. Não define módulos, tensão, controlador, conversores ou produto comercial compatível. |
+| HSP conservadora / média | 3,8 / 4,9 h/dia | Condições de ensaio, não média meteorológica comprovada de uma praça ou de junho. |
+| Rendimento FV / descarga / saída do banco | 75% / 90% / 95% | Hipóteses de balanço e armazenamento, não limites certificados do fabricante. |
+| FV no quiosque | 1,6 kWp | Capacidade compartilhada, hipotética e editável. |
+| Crédito unitário de A3 | R$ 0,356211/kWh | Hipótese financeira herdada do HTML. Não é cálculo regulatório nem garantia de faturamento ou aprovação da compensação. |
+| A1 / A2 instalados | R$ 925 / R$ 4.600 por ponto | Estimativas do HTML, com equipamentos e instalação no escopo considerado. Sem orçamento comercial local. |
+| FV A3 instalado | R$ 5.500/kWp | Estimativa do HTML: 1,6 × 5.500 = R$ 8.800 adicionais a A1. |
+| Manutenção anual | Atual 37,50; A1 10; A2 60 R$/ponto; FV 93,75 R$/kWp | Hipóteses do estudo, não histórico de manutenção. |
+| Reposição A2 | R$ 1.000/ponto nos anos 4 e 8 do ensaio de 10 anos | Cronograma orçamentário escolhido para reproduzir os R$ 24.000 do HTML; não é vida útil certificada. Evento exatamente no fim do horizonte não é incluído. |
+| Fator CO₂ | 0,0545 kg/kWh | Preservado do HTML original, com referência indicada de 2024. Não representa um fator atual de 2026; consultar MCTI e ajustar conforme o objetivo. |
 
-Valores de referência e hipóteses são diferentes: F1–F5, F8 e F9 sustentam características/ofertas/tarifa; **não validam** HSP, rendimentos, percentuais de instalação ou reservas. F6 fundamenta os conceitos do modelo, não seus coeficientes. As hipóteses estão explicitadas e são editáveis para análise de sensibilidade.
+As referências de tarifa e características **não validam os preços completos, rendimentos, HSP, presença ou cronograma de reposições**. Todos esses itens permanecem identificados como estimativas. A documentação do MME fundamenta os conceitos, não os coeficientes do ensaio.
 
-## Mesma necessidade de iluminação
-
-A e B usam o mesmo LED e horário. A referência convencional tem fluxo nominal aproximado de 6.250 lm e a oferta LED declara 7.500 lm. Isso indica uma possibilidade a estudar, mas lúmens não são lux na praça: óptica, altura, espaçamento, perdas da luminária, envelhecimento e uniformidade mudam o resultado. O simulador não certifica equivalência luminosa nem atendimento às normas. Uma implantação depende dessa verificação. O consumo atual nominal é conservador por excluir o reator não medido.
-
-## Cálculos de consumo e custos
-
-Todos os resultados de consumo e operação usam **o mesmo período selecionado**. A reserva mensal é proporcional a `dias / 30`, adotando um mês contábil de 30 dias; não é extrapolação meteorológica anual.
+## Cálculos
 
 ```text
-E_atual = quantidade × (potência atual + perda do reator) × horas/dia × dias / 1.000
-E_LED = quantidade × potência LED × horas/dia × dias / 1.000
-Economia = E_atual - E_LED
-Economia (%) = Economia / E_atual × 100
-Custo de compra = energia da rede × tarifa
-Materiais A = quantidade × preço LED
-Materiais B = quantidade × (preço LED + preço conjunto solar + preço inversor)
-Implantação = materiais × (1 + percentual de instalação)
-Reserva atual/A = materiais A × percentual anual rede / 12 × dias / 30
-Reserva B = materiais B × percentual anual solar / 12 × dias / 30
-Operação = compra de energia + reserva de manutenção/reposição
+h_madrugada = h_noite - mínimo(h_uso_intenso, h_noite)
+h_equivalentes = h_intenso + h_madrugada × [presença + (1−presença) × espera]
+E_atual_dia = postes × (W_lâmpada + W_reator) × h_noite / 1000
+E_alternativas_dia = postes × [W_LED × h_equivalentes + W_IoT × h_IoT] / 1000
+E_período = E_dia × dias_selecionados
+E_anual = E_dia × 365
+Redução_demanda = (E_atual − E_alternativas) / E_atual × 100
+FV_quiosque_ano = kWp × HSP_média × rendimento_global × 365
+Crédito_A3 = mínimo(FV_ano, demanda_ano) × crédito_unitário
+Crédito_A3 é limitado ao custo variável de energia do modelo
+Operação_ano = custo variável de energia_ano + manutenção_ano
+Operação_período = Operação_ano × dias/365
+Economia_operacional = operação_atual − operação_alternativa
+Payback_simples = investimento / economia anual recorrente
+Custo_horizonte = investimento + operação_ano × anos + reposições previstas
 ```
 
-Sem consumo atual, a economia percentual é 0% por convenção. A economia financeira destacada nos indicadores considera somente energia comprada; a tabela inclui também provisões. O investimento inicial é separado. Sem análise de retorno, taxa de desconto, inflação ou garantia de reposições futuras.
+Presença e espera entram como frações entre 0 e 1. Quando o consumo atual é zero, percentuais relativos usam 0 por convenção. Se não há economia anual positiva, o payback fica indisponível. O **retorno simples não inclui reposições nem desconto**; o custo no horizonte as inclui. Sem inflação, juros, degradação ou orçamento executivo. O ano tem 365 dias, portanto 30 dias não são automaticamente 1/12 da análise anual.
 
-## Checagem solar simplificada
+### A2: solar isolado
 
-O modelo considera **carga noturna, conjuntos idênticos por ponto e repetição de um dia de referência**, sem crédito por carga inicial de bateria. B não recebe energia da rede. O uso de inversor é necessário porque a luminária de referência é CA e o banco é CC.
+A demanda é a mesma de A1. A energia solar atendida por dia é o menor valor entre demanda, geração útil e capacidade útil do banco. A geração usa `Wp × HSP × rendimento global / 1000`; o banco usa `kWh nominais × descarga × aproveitamento de saída`. Não se reaplica o aproveitamento de saída à geração, cujo rendimento global já inclui as perdas até a carga.
 
-O conjunto proposto adapta a referência comercial: **dois módulos de 210 Wp em série por ponto**, somando 420 Wp e Vmp nominal de 40,10 V. Um só módulo tem Vmp de 20,05 V e não sustenta a carga de um banco de 24 V. O módulo adicional de R$ 399,00 está incluído no custo. Os 420 Wp ficam abaixo dos 520 W declarados para o controlador em 24 V. A faixa MPPT, o Voc em baixa temperatura e os demais limites elétricos ainda precisam de validação no manual; não se trata de esquema de instalação.
+No padrão, cada ponto demanda **0,49328088 kWh/dia**, gera **0,570 kWh/dia** no ensaio conservador e tem **1,0944 kWh úteis** de banco. A autonomia teórica é **2,2186 noites**, partindo de banco cheio. Isso não valida sequência climática, iluminação ou compatibilidade elétrica.
 
-```text
-Demanda_LED_dia = quantidade × potência LED × horas/dia / 1.000
-Potencial_solar_útil_dia = quantidade × painel_Wp × HSP × rendimento_global / 1.000
-Banco_nominal = quantidade × tensão_banco × Ah / 1.000
-Banco_útil = Banco_nominal × descarga × aproveitamento_saída
-Limite_inversores_dia = quantidade × potência_contínua_inversor × horas/dia / 1.000
-Solar_atendida_dia = mínimo(demanda, potencial útil, banco útil, limite inversores)
-Déficit_período = (demanda_dia - solar_atendida_dia) × dias
-Cobertura_solar (%) = solar_atendida / demanda_LED × 100
-Autonomia_teórica (h) = banco_útil / potência_total_LED_em_kW
-```
+Quando há déficit, não se apresenta o menor gasto por falta de iluminação como economia para o mesmo serviço. A2 continua sem compra da rede; o déficit aparece separadamente. Seus indicadores equivalentes de economia operacional, retorno e CO₂ ficam indisponíveis. A comparação de custos precisa ser interpretada com esse alerta.
 
-O limite de inversor é apenas um teto de energia; uma potência insuficiente também impede o atendimento integral instantâneo. A energia parcialmente atendida representa limite agregado do estudo, não prova de que o driver opera normalmente com alimentação insuficiente. A autonomia pressupõe banco cheio, inversor compatível e os coeficientes de ensaio.
+### A3: rede e FV do quiosque
 
-**Não há soma de energia da bateria à geração:** a bateria armazena energia, não a cria. O rendimento global já inclui as perdas do caminho solar; o aproveitamento de saída é usado somente na checagem independente de capacidade do banco. Não se descontam as mesmas perdas duas vezes.
+A iluminação continua comprando energia da rede à noite. O FV gera de dia e um **crédito unitário hipotético** reduz o custo variável estimado. A geração não é subtraída da compra física noturna exibida no painel. O crédito é limitado à demanda anual e ao custo da energia, sem venda de excedentes neste modelo.
 
-No padrão: demanda de 6 kWh/dia; potencial útil de 13,230 kWh/dia; banco nominal de 22,32 kWh e útil de 9,486 kWh. Autonomia teórica de 18,972 horas na potência de 500 W, aproximadamente 1,58 noites de 12 h, partindo de banco cheio. Isso **não comprova autonomia meteorológica**, confiabilidade ou operação durante várias noites sem recarga.
+O percentual de FV local é um **balanço anual**, não fornecimento direto noturno e não a participação de renováveis da rede brasileira. Rede sem FV local aparece com 0% de geração local, sem afirmar que o SIN não tem fontes renováveis.
 
-A referência comercial “até 750 Wh/dia” do kit não é usada como garantia. Calculamos com a potência dos componentes e as premissas. Em 1 HSP/dia, o potencial útil cai a 2,94 kWh/dia: somente 49% da demanda diária. Em 2 HSP/dia, a cobertura é 98% e ainda existe déficit. O painel mostra o déficit e bloqueia a indicação de economia operacional de B em serviço equivalente.
+O indicador de CO₂ usa o fator adotado para estimar a operação ou o saldo energético anual. No caso de A3, a dedução da geração é uma aproximação de balanço, **não um inventário certificado, crédito de carbono ou análise de ciclo de vida**. A emissão associada à importação física da rede também permanece disponível nos resultados JSON.
 
-Não há simulação temporal do estado de carga, eventos climáticos, temperatura, envelhecimento, corrente de partida, limite real de descarga ou consumo em vazio. O estudo precisa ser validado com fichas completas, série solar e profissional habilitado antes de uma implantação. O título de atendimento no modelo é sempre condicional.
+## Resultados que reproduzem o HTML original
 
-## Resultados no cenário de referência (30 dias)
+Referência de 30 dias; custos e retornos condicionados às premissas:
 
-| Item | Atual | A — LED na rede | B — LED solar isolado |
-| --- | ---: | ---: | ---: |
-| Demanda das luminárias (kWh) | 450,00 | 180,00 | 180,00 |
-| Energia atendida (kWh) | 450,00 | 180,00 | 180,00 |
-| Déficit no modelo (kWh) | 0,00 | 0,00 | 0,00 |
-| Compra de energia da rede (kWh) | 450,00 | 180,00 | 0,00 |
-| Compra de energia (R$) | 195,37 | 78,15 | 0,00 |
-| Reserva para manutenção/reposição (R$) | 7,14 | 7,14 | 194,54 |
-| Compra + reserva (R$) | 202,51 | 85,28 | 194,54 |
-| Novo investimento estimado (R$) | 0,00 | 4.709,21 | 56.027,88 |
+| Indicador | A0 | A1 | A2 | A3 |
+| --- | ---: | ---: | ---: | ---: |
+| Demanda no período (kWh) | 491,28 | 177,58 | 177,58 | 177,58 |
+| Compra física da rede (kWh) | 491,28 | 177,58 | 0,00 | 177,58 |
+| Custo variável de energia (R$) | 213,29 | 77,10 | 0,00 | 14,26 |
+| Economia operacional (R$/período) | 0,00 | 163,32 | 191,10 | 213,83 |
+| FV local no balanço (%) | 0,00 | 0,00 | 100,00 | 99,33 |
+| Investimento (R$) | 0,00 | 11.100,00 | 55.200,00 | 19.900,00 |
+| Payback simples (anos) | — | 5,59 | 23,74 | 7,65 |
+| Custo estimado em 10 anos (R$) | 30.450,86 | 21.680,33 | 86.400,00 | 24.335,33 |
 
-As diferenças são calculadas antes do arredondamento. A economia energética com LED é **270 kWh, ou 60%**. A economia na energia comprada de A é **R$ 117,22**. B cobre 100% da demanda no ensaio inicial, mas custa mais para implantar e provisiona mais manutenção. Compra zero de energia não significa consumo ou operação zero.
+A redução da **demanda** das três alternativas é 63,85%; os 100% de rede evitada de A2 indicam troca de fonte e não eliminação do consumo. Na referência, A1 tem o menor custo total no horizonte; A3 é uma proposta com geração FV local e investimento adicional. A decisão depende das prioridades e da viabilidade, não de uma recomendação universal.
 
-O investimento atual é zero por ser a instalação existente, não por ser gratuita. Não foi feita avaliação patrimonial do sistema atual. A provisão atual de manutenção é uma convenção de comparação, não um levantamento de despesas.
+## Indicadores e diagrama
 
-## Comparação técnica, ambiental e comunitária
+Há indicadores de consumo (kWh/período), redução de demanda (%), economia operacional (R$/período), FV local no balanço (%), déficit (kWh), CO₂ potencial do balanço (kg/ano), tempo em espera (h/dia), investimento e retorno simples. Todos derivam das entradas e das fórmulas do módulo.
 
-| Aspecto | A — LED na rede | B — LED solar isolado |
-| --- | --- | --- |
-| Implantação | Menor investimento no exemplo; reaproveitar suportes e rede compatíveis. | Maior investimento; montagem dos painéis, abrigo, proteção e verificação estrutural. |
-| Atendimento | Depende da rede e da iluminação adequada entregue. | Depende de recurso solar, carga, armazenamento, conversão e manutenção. Déficit invalida comparação financeira com serviço integral. |
-| Eficiência | Reduz demanda de 450 para 180 kWh no exemplo. | Mesma demanda LED; a origem solar muda o fornecimento, não elimina o consumo. |
-| Impactos | Menor demanda elétrica; destinação das lâmpadas convencionais, que podem conter mercúrio. | Fonte renovável direta; fabricação e destinação de baterias, painéis e eletrônica também causam impactos. |
-| Benefícios esperados | Menor gasto e apoio à manutenção de iluminação adequada. | Uso local de renovável e estudo de opção para locais sem rede. |
-| Limitações | Continuidade depende da rede; investimento e desempenho precisam de verificação local. | Maior complexidade e custo; autonomia não comprovada por este balanço. |
+![Arquitetura conceitual do Efficiency Park](diagrama.svg)
 
-**Decisão no exemplo:** A é a opção inicial mais simples e de menor investimento para a praça com rede existente. B é uma alternativa renovável relevante quando autonomia em relação à rede é prioridade, sujeita à validação técnica e ao orçamento. Não existe vencedora universal. A comparação não demonstra aumento medido de segurança ou satisfação dos moradores.
+As fontes e cargas são propostas de implantação. O MVP usa **entrada manual → cálculos Python → dashboard e apresentação**. A animação representa presença; a fração de presença dos cálculos é informada pelo usuário.
 
-Não calculamos CO₂ evitado por não ter sido adotado fator de emissão. Não atribuímos 0% de renováveis à rede e não chamamos B de “impacto zero”. Uma análise de ciclo de vida não foi realizada.
+## Séries simuladas e animação
 
-## Indicadores integrados ao dashboard
+O perfil de potência da noite usa os horários informados; o gráfico representa só as luminárias, enquanto a carga IoT é contabilizada separadamente na energia. A série diária usa as variações ilustrativas do HTML original, escaladas às entradas atuais. Ela não é a base do dia médio usado nos indicadores.
 
-| Indicador | Unidade | Como é obtido |
-| --- | --- | --- |
-| Consumo atual e demanda LED | kWh/período | Quantidade × potência × tempo. |
-| Economia de energia | kWh/período e % | Diferença entre atual e LED. |
-| Economia na energia comprada de A | R$/período | Diferença dos consumos × tarifa. |
-| Cobertura solar direta de B | % da demanda LED | Energia atendida pelo sistema solar / demanda. É indicador de uso de fonte renovável, não de emissões. |
-| Déficit solar | kWh/período | Demanda LED - energia atendida. |
-| Investimento e operação | R$ e R$/período | Equipamentos, provisões e compra da rede. |
+A série de bateria começa cheia, considera geração diurna e depois o consumo noturno; mostra a carga após a noite. Ela pode diferir do gráfico de carga do primeiro HTML por explicitar essa ordem temporal. O balanço de projeto de A2 não recebe energia gratuita de uma carga inicial. Ambos são modelos simplificados, sem comprovação de autonomia real.
 
-Consumo e economia são indicadores energéticos; cobertura renovável e redução de demanda são os indicadores de sustentabilidade adotados. Gráfico e tabela mostram energia atendida e déficit, evitando apresentar falta de iluminação como eficiência. Indicadores correspondem às contas do módulo; o dashboard não é genérico.
+A apresentação preserva a animação original das lâmpadas reagindo à passagem de uma pessoa simulada. A arquitetura física de sensores e dimerização segue planejada; o cálculo estima o comportamento pela presença e potência de espera informadas no painel. Os percentuais da animação são ilustrativos e não substituem medições.
 
-## Diagrama conceitual
+## Apresentação e exportação
 
-![Fontes, conversão, luminárias e dados manuais do Efficiency Park](diagrama.svg)
+O botão do dashboard gera um HTML autossuficiente com **as entradas atuais e os resultados do mesmo `calculos.py`**. Abra o arquivo baixado no navegador, use as setas para trocar de cena e F para tela cheia. A apresentação tem nove cenas, roteiro e cronômetro. O botão de dashboard local depende do Streamlit iniciado no mesmo computador.
 
-Setas contínuas: energia proposta. Setas tracejadas: dados digitados e processados. Sensores, temporizadores e automação física não estão implementados. O horário é um dado de operação assumido, comum às alternativas.
-
-## Como conferir e demonstrar
-
-1. Execute o painel e confira os resultados de referência acima.
-2. Dobre os pontos para 20: os consumos, custos e capacidades totais devem dobrar.
-3. Em “Sistema solar por ponto”, mude HSP para 1: cobertura de 49%, déficit de 91,8 kWh em 30 dias e alerta de serviço incompleto.
-4. Informe zero horas: consumo e cobertura percentual ficam zero; reservas fixas permanecem.
-5. Se alterar equipamentos, revise os preços e a iluminação entregue. O painel avisa dessa necessidade.
-6. Baixe o JSON para registrar exatamente as entradas, saídas, fontes e premissas usadas.
-7. Clique em **Baixar apresentação HTML desta simulação**: o arquivo usa as entradas atuais e os mesmos cálculos. No HTML, você também pode importar um JSON exportado pelo dashboard.
-
-Testes dos cálculos, sem biblioteca adicional:
-
-```bash
-python -m unittest discover -s tests -p test_calculos.py -v
-```
-
-Para executar também os testes da interface e da integração HTML, com as dependências instaladas:
-
-```bash
-python -m unittest discover -s tests -v
-```
-
-No Mac, use `python3` ou `.venv/bin/python`. Os testes cobrem consumo, custos, déficit por falta de sol/bateria/inversor, ausência de demanda, perdas do reator, escala e coerência do período. A interface também possui teste de execução e mudanças de entradas em `tests/test_interface.py`, que usa o Streamlit instalado.
-
-## Arquivos e contribuição de SERS
-
-| Arquivo | Função |
-| --- | --- |
-| `app.py` | Interface Streamlit, entradas, resultados e exportação. |
-| `calculos.py` | Cálculos de energia, checagem solar e custos. |
-| `apresentacao.py` | Monta o HTML com resultados produzidos por `calculos.py`. |
-| `apresentacao_template.html` | Modelo visual autossuficiente da apresentação, com fontes embutidas. |
-| `apresentacao.html` | Apresentação offline gerada com as entradas de referência. |
-| `dados.json` | Valores de referência, integrantes, fontes e premissas. |
-| `diagrama.svg` | Funcionamento conceitual da solução. |
-| `requirements.txt` | Dependência para execução. |
-| `tests/` | Testes de cálculo e execução da interface. |
-| `roteiro_video.md` | Sugestão de demonstração técnica de até 3 minutos. |
-| `entrega_modelo.txt` | Integrantes, GitHub e campo a preencher com vídeo real. |
-
-## Apresentação HTML integrada
-
-Abra `apresentacao.html` no navegador. Há uma página de indicadores, modo apresentação em nove cenas e roteiro com cronômetro. As setas passam as cenas; F alterna tela cheia, R mostra as notas e H oculta os controles. A capa e a cena **Simulação de sensores de presença** recuperam o movimento e a reação das lâmpadas do HTML original. O botão **Pausar animação** interrompe e retoma a demonstração. Os dez pontos luminosos aumentam o brilho por proximidade; os percentuais de espera e presença são apenas parâmetros visuais. A economia dos sensores não é somada aos indicadores, e não há hardware conectado.
-
-O HTML é autossuficiente e não precisa de internet para exibir conteúdo. O botão **Abrir dashboard local** depende do Streamlit iniciado em `http://localhost:8501`.
-
-O HTML não refaz os cálculos em JavaScript: incorpora entradas e resultados de `calculos.py`. O gerador inclui a referência e um ensaio com HSP = 1; o déficit do ensaio é calculado para a mesma quantidade e o mesmo período. O modo **Importar JSON do dashboard** usa a simulação exportada e atualiza indicadores e falas. Para voltar aos dados embutidos, use **Restaurar referência**. Importar um arquivo não altera o Python ou `dados.json`.
-
-Se alterar dados ou o modelo visual do repositório, regenere a versão de referência:
+Para regenerar a versão de referência do repositório após editar os dados ou o template:
 
 ```bash
 python apresentacao.py
 ```
 
-No Mac, use `python3` ou `.venv/bin/python`. A opção de download dentro do Streamlit já gera o HTML com as entradas da sessão. Fontes Barlow Condensed, Public Sans e IBM Plex Mono foram preservadas do HTML fornecido, originalmente embutidas sob a licença SIL Open Font License. A ilustração é conceitual e não representa projeto de iluminação validado.
+No Mac, use `python3` ou `.venv/bin/python`. O modelo atual é a versão 2; arquivos JSON da antiga comparação de dois cenários não são compatíveis. Nenhum resultado do HTML original é usado como constante para impedir o recálculo: o arquivo extraído serve à rastreabilidade e aos testes de reprodução.
 
-## Entrega e próximos passos
+## Arquivos e testes
 
-- [x] Identificação do grupo, problema, duas alternativas e fonte renovável.
-- [x] Cálculos, origem dos dados, hipóteses, limitações, diagrama e indicadores.
-- [x] Código para o módulo energético e testes de cenários críticos.
-- [ ] Gravar e publicar vídeo **não listado no YouTube, com no máximo 3 minutos**.
-- [ ] Preencher o link real do vídeo no `entrega_modelo.txt`, verificar ambos os links e enviar **apenas o .txt** no Portal, no prazo informado pelo professor.
+| Arquivo | Função |
+| --- | --- |
+| `app.py` | Interface editável, controles de restauração e importação, indicadores e downloads. |
+| `calculos.py` | Consumo, dimerização, solar, finanças e séries simuladas. |
+| `dados.json` | Padrões, integrantes, fontes e justificativas. |
+| `referencias/html_original_dados.json` | Registro dos dados do primeiro HTML. |
+| `apresentacao.py` | Geração da apresentação com resultados atuais. |
+| `apresentacao_template.html` | Visual e animação do HTML original, com explicações de escopo. |
+| `apresentacao.html` | Versão offline gerada com os padrões. |
+| `diagrama.svg` | Arquitetura conceitual e fluxo de dados do MVP. |
+| `tests/` | Reprodução do HTML, alterações de parâmetros, limites físicos e interface. |
+| `roteiro_video.md` / `entrega_modelo.txt` | Apoio à apresentação e entrega no Portal. |
 
-O vídeo deve mostrar problema, análise energética, alternativas, diagrama, dashboard, benefícios e limites. O roteiro é apoio: não substitui a gravação.
+Com as dependências instaladas:
 
-Em uma etapa de implantação: selecionar a praça real, ouvir a comunidade, medir cargas e perdas, conferir tarifa, validar iluminação e estrutura, obter orçamentos completos, analisar o pior mês solar e definir manutenção e descarte. Esses itens são próximos passos de campo, não realizações deste protótipo.
+```bash
+python -m unittest discover -s tests -v
+```
+
+## Benefícios, limites e entrega
+
+O benefício esperado é reduzir desperdícios e orientar uma decisão sustentável, mantendo iluminação adequada. Custos, autonomia, impacto ambiental e conforto não foram medidos em campo. É preciso validar iluminação mínima na dimerização, produtos e tensões, recurso solar, medição/faturamento, manutenção e descarte de lâmpadas, baterias e painéis. Não há garantia de aumento de segurança ou impacto zero.
+
+O professor pede vídeo técnico não listado no YouTube, com no máximo três minutos, mostrando problema, análise e alternativas, diagrama, indicadores, benefícios e limitações. O roteiro é apoio, não substitui a gravação. Preencha o link real em `entrega_modelo.txt`, teste ambos os links e envie **apenas o .txt** no Portal, conforme o prazo da disciplina.
 
 ## Referências
 
-Os links completos e a aplicação de cada fonte estão em [`dados.json`](dados.json), também visíveis no painel:
-
-- **F1:** Philips/Signify, ficha HPL-N 125 W — potência e eficiência luminosa nominal.
-- **F2:** Santa Iluminação, oferta Ourolux SI05126A — referência de LED e preço de venda.
-- **F3:** Enel São Paulo, tabela de tarifas — referência B4a e conversão de R$/MWh para R$/kWh.
-- **F4:** Energy Shop, kit solar 24 V — componentes e preço da oferta.
-- **F5:** JC Network, inversor Volt 300 W — conversão senoidal e preço da oferta.
-- **F6:** Ministério de Minas e Energia, *Sistemas Híbridos: Soluções Energéticas para a Amazônia*, 2008 — conceitos de geração, armazenamento e perdas.
-- **F7:** Streamlit, documentação oficial — instalação e execução.
-- **F8:** Energy Shop, módulo Resun 210 Wp — preço do painel adicional e tensões de referência.
-- **F9:** Energy Shop, MPPT120D — limite nominal de potência em 24 V; já incluído no kit.
-
-As fontes comerciais são referências de características declaradas e ofertas, sem endosso de fornecedor. A checagem de compatibilidade e o orçamento de engenharia continuam necessários para uso real.
-
+Os links completos e o uso de cada fonte estão em [dados.json](dados.json) e no painel: HTML original do grupo, Enel SP (tarifa), Signify (categoria de sódio), Ledstronic (categoria LED), MCTI/SIRENE (metodologia de CO₂) e MME (conceitos de sistemas solares). As consultas de características não constituem aprovação dos produtos ou orçamento da implantação.

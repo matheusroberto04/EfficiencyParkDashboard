@@ -1,21 +1,17 @@
 # Vídeo técnico — Efficiency Park
 
-**Nove cenas, roteiro sugerido de 2min55s.** O limite é 3 minutos. Cronometrem a leitura e os cliques; a duração não foi aferida por gravação.
+Use o HTML gerado pelo dashboard com as mesmas entradas que serão demonstradas. As falas atualizadas estão em **Roteiro e falas**. Nove cenas, duração sugerida de **2min52s**; ensaie e cronometre para respeitar o máximo de três minutos.
 
-As falas com os valores atuais estão na opção **Roteiro e falas** de `apresentacao.html`. O arquivo gerado pelo dashboard incorpora as entradas da sessão. Durante a gravação, usem uma simulação consistente do início ao fim.
+1. **Abertura (12 s):** integrantes, projeto e módulo SERS do CitizenTech.
+2. **Problema (20 s):** praça simulada com 12 postes; público beneficiado e maior demanda da referência.
+3. **Consumo (22 s):** 100 W + 15 W de reator e 11,8667 h/noite. Referência de 491,3 kWh em 30 dias.
+4. **Sensores (20 s):** animação; 5 h de luz total, espera em 30% e presença em 20% da madrugada. Com IoT, 177,6 kWh, redução de demanda de 63,9%. É comportamento simulado.
+5. **Alternativas (25 s):** A1 rede, A2 painel/bateria por poste e A3 rede + FV no quiosque. Investimento, manutenção e reposições separados. A3 não é vencedora universal.
+6. **Diagrama (18 s):** fontes e arquitetura proposta; dados manuais no MVP e sensores físicos ainda planejados.
+7. **Dashboard (25 s):** mostrar uma alteração de entrada e o recálculo. Por exemplo, presença de 20% para 100%; depois restaurar o modelo original. Se houver tempo, mostrar o déficit de A2 ao zerar sua HSP.
+8. **Benefícios e limites (20 s):** menor demanda esperada, estimativas, validação luminosa/solar, crédito hipotético de A3 e descarte dos componentes.
+9. **Encerramento (10 s):** projeções condicionadas às premissas; GitHub com código e instruções para o professor testar.
 
-| Tempo sugerido | Cena | Mostrar e explicar |
-| --- | --- | --- |
-| 0:00–0:10 | Abertura | Efficiency Park, equipe e módulo energético do CitizenTech. A capa recupera a animação de presença. |
-| 0:10–0:35 | Problema e consumo | Praça simulada, público beneficiado, fórmula e redução de demanda de 450 para 180 kWh no padrão. |
-| 0:35–0:50 | Sensores de presença | Mostrar o ponto em movimento e as lâmpadas reagindo. É demonstração visual: sensores reais e dimerização são possibilidades futuras e sua economia não entra nos cálculos. |
-| 0:50–1:15 | Alternativas | LED na rede e LED solar isolado; investimento separado da operação e reservas. |
-| 1:15–1:35 | Diagrama | Fontes, equipamentos, entrada manual, Python e indicadores. Sem sensores físicos conectados. |
-| 1:35–2:00 | Solar | Referência e ensaio de 1 HSP: no padrão, cobertura de 49% e déficit de 91,8 kWh. |
-| 2:00–2:20 | Dashboard | Mostrar indicadores e, se desejarem, abrir o Streamlit já iniciado. JSON e download HTML mantêm os números alinhados. |
-| 2:20–2:40 | Benefícios e limites | Pronto: simulador, animação conceitual e exportação. Planejado: validação local e implantação. |
-| 2:40–2:55 | Decisão | Menor investimento de A na referência; B adiciona fonte renovável e armazenamento, sujeita à validação. |
+O painel Python é editável. O HTML baixado é uma apresentação dos resultados da sessão; para mudar parâmetros, use o dashboard e gere outro HTML. Não apresente dados simulados como medições ou a compensação hipotética como fatura garantida.
 
-Use as setas para trocar de cena; F alterna tela cheia, R mostra as notas e H oculta os controles. As notas laterais aparecem na captura: oculte-as antes de gravar. A terceira cena possui botão para pausar e retomar a animação. Todos os equipamentos físicos são conceituais.
-
-Publiquem o vídeo como **não listado no YouTube**. Substituam o marcador em `entrega_modelo.txt` pelo link real, testem os dois links e enviem **somente o .txt** no Portal.
+Publique o vídeo como **não listado no YouTube**, substitua o marcador em `entrega_modelo.txt`, teste os links e envie **somente o .txt** no Portal.

@@ -2,6 +2,7 @@
   "projeto": "Efficiency Park",
   "disciplina": "Soluções em Energias Renováveis e Sustentáveis (SERS)",
   "consulta": "2026-11-09",
+  "versao_modelo": 2,
   "integrantes": [
     {
       "nome": "Matheus Roberto",
@@ -17,117 +18,122 @@
     }
   ],
   "valores": {
-    "quantidade": 10,
-    "potencia_atual": 125.0,
-    "perda_reator": 0.0,
-    "potencia_led": 50.0,
-    "horas": 12.0,
-    "dias": 30,
-    "tarifa": 0.43416,
-    "painel_wp": 420.0,
-    "hsp": 4.5,
-    "rendimento_solar": 0.7,
-    "bateria_v": 24.0,
-    "bateria_ah": 93.0,
-    "descarga": 0.5,
-    "rendimento_descarga": 0.85,
-    "inversor_w": 300.0,
-    "preco_led": 428.11,
-    "preco_kit": 2801.88,
-    "preco_inversor": 1439.0,
-    "instalacao_led": 0.1,
-    "instalacao_solar": 0.2,
-    "reserva_rede": 0.02,
-    "reserva_solar": 0.05
+    "pontos": 12,
+    "p_lampada_w": 100.0,
+    "p_reator_w": 15.0,
+    "p_led_w": 60.0,
+    "fluxo_sodio_lm": 10600.0,
+    "fluxo_led_lm": 9000.0,
+    "mercurio_mg": 16.3,
+    "horas_noite": 11.8667,
+    "horas_uso_intenso": 5.0,
+    "dim_pct": 30.0,
+    "presenca_pct": 20.0,
+    "p_iot_w": 0.5,
+    "horas_iot": 24.0,
+    "dias_mes": 30,
+    "tarifa_rs_kwh": 0.43416,
+    "fator_emissao": 0.0545,
+    "horizonte_anos": 10,
+    "painel_wp": 200.0,
+    "bateria_kwh": 1.28,
+    "descarga_pct": 90.0,
+    "eficiencia_bateria_pct": 95.0,
+    "autonomia_desejada": 2.0,
+    "kwp_quiosque": 1.6,
+    "hsp_pior_mes": 3.8,
+    "hsp_media": 4.9,
+    "rendimento_fv_pct": 75.0,
+    "valor_credito_rs_kwh": 0.356211,
+    "capex_a1_ponto": 925.0,
+    "capex_a2_ponto": 4600.0,
+    "capex_fv_kwp": 5500.0,
+    "manut_atual_ponto_ano": 37.5,
+    "manut_a1_ponto_ano": 10.0,
+    "manut_a2_ponto_ano": 60.0,
+    "manut_fv_kwp_ano": 93.75,
+    "reposicao_a2_ponto": 1000.0,
+    "intervalo_reposicao_anos": 4,
+    "adicional_tarifa": 0.04463
   },
   "fontes": [
     {
       "id": "F1",
-      "titulo": "Philips / Signify - HPL-N 125 W",
-      "url": "https://www.assets.lighting.philips.com/is/content/PhilipsLighting/fp928052007395-pss-pt_br",
-      "uso": "125 W nominais e 50 lm/W; fluxo aproximado calculado de 6.250 lm. Não inclui perdas externas do reator."
+      "titulo": "HTML original fornecido pela equipe — dados extraídos",
+      "url": "referencias/html_original_dados.json",
+      "uso": "Origem dos valores iniciais e dos resultados de referência. Custos e condições de operação são estimativas do estudo, não cotações de implantação."
     },
     {
       "id": "F2",
-      "titulo": "Santa Iluminação - oferta Ourolux SI05126A",
-      "url": "https://www.santailuminacao.com.br/produtos/luminaria-publica-led-50w-ip66-bivolt-150lm-w-7-pinos-4000k-m4/",
-      "uso": "Oferta do vendedor: 50 W, 7.500 lm, bivolt, R$ 428,11 sem desconto Pix e sem frete. Equivalência fotométrica não certificada pelo simulador."
+      "titulo": "Enel São Paulo — tarifa B4a",
+      "url": "https://www.enel.com.br/pt-saopaulo/Para_Voce/tarifa-de-energia-eletrica.html",
+      "uso": "TUSD 259,83 + TE 174,33 R$/MWh = R$ 0,43416/kWh na tabela consultada em 09/11/2026. Sem tributos e adicionais; verificar enquadramento local."
     },
     {
       "id": "F3",
-      "titulo": "Enel São Paulo - tarifas B4a",
-      "url": "https://www.enel.com.br/pt-saopaulo/Para_Voce/tarifa-de-energia-eletrica.html",
-      "uso": "Tabela vigente desde 04/07/2026: TUSD 259,83 + TE 174,33 R$/MWh; soma / 1.000 = R$ 0,43416/kWh. Sem adicionais. Enquadramento B4a assumido para a praça de referência."
+      "titulo": "Signify — Philips MASTER SON-T PIA Plus 100 W",
+      "url": "https://www.lighting.philips.com/content/signify-multibrand/aa/en/product/product-detail-page.928151709230_EU.html",
+      "uso": "Referência da categoria de lâmpada de sódio e fluxo de 10.600 lm. Os 100 W do estudo são potência nominal arredondada; 15 W de reator são hipótese, não medição."
     },
     {
       "id": "F4",
-      "titulo": "Energy Shop - kit off-grid 750 Wh/dia, 24 V",
-      "url": "https://www.energyshop.com.br/kit-energia-solar/kit-solar-off-grid/kit-energia-solar-off-grid-ate-750-wh-dia-24v",
-      "uso": "R$ 2.402,88 sem desconto à vista e sem frete; painel 210 Wp, controlador, duas baterias 12 V / 93 Ah e acessórios. Não inclui o inversor da proposta. Usamos os componentes, não 750 Wh/dia como garantia."
+      "titulo": "Ledstronic — referência LED 60 W / 9.000 lm",
+      "url": "https://ledstronic.com.br/produto/luminaria-rua-60w-led-24-volts-24v-ideal-painel-solar/",
+      "uso": "Referência de potência e fluxo declarados pelo vendedor. Não comprova dimerização, equivalência fotométrica ou o custo dos conjuntos. Cada alternativa requer driver compatível com rede ou banco."
     },
     {
       "id": "F5",
-      "titulo": "JC Network - inversor Volt senoidal 300 W, 24 V / 127 V",
-      "url": "https://jcnetworktelecom.com.br/produto/inversor-senoidal-300w-24v-127vac-volt",
-      "uso": "R$ 1.439,00 sem desconto à vista e sem frete; 300 W contínuos. Referência CC/CA; exige abrigo e validação de consumo em vazio e compatibilidade."
+      "titulo": "MCTI/SIRENE — fatores e metodologia de CO₂ do SIN",
+      "url": "https://www.gov.br/mcti/pt-br/acompanhe-o-mcti/sirene/dados-e-ferramentas/fatores-de-emissao",
+      "uso": "Referência metodológica. O fator 0,0545 kg/kWh foi preservado do HTML original, identificado como referência de 2024; não é apresentado como fator atual de 2026."
     },
     {
       "id": "F6",
-      "titulo": "MME - Sistemas Híbridos: Soluções Energéticas para a Amazônia",
+      "titulo": "MME — Sistemas Híbridos: Soluções Energéticas para a Amazônia",
       "url": "https://www.gov.br/mme/pt-br/arquivos/solucoes-energeticas-para-a-amazonia-sistemas-hibridos.pdf",
-      "uso": "Fundamentos de HSP, perdas, armazenamento e dimensionamento: seções 2.5, 5, 6 e 8.8-8.10. Não fornece os coeficientes de ensaio escolhidos pela equipe."
-    },
-    {
-      "id": "F7",
-      "titulo": "Streamlit - instalação",
-      "url": "https://docs.streamlit.io/get-started/installation/command-line",
-      "uso": "Instalação e execução da ferramenta de dashboard."
-    },
-    {
-      "id": "F8",
-      "titulo": "Energy Shop - painel Resun 210 Wp adicional",
-      "url": "https://www.energyshop.com.br/painel-solar/potencia-maior-que-150w/resun-210w",
-      "uso": "R$ 399,00 sem desconto e sem frete; Vmp 20,05 V e Voc 23,95 V. Segundo módulo proposto em série: arranjo de 420 Wp, Vmp 40,10 V e Voc 47,90 V nas condições nominais."
-    },
-    {
-      "id": "F9",
-      "titulo": "Energy Shop - controlador MPPT120D 20 A",
-      "url": "https://www.energyshop.com.br/controlador-de-carga/sun-energy-mppt120d-20a",
-      "uso": "Já incluído no kit F4; entrada nominal declarada de até 520 W para banco de 24 V. Arranjo proposto de 420 Wp fica abaixo desse limite. Confirmar faixa MPPT, Voc no frio, corrente e manual na implantação."
+      "uso": "Fundamentos de HSP, armazenamento e perdas. Não valida os coeficientes de rendimento nem o recurso solar de uma praça real."
     }
   ],
   "premissas": [
     {
-      "parametro": "quantidade, horas, dias",
-      "origem": "Cenário simulado: 10 pontos, 12 h/dia e 30 dias. Mesma necessidade e horário nas duas alternativas."
+      "parametro": "Escopo",
+      "origem": "Praça simulada com 12 pontos. Não houve medição ou instalação física. ESP32, sensores e comunicação representam arquitetura proposta; os gráficos são simulações."
     },
     {
-      "parametro": "perda_reator",
-      "origem": "0 W adicional como limite inferior conservador, por não haver medição do reator. Não significa ausência física de perdas. Editar após medição."
+      "parametro": "Operação e sensores",
+      "origem": "11,8667 h/noite e 5 h de uso intenso são premissas do HTML. Na madrugada, presença em 20% do tempo e potência em espera de 30%. O modelo aproxima potência como proporcional à dimerização; exige validação do driver e da iluminação mínima."
     },
     {
-      "parametro": "hsp",
-      "origem": "4,5 h/dia é condição de ensaio, não dado meteorológico de São Paulo. Testar também 1 e 2 h/dia; na implantação consultar o recurso solar local e o pior mês."
+      "parametro": "Iluminação e IoT",
+      "origem": "Referência convencional 10.600 lm e LED 9.000 lm não certificam mesma iluminação no solo. Validar óptica, altura e uniformidade. IoT de 0,5 W opera 24 h/dia e entra na demanda; driver/controlador devem atender a cada fonte."
     },
     {
-      "parametro": "rendimento_solar",
-      "origem": "70% é hipótese global do painel até a carga, incluindo controlador, armazenamento, inversor e perdas auxiliares. Não é eficiência medida de produto."
+      "parametro": "Solar",
+      "origem": "HSP de 3,8 no ensaio conservador e 4,9 na média são hipóteses do HTML, não dados meteorológicos comprovados de junho ou de uma praça. Rendimento FV global de 75% inclui perdas até a carga. Banco útil usa descarga e eficiência para verificar armazenamento, sem descontar as perdas novamente da geração."
     },
     {
-      "parametro": "descarga, rendimento_descarga",
-      "origem": "50% de descarga de ensaio e 85% de aproveitamento da saída do banco são hipóteses, não recomendações do fabricante. Usadas só na checagem do banco; não são reaplicadas à geração, que já usa rendimento global."
+      "parametro": "A2",
+      "origem": "Solar isolado: não há compra de energia de apoio. O balanço compara geração, demanda e banco útil. Quando há déficit, economia operacional, retorno e redução equivalente de emissões ficam indisponíveis. Autonomia calculada pressupõe banco cheio e não garante sequência de noites nubladas."
     },
     {
-      "parametro": "instalacao_led, instalacao_solar",
-      "origem": "Provisões de 10% e 20% dos equipamentos. Solar recebe provisão maior por montagem, abrigo e proteções adicionais. Não são cotações de mão de obra. Postes novos, obras civis e frete não incluídos. Testar sensibilidade."
+      "parametro": "A3",
+      "origem": "A iluminação consome da rede à noite; FV gera de dia. O percentual representa cobertura FV em balanço anual, não fornecimento direto noturno nem composição renovável do SIN. Crédito de R$ 0,356211/kWh é hipótese financeira editável, sem cálculo regulatório de faturamento. Não se deve prometer implantação ou valor da fatura."
     },
     {
-      "parametro": "reserva_rede, reserva_solar",
-      "origem": "Reserva anual: 2% do preço de reposição das luminárias para atual/A; 5% dos equipamentos para B, pelo banco e eletrônica adicionais. Rateio /12 e dias/30. Hipótese financeira; não comprova cobertura de reposições nem vida útil."
+      "parametro": "Custos",
+      "origem": "A1 R$ 925/ponto; A2 R$ 4.600/ponto; FV R$ 5.500/kWp, incluindo instalação no escopo estimado. São hipóteses herdadas do HTML, a substituir por orçamento local. Manutenção anual é estimada por ponto e por kWp. Não há garantia de cobertura de todos os custos, tributos, encargos fixos ou obras."
     },
     {
-      "parametro": "configuracao",
-      "origem": "Um kit F4 + um painel extra F8 + um inversor por ponto. Dois painéis 210 Wp em série: 420 Wp e Vmp nominal 40,10 V. Um painel de Vmp 20,05 V não sustenta carga do banco 24 V. Duas baterias 12 V em série = 24 V, mantendo 93 Ah. O controlador F9 já está no kit. Sem rede de apoio. Verificar limites de tensão, temperatura e manual na implantação."
+      "parametro": "Reposições e retorno",
+      "origem": "Para reproduzir os R$ 24.000 do HTML em 10 anos, assume-se R$ 1.000 por ponto em reposições nos anos 4 e 8. É um cronograma orçamentário de ensaio, não vida útil certificada. Payback simples divide investimento por economia anual recorrente e exclui essas reposições; o custo no horizonte as inclui. Sem juros, inflação ou degradação."
+    },
+    {
+      "parametro": "Períodos e ambiente",
+      "origem": "Energia do período usa dias selecionados; análise anual usa 365 dias. Manutenção do período = anual × dias/365. CO₂ refere-se à operação/balanço energético, não ciclo de vida, impacto zero ou crédito de carbono. A redução com FV no balanço é potencial contábil; não altera a importação física noturna de A3."
+    },
+    {
+      "parametro": "Séries diárias",
+      "origem": "A série ilustrativa de novembro vem do HTML original. As diferenças diárias de presença e HSP são escaladas para as entradas atuais. Banco inicia cheio na série ilustrativa; dias sem recarga podem mostrar carga inicial disponível. O balanço de projeto de A2 não conta com carga inicial gratuita."
     }
   ]
 }

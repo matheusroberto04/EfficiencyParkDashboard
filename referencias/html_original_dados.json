@@ -1,0 +1,708 @@
+{
+  "gerado_em": "2026-11-09",
+  "premissas_principais": {
+    "pontos": 12,
+    "horas_noite": 11.8667,
+    "tarifa_rs_kwh": 0.43416,
+    "fator_emissao": 0.0545,
+    "dias_mes": 30,
+    "horizonte_anos": 10
+  },
+  "dimensionamento_solar": {
+    "painel_necessario_wp": 173.0810105263158,
+    "painel_escolhido_wp": 200,
+    "margem_pior_mes_pct": 15.552826616754345,
+    "bateria_necessaria_kwh": 1.1538734035087719,
+    "bateria_escolhida_kwh": 1.28,
+    "autonomia_noites": 2.2186142710416834,
+    "geracao_fv_quiosque_kwh_ano": 2146.2000000000003,
+    "valor_credito_rs_kwh": 0.356211
+  },
+  "parametros": {
+    "pontos": 12,
+    "p_lampada_w": 100,
+    "p_reator_w": 15,
+    "p_atual_w": 115,
+    "fluxo_sodio_lm": 10600,
+    "mercurio_mg": 16.3,
+    "p_led_w": 60,
+    "fluxo_led_lm": 9000,
+    "horas_noite": 11.8667,
+    "horas_uso_intenso": 5.0,
+    "hora_fim_intenso": 23.0,
+    "dim_pct": 30.0,
+    "presenca_pct": 20.0,
+    "horas_dimerizado": 5.49336,
+    "e_a0_ponto_dia": 1.3646705,
+    "e_led_ponto_dia": 0.48128087999999997,
+    "e_iot_ponto_dia": 0.012,
+    "e_alt_ponto_dia": 0.49328088,
+    "tarifa_rs_kwh": 0.43416,
+    "fator_emissao": 0.0545,
+    "dias_mes": 30,
+    "horizonte_anos": 10,
+    "painel_wp": 200,
+    "bateria_kwh": 1.28,
+    "kwp_quiosque": 1.6,
+    "hsp_pior_mes": 3.8,
+    "hsp_media": 4.9
+  },
+  "cenarios": [
+    {
+      "codigo": "A0",
+      "nome": "Situação atual",
+      "descricao": "12 lâmpadas de vapor de sódio 100 W com reator, acesas a 100% a noite toda",
+      "fonte_energia": "Rede elétrica (SIN)",
+      "consumo_rede_kwh_mes": 491.28137999999996,
+      "consumo_rede_kwh_ano": 5977.2567899999995,
+      "renovavel_kwh_ano": 0,
+      "custo_energia_ano": 2595.0858079463997,
+      "custo_energia_mes": 213.29472394079997,
+      "capex": 0,
+      "om_ano": 450.0,
+      "reposicoes_horizonte": 0,
+      "energia_demandada_kwh_ano": 5977.2567899999995,
+      "energia_demandada_kwh_mes": 491.28137999999996,
+      "renovavel_kwh_mes": 0.0,
+      "participacao_renovavel_pct": 0.0,
+      "emissoes_kgco2_ano": 325.760495055,
+      "economia_kwh_mes": 0.0,
+      "economia_rede_pct": 0.0,
+      "reducao_demanda_pct": 0.0,
+      "emissoes_evitadas_kgco2_ano": 0.0,
+      "economia_rs_ano": 0.0,
+      "economia_rs_mes": 0.0,
+      "payback_anos": null,
+      "custo_total_10_anos": 30450.858079463997,
+      "horas_dimerizado_dia": 0,
+      "custo_energia_ano_bandeira_vermelha": 2861.8507784840995
+    },
+    {
+      "codigo": "A1",
+      "nome": "LED + sensores na rede",
+      "descricao": "Troca por LED 60 W com sensor de presença, dimerização e monitoramento IoT",
+      "fonte_energia": "Rede elétrica (SIN)",
+      "consumo_rede_kwh_mes": 177.5811168,
+      "consumo_rede_kwh_ano": 2160.5702544,
+      "renovavel_kwh_ano": 0,
+      "custo_energia_ano": 938.033181650304,
+      "custo_energia_mes": 77.098617669888,
+      "capex": 11100,
+      "om_ano": 120,
+      "reposicoes_horizonte": 0,
+      "energia_demandada_kwh_ano": 2160.5702544,
+      "energia_demandada_kwh_mes": 177.5811168,
+      "renovavel_kwh_mes": 0.0,
+      "participacao_renovavel_pct": 0.0,
+      "emissoes_kgco2_ano": 117.75107886480001,
+      "economia_kwh_mes": 313.7002632,
+      "economia_rede_pct": 63.8534811150384,
+      "reducao_demanda_pct": 63.85348111503839,
+      "emissoes_evitadas_kgco2_ano": 208.00941619019997,
+      "economia_rs_ano": 1987.0526262960957,
+      "economia_rs_mes": 163.31939394214484,
+      "payback_anos": 5.586163070421851,
+      "custo_total_10_anos": 21680.33181650304,
+      "horas_dimerizado_dia": 5.49336,
+      "custo_energia_ano_bandeira_vermelha": 1034.459432104176
+    },
+    {
+      "codigo": "A2",
+      "nome": "Luminárias solares autônomas",
+      "descricao": "Mesma luminária LED + sensores, alimentada por painel de 200 Wp e bateria LiFePO4 em cada poste",
+      "fonte_energia": "Solar fotovoltaica (off-grid)",
+      "consumo_rede_kwh_mes": 0,
+      "consumo_rede_kwh_ano": 0,
+      "renovavel_kwh_ano": 2160.5702544,
+      "custo_energia_ano": 0,
+      "custo_energia_mes": 0.0,
+      "capex": 55200.0,
+      "om_ano": 720,
+      "reposicoes_horizonte": 24000,
+      "energia_demandada_kwh_ano": 2160.5702544,
+      "energia_demandada_kwh_mes": 177.5811168,
+      "renovavel_kwh_mes": 177.5811168,
+      "participacao_renovavel_pct": 100.0,
+      "emissoes_kgco2_ano": 0.0,
+      "economia_kwh_mes": 491.28137999999996,
+      "economia_rede_pct": 100.0,
+      "reducao_demanda_pct": 63.85348111503839,
+      "emissoes_evitadas_kgco2_ano": 325.760495055,
+      "economia_rs_ano": 2325.0858079463997,
+      "economia_rs_mes": 191.10294311888217,
+      "payback_anos": 23.741059281057094,
+      "custo_total_10_anos": 86400.0,
+      "horas_dimerizado_dia": 5.49336,
+      "custo_energia_ano_bandeira_vermelha": 0.0
+    },
+    {
+      "codigo": "A3",
+      "nome": "LED + sensores + solar na rede",
+      "descricao": "Alternativa 1 + 1,6 kWp de painéis no quiosque da praça, compensando o consumo pela rede (Lei 14.300)",
+      "fonte_energia": "Rede + solar fotovoltaica (on-grid)",
+      "consumo_rede_kwh_mes": 177.5811168,
+      "consumo_rede_kwh_ano": 2160.5702544,
+      "renovavel_kwh_ano": 2146.2000000000003,
+      "custo_energia_ano": 173.5331334503038,
+      "custo_energia_mes": 14.262997269887984,
+      "capex": 19900.0,
+      "om_ano": 270,
+      "reposicoes_horizonte": 0,
+      "geracao_fv_kwh_ano": 2146.2000000000003,
+      "energia_demandada_kwh_ano": 2160.5702544,
+      "energia_demandada_kwh_mes": 177.5811168,
+      "renovavel_kwh_mes": 176.40000000000003,
+      "participacao_renovavel_pct": 99.33488603896426,
+      "emissoes_kgco2_ano": 0.7831788647999888,
+      "economia_kwh_mes": 313.7002632,
+      "economia_rede_pct": 63.8534811150384,
+      "reducao_demanda_pct": 63.85348111503839,
+      "emissoes_evitadas_kgco2_ano": 324.9773161902,
+      "economia_rs_ano": 2601.5526744960957,
+      "economia_rs_mes": 213.8262472188572,
+      "payback_anos": 7.649278138815507,
+      "custo_total_10_anos": 24335.33133450304,
+      "horas_dimerizado_dia": 5.49336,
+      "custo_energia_ano_bandeira_vermelha": 174.174477904176
+    }
+  ],
+  "perfil_noite": [
+    {
+      "hora": "18:00",
+      "atual_w": 1380,
+      "led_w": 720
+    },
+    {
+      "hora": "18:15",
+      "atual_w": 1380,
+      "led_w": 720
+    },
+    {
+      "hora": "18:30",
+      "atual_w": 1380,
+      "led_w": 720
+    },
+    {
+      "hora": "18:45",
+      "atual_w": 1380,
+      "led_w": 720
+    },
+    {
+      "hora": "19:00",
+      "atual_w": 1380,
+      "led_w": 720
+    },
+    {
+      "hora": "19:15",
+      "atual_w": 1380,
+      "led_w": 720
+    },
+    {
+      "hora": "19:30",
+      "atual_w": 1380,
+      "led_w": 720
+    },
+    {
+      "hora": "19:45",
+      "atual_w": 1380,
+      "led_w": 720
+    },
+    {
+      "hora": "20:00",
+      "atual_w": 1380,
+      "led_w": 720
+    },
+    {
+      "hora": "20:15",
+      "atual_w": 1380,
+      "led_w": 720
+    },
+    {
+      "hora": "20:30",
+      "atual_w": 1380,
+      "led_w": 720
+    },
+    {
+      "hora": "20:45",
+      "atual_w": 1380,
+      "led_w": 720
+    },
+    {
+      "hora": "21:00",
+      "atual_w": 1380,
+      "led_w": 720
+    },
+    {
+      "hora": "21:15",
+      "atual_w": 1380,
+      "led_w": 720
+    },
+    {
+      "hora": "21:30",
+      "atual_w": 1380,
+      "led_w": 720
+    },
+    {
+      "hora": "21:45",
+      "atual_w": 1380,
+      "led_w": 720
+    },
+    {
+      "hora": "22:00",
+      "atual_w": 1380,
+      "led_w": 720
+    },
+    {
+      "hora": "22:15",
+      "atual_w": 1380,
+      "led_w": 720
+    },
+    {
+      "hora": "22:30",
+      "atual_w": 1380,
+      "led_w": 720
+    },
+    {
+      "hora": "22:45",
+      "atual_w": 1380,
+      "led_w": 720
+    },
+    {
+      "hora": "23:00",
+      "atual_w": 1380,
+      "led_w": 316.8
+    },
+    {
+      "hora": "23:15",
+      "atual_w": 1380,
+      "led_w": 316.8
+    },
+    {
+      "hora": "23:30",
+      "atual_w": 1380,
+      "led_w": 316.8
+    },
+    {
+      "hora": "23:45",
+      "atual_w": 1380,
+      "led_w": 316.8
+    },
+    {
+      "hora": "00:00",
+      "atual_w": 1380,
+      "led_w": 316.8
+    },
+    {
+      "hora": "00:15",
+      "atual_w": 1380,
+      "led_w": 316.8
+    },
+    {
+      "hora": "00:30",
+      "atual_w": 1380,
+      "led_w": 316.8
+    },
+    {
+      "hora": "00:45",
+      "atual_w": 1380,
+      "led_w": 316.8
+    },
+    {
+      "hora": "01:00",
+      "atual_w": 1380,
+      "led_w": 316.8
+    },
+    {
+      "hora": "01:15",
+      "atual_w": 1380,
+      "led_w": 316.8
+    },
+    {
+      "hora": "01:30",
+      "atual_w": 1380,
+      "led_w": 316.8
+    },
+    {
+      "hora": "01:45",
+      "atual_w": 1380,
+      "led_w": 316.8
+    },
+    {
+      "hora": "02:00",
+      "atual_w": 1380,
+      "led_w": 316.8
+    },
+    {
+      "hora": "02:15",
+      "atual_w": 1380,
+      "led_w": 316.8
+    },
+    {
+      "hora": "02:30",
+      "atual_w": 1380,
+      "led_w": 316.8
+    },
+    {
+      "hora": "02:45",
+      "atual_w": 1380,
+      "led_w": 316.8
+    },
+    {
+      "hora": "03:00",
+      "atual_w": 1380,
+      "led_w": 316.8
+    },
+    {
+      "hora": "03:15",
+      "atual_w": 1380,
+      "led_w": 316.8
+    },
+    {
+      "hora": "03:30",
+      "atual_w": 1380,
+      "led_w": 316.8
+    },
+    {
+      "hora": "03:45",
+      "atual_w": 1380,
+      "led_w": 316.8
+    },
+    {
+      "hora": "04:00",
+      "atual_w": 1380,
+      "led_w": 316.8
+    },
+    {
+      "hora": "04:15",
+      "atual_w": 1380,
+      "led_w": 316.8
+    },
+    {
+      "hora": "04:30",
+      "atual_w": 1380,
+      "led_w": 316.8
+    },
+    {
+      "hora": "04:45",
+      "atual_w": 1380,
+      "led_w": 316.8
+    },
+    {
+      "hora": "05:00",
+      "atual_w": 1380,
+      "led_w": 316.8
+    },
+    {
+      "hora": "05:15",
+      "atual_w": 1380,
+      "led_w": 316.8
+    },
+    {
+      "hora": "05:30",
+      "atual_w": 1380,
+      "led_w": 316.8
+    }
+  ],
+  "monitoramento_simulado": [
+    {
+      "data": "2026-11-01",
+      "fracao_presenca_madrugada": 0.323,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 6.35,
+      "hsp_simulada": 5.95,
+      "geracao_poste_solar_kwh": 0.892,
+      "soc_bateria_poste_pct": 100.0,
+      "geracao_fv_quiosque_kwh": 7.13
+    },
+    {
+      "data": "2026-11-02",
+      "fracao_presenca_madrugada": 0.081,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 5.51,
+      "hsp_simulada": 4.71,
+      "geracao_poste_solar_kwh": 0.706,
+      "soc_bateria_poste_pct": 100.0,
+      "geracao_fv_quiosque_kwh": 5.65
+    },
+    {
+      "data": "2026-11-03",
+      "fracao_presenca_madrugada": 0.208,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 5.95,
+      "hsp_simulada": 5.46,
+      "geracao_poste_solar_kwh": 0.818,
+      "soc_bateria_poste_pct": 100.0,
+      "geracao_fv_quiosque_kwh": 6.55
+    },
+    {
+      "data": "2026-11-04",
+      "fracao_presenca_madrugada": 0.129,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 5.67,
+      "hsp_simulada": 3.92,
+      "geracao_poste_solar_kwh": 0.588,
+      "soc_bateria_poste_pct": 100.0,
+      "geracao_fv_quiosque_kwh": 4.7
+    },
+    {
+      "data": "2026-11-05",
+      "fracao_presenca_madrugada": 0.193,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 5.9,
+      "hsp_simulada": 3.3,
+      "geracao_poste_solar_kwh": 0.495,
+      "soc_bateria_poste_pct": 96.3,
+      "geracao_fv_quiosque_kwh": 3.96
+    },
+    {
+      "data": "2026-11-06",
+      "fracao_presenca_madrugada": 0.17,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 5.81,
+      "hsp_simulada": 2.69,
+      "geracao_poste_solar_kwh": 0.404,
+      "soc_bateria_poste_pct": 86.5,
+      "geracao_fv_quiosque_kwh": 3.23
+    },
+    {
+      "data": "2026-11-07",
+      "fracao_presenca_madrugada": 0.28,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 6.2,
+      "hsp_simulada": 3.17,
+      "geracao_poste_solar_kwh": 0.476,
+      "soc_bateria_poste_pct": 79.3,
+      "geracao_fv_quiosque_kwh": 3.81
+    },
+    {
+      "data": "2026-11-08",
+      "fracao_presenca_madrugada": 0.284,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 6.21,
+      "hsp_simulada": 6.69,
+      "geracao_poste_solar_kwh": 1.004,
+      "soc_bateria_poste_pct": 100.0,
+      "geracao_fv_quiosque_kwh": 8.03
+    },
+    {
+      "data": "2026-11-09",
+      "fracao_presenca_madrugada": 0.251,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 6.09,
+      "hsp_simulada": 6.44,
+      "geracao_poste_solar_kwh": 0.965,
+      "soc_bateria_poste_pct": 100.0,
+      "geracao_fv_quiosque_kwh": 7.72
+    },
+    {
+      "data": "2026-11-10",
+      "fracao_presenca_madrugada": 0.093,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 5.55,
+      "hsp_simulada": 5.64,
+      "geracao_poste_solar_kwh": 0.846,
+      "soc_bateria_poste_pct": 100.0,
+      "geracao_fv_quiosque_kwh": 6.77
+    },
+    {
+      "data": "2026-11-11",
+      "fracao_presenca_madrugada": 0.15,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 5.75,
+      "hsp_simulada": 3.1,
+      "geracao_poste_solar_kwh": 0.465,
+      "soc_bateria_poste_pct": 95.1,
+      "geracao_fv_quiosque_kwh": 3.72
+    },
+    {
+      "data": "2026-11-12",
+      "fracao_presenca_madrugada": 0.189,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 5.88,
+      "hsp_simulada": 5.86,
+      "geracao_poste_solar_kwh": 0.879,
+      "soc_bateria_poste_pct": 100.0,
+      "geracao_fv_quiosque_kwh": 7.03
+    },
+    {
+      "data": "2026-11-13",
+      "fracao_presenca_madrugada": 0.294,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 6.25,
+      "hsp_simulada": 4.52,
+      "geracao_poste_solar_kwh": 0.678,
+      "soc_bateria_poste_pct": 100.0,
+      "geracao_fv_quiosque_kwh": 5.43
+    },
+    {
+      "data": "2026-11-14",
+      "fracao_presenca_madrugada": 0.348,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 6.43,
+      "hsp_simulada": 1.0,
+      "geracao_poste_solar_kwh": 0.15,
+      "soc_bateria_poste_pct": 67.1,
+      "geracao_fv_quiosque_kwh": 1.2
+    },
+    {
+      "data": "2026-11-15",
+      "fracao_presenca_madrugada": 0.26,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 6.13,
+      "hsp_simulada": 4.86,
+      "geracao_poste_solar_kwh": 0.728,
+      "soc_bateria_poste_pct": 79.1,
+      "geracao_fv_quiosque_kwh": 5.83
+    },
+    {
+      "data": "2026-11-16",
+      "fracao_presenca_madrugada": 0.146,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 5.73,
+      "hsp_simulada": 6.3,
+      "geracao_poste_solar_kwh": 0.945,
+      "soc_bateria_poste_pct": 100.0,
+      "geracao_fv_quiosque_kwh": 7.56
+    },
+    {
+      "data": "2026-11-17",
+      "fracao_presenca_madrugada": 0.166,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 5.8,
+      "hsp_simulada": 6.29,
+      "geracao_poste_solar_kwh": 0.943,
+      "soc_bateria_poste_pct": 100.0,
+      "geracao_fv_quiosque_kwh": 7.55
+    },
+    {
+      "data": "2026-11-18",
+      "fracao_presenca_madrugada": 0.236,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 6.04,
+      "hsp_simulada": 3.48,
+      "geracao_poste_solar_kwh": 0.522,
+      "soc_bateria_poste_pct": 97.3,
+      "geracao_fv_quiosque_kwh": 4.17
+    },
+    {
+      "data": "2026-11-19",
+      "fracao_presenca_madrugada": 0.17,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 5.82,
+      "hsp_simulada": 4.76,
+      "geracao_poste_solar_kwh": 0.715,
+      "soc_bateria_poste_pct": 100.0,
+      "geracao_fv_quiosque_kwh": 5.72
+    },
+    {
+      "data": "2026-11-20",
+      "fracao_presenca_madrugada": 0.168,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 5.81,
+      "hsp_simulada": 3.7,
+      "geracao_poste_solar_kwh": 0.555,
+      "soc_bateria_poste_pct": 100.0,
+      "geracao_fv_quiosque_kwh": 4.44
+    },
+    {
+      "data": "2026-11-21",
+      "fracao_presenca_madrugada": 0.235,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 6.04,
+      "hsp_simulada": 5.52,
+      "geracao_poste_solar_kwh": 0.827,
+      "soc_bateria_poste_pct": 100.0,
+      "geracao_fv_quiosque_kwh": 6.62
+    },
+    {
+      "data": "2026-11-22",
+      "fracao_presenca_madrugada": 0.23,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 6.02,
+      "hsp_simulada": 4.12,
+      "geracao_poste_solar_kwh": 0.617,
+      "soc_bateria_poste_pct": 100.0,
+      "geracao_fv_quiosque_kwh": 4.94
+    },
+    {
+      "data": "2026-11-23",
+      "fracao_presenca_madrugada": 0.224,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 6.0,
+      "hsp_simulada": 5.93,
+      "geracao_poste_solar_kwh": 0.89,
+      "soc_bateria_poste_pct": 100.0,
+      "geracao_fv_quiosque_kwh": 7.12
+    },
+    {
+      "data": "2026-11-24",
+      "fracao_presenca_madrugada": 0.18,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 5.85,
+      "hsp_simulada": 3.14,
+      "geracao_poste_solar_kwh": 0.471,
+      "soc_bateria_poste_pct": 94.9,
+      "geracao_fv_quiosque_kwh": 3.77
+    },
+    {
+      "data": "2026-11-25",
+      "fracao_presenca_madrugada": 0.069,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 5.46,
+      "hsp_simulada": 5.06,
+      "geracao_poste_solar_kwh": 0.759,
+      "soc_bateria_poste_pct": 100.0,
+      "geracao_fv_quiosque_kwh": 6.08
+    },
+    {
+      "data": "2026-11-26",
+      "fracao_presenca_madrugada": 0.177,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 5.84,
+      "hsp_simulada": 6.25,
+      "geracao_poste_solar_kwh": 0.938,
+      "soc_bateria_poste_pct": 100.0,
+      "geracao_fv_quiosque_kwh": 7.51
+    },
+    {
+      "data": "2026-11-27",
+      "fracao_presenca_madrugada": 0.231,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 6.03,
+      "hsp_simulada": 4.24,
+      "geracao_poste_solar_kwh": 0.635,
+      "soc_bateria_poste_pct": 100.0,
+      "geracao_fv_quiosque_kwh": 5.08
+    },
+    {
+      "data": "2026-11-28",
+      "fracao_presenca_madrugada": 0.269,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 6.16,
+      "hsp_simulada": 4.87,
+      "geracao_poste_solar_kwh": 0.73,
+      "soc_bateria_poste_pct": 100.0,
+      "geracao_fv_quiosque_kwh": 5.84
+    },
+    {
+      "data": "2026-11-29",
+      "fracao_presenca_madrugada": 0.284,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 6.21,
+      "hsp_simulada": 5.57,
+      "geracao_poste_solar_kwh": 0.836,
+      "soc_bateria_poste_pct": 100.0,
+      "geracao_fv_quiosque_kwh": 6.69
+    },
+    {
+      "data": "2026-11-30",
+      "fracao_presenca_madrugada": 0.254,
+      "consumo_atual_kwh": 16.38,
+      "consumo_led_sensor_kwh": 6.11,
+      "hsp_simulada": 5.51,
+      "geracao_poste_solar_kwh": 0.827,
+      "soc_bateria_poste_pct": 100.0,
+      "geracao_fv_quiosque_kwh": 6.62
+    }
+  ]
+}
