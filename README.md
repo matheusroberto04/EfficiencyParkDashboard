@@ -3,7 +3,7 @@
 Módulo energético do **Neighborhood Action Dashboard — CitizenTech**.
 Global Solution 2026.2 | Ciência da Computação | **Soluções em Energias Renováveis e Sustentáveis (SERS)**.
 
-## Acesso rápido para o professor
+## Acesso rápido aos dados
 
 **[Apresentação e indicadores — apresentacao.html](apresentacao.html)** · [Código do dashboard Python](app.py) · [Dados e fontes](dados.json) · [Roteiro do vídeo](roteiro_video.md)
 
