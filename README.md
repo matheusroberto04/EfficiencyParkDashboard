@@ -261,6 +261,7 @@ Setas contínuas: energia proposta. Setas tracejadas: dados digitados e processa
 4. Informe zero horas: consumo e cobertura percentual ficam zero; reservas fixas permanecem.
 5. Se alterar equipamentos, revise os preços e a iluminação entregue. O painel avisa dessa necessidade.
 6. Baixe o JSON para registrar exatamente as entradas, saídas, fontes e premissas usadas.
+7. Clique em **Baixar apresentação HTML desta simulação**: o arquivo usa as entradas atuais e os mesmos cálculos. No HTML, você também pode importar um JSON exportado pelo dashboard.
 
 Testes dos cálculos, sem biblioteca adicional:
 
@@ -276,12 +277,29 @@ No Mac, use `python3` ou `.venv/bin/python`. Os testes cobrem consumo, custos, d
 | --- | --- |
 | `app.py` | Interface Streamlit, entradas, resultados e exportação. |
 | `calculos.py` | Cálculos de energia, checagem solar e custos. |
+| `apresentacao.py` | Monta o HTML com resultados produzidos por `calculos.py`. |
+| `apresentacao_template.html` | Modelo visual autossuficiente da apresentação, com fontes embutidas. |
+| `apresentacao.html` | Apresentação offline gerada com as entradas de referência. |
 | `dados.json` | Valores de referência, integrantes, fontes e premissas. |
 | `diagrama.svg` | Funcionamento conceitual da solução. |
 | `requirements.txt` | Dependência para execução. |
 | `tests/` | Testes de cálculo e execução da interface. |
 | `roteiro_video.md` | Sugestão de demonstração técnica de até 3 minutos. |
 | `entrega_modelo.txt` | Integrantes, GitHub e campo a preencher com vídeo real. |
+
+## Apresentação HTML integrada
+
+Abra `apresentacao.html` no navegador. Há uma página de indicadores, modo apresentação em oito cenas e roteiro com cronômetro. As setas passam as cenas; F alterna tela cheia, R mostra as notas e H oculta os controles. O HTML é autossuficiente e não precisa de internet para exibir conteúdo. O botão **Abrir dashboard local** depende do Streamlit iniciado em `http://localhost:8501`.
+
+O HTML não refaz os cálculos em JavaScript: incorpora entradas e resultados de `calculos.py`. O gerador inclui a referência e um ensaio com HSP = 1; o déficit do ensaio é calculado para a mesma quantidade e o mesmo período. O modo **Importar JSON do dashboard** usa a simulação exportada e atualiza indicadores e falas. Para voltar aos dados embutidos, use **Restaurar referência**. Importar um arquivo não altera o Python ou `dados.json`.
+
+Se alterar dados ou o modelo visual do repositório, regenere a versão de referência:
+
+```bash
+python apresentacao.py
+```
+
+No Mac, use `python3` ou `.venv/bin/python`. A opção de download dentro do Streamlit já gera o HTML com as entradas da sessão. Fontes Barlow Condensed, Public Sans e IBM Plex Mono foram preservadas do HTML fornecido, originalmente embutidas sob a licença SIL Open Font License. A ilustração é conceitual e não representa projeto de iluminação validado.
 
 ## Entrega e próximos passos
 

@@ -4,6 +4,7 @@ import json
 import streamlit as st
 
 from calculos import calcular
+from apresentacao import montar_html
 
 
 # 1. Identificação e dados de referência
@@ -129,3 +130,6 @@ with st.expander("Dados e fontes consultadas"):
     for fonte in base["fontes"]:
         st.markdown(f"**{fonte['id']} · [{fonte['titulo']}]({fonte['url']})** — {fonte['uso']}")
 st.download_button("Baixar entradas e resultados da simulação (JSON)", json.dumps({"entradas": d, "resultados": r, "referencias": base["fontes"], "premissas": base["premissas"]}, ensure_ascii=False, indent=2), file_name="efficiency_park_simulacao.json", mime="application/json")
+
+st.download_button("Baixar apresentação HTML desta simulação", montar_html(base, d), file_name="Efficiency_Park_Apresentacao.html", mime="text/html; charset=utf-8")
+st.caption("A apresentação usa os mesmos cálculos e as entradas atuais. Abra o HTML baixado no navegador; ele também funciona offline.")
