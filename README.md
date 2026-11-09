@@ -3,6 +3,25 @@
 Módulo energético do **Neighborhood Action Dashboard — CitizenTech**.
 Global Solution 2026.2 | Ciência da Computação | **Soluções em Energias Renováveis e Sustentáveis (SERS)**.
 
+## Acesso rápido para o professor
+
+**[Apresentação e indicadores — apresentacao.html](apresentacao.html)** · [Código do dashboard Python](app.py) · [Dados e fontes](dados.json) · [Roteiro do vídeo](roteiro_video.md)
+
+### Testar a apresentação HTML
+
+1. Baixe o repositório como ZIP (**Code → Download ZIP**) e extraia a pasta.
+2. Abra o arquivo **`apresentacao.html`**, que está na raiz do projeto, no Chrome, Edge, Firefox ou Safari.
+3. Clique em **Apresentar para o vídeo**. Use as setas para passar as oito cenas; F alterna tela cheia.
+4. Na página de indicadores ou nas cenas de checagem solar e dashboard, selecione **Ensaio: 1 HSP/dia**. Com os valores de referência, a cobertura cai para **49%**, com déficit de **91,8 kWh** em 30 dias. Volte a **Referência** para restaurar o caso inicial.
+
+O HTML funciona sozinho e offline, com dados e fontes embutidos. Não precisa de Python ou PowerPoint. Ao abrir o arquivo pela página do GitHub, o GitHub mostra o código: baixe o arquivo e abra a cópia local no navegador para executar os controles.
+
+### Testar o dashboard completo em Python
+
+Para alterar livremente quantidade, potência, período, tarifa, capacidades e custos, siga a instalação de Windows ou macOS abaixo e execute o Streamlit. O painel permite exportar JSON e baixar uma apresentação HTML com os valores da sessão.
+
+O botão **Abrir dashboard local** dentro do HTML só funciona quando o Streamlit estiver iniciado no mesmo computador, normalmente em `http://localhost:8501`. A apresentação HTML permanece utilizável mesmo sem iniciar o Python.
+
 ## Integrantes
 
 | Nome | RM |
@@ -43,7 +62,7 @@ Não é necessário instalar banco de dados, criar conta no Streamlit ou ter equ
 
 1. Na página do repositório no GitHub, clique no botão **Code** e selecione **Download ZIP**.
 2. Extraia o arquivo ZIP para uma pasta do computador. No Windows, use **Extrair Tudo**; no macOS, abra o ZIP para descompactar.
-3. Localize a pasta que contém `app.py`, `calculos.py`, `dados.json`, `requirements.txt` e `diagrama.svg`. Mantenha esses arquivos juntos e abra a pasta principal do projeto.
+3. Localize a pasta que contém `app.py`, `calculos.py`, `dados.json`, `requirements.txt` e `diagrama.svg`. Mantenha todos os arquivos do projeto juntos, incluindo `apresentacao.py` e `apresentacao_template.html`, e abra a pasta principal.
 4. No VS Code, selecione **Arquivo/File → Abrir Pasta/Open Folder** e escolha essa pasta.
 5. Abra **Terminal → Novo Terminal/New Terminal**.
 
@@ -264,6 +283,12 @@ Setas contínuas: energia proposta. Setas tracejadas: dados digitados e processa
 7. Clique em **Baixar apresentação HTML desta simulação**: o arquivo usa as entradas atuais e os mesmos cálculos. No HTML, você também pode importar um JSON exportado pelo dashboard.
 
 Testes dos cálculos, sem biblioteca adicional:
+
+```bash
+python -m unittest discover -s tests -p test_calculos.py -v
+```
+
+Para executar também os testes da interface e da integração HTML, com as dependências instaladas:
 
 ```bash
 python -m unittest discover -s tests -v
