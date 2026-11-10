@@ -4,9 +4,9 @@ Módulo energético do **Neighborhood Action Dashboard — CitizenTech**. Global
 
 ## Acesso rápido aos dados
 
-**[Apresentação e animação — apresentacao.html](apresentacao.html)** · [Dashboard Python](app.py) · [Premissas editáveis e fontes](dados.json) · [Valores extraídos do HTML original](referencias/html_original_dados.json) · [Roteiro do vídeo](roteiro_video.md)
+**[Apresentação e animação — apresentacao.html](apresentacao.html)** · [Dashboard Python](app.py) · [Premissas editáveis e fontes](dados.json) · [Valores extraídos do HTML original](referencias/html_original_dados.json) · 
 
-O dashboard agora parte dos **valores do HTML **: 12 postes, lâmpada de sódio de 100 W + reator de 15 W, LED de 60 W, sensores, dimerização e três alternativas. Pode-se alterar os parâmetros pela barra lateral, observar o recálculo e restaurar os padrões com um botão.
+O dashboard utiliza os seguintes valores: 12 postes, lâmpada de sódio de 100 W + reator de 15 W, LED de 60 W, sensores, dimerização e três alternativas. Pode-se alterar os parâmetros pela barra lateral, observar o recálculo e restaurar os padrões com um botão.
 
 Para usar apenas a apresentação, baixe o ZIP em **Code → Download ZIP**, extraia a pasta e abra `apresentacao.html` no navegador. O GitHub mostra o código do HTML; a cópia local executa os controles. Para alterar as premissas, use o Python conforme as instruções abaixo.
 
@@ -20,7 +20,9 @@ Para usar apenas a apresentação, baixe o ZIP em **Code → Download ZIP**, ext
 
 ## Problema e solução
 
-Uma praça comunitária precisa de iluminação noturna adequada, com menor desperdício e custos justificáveis. Os beneficiários são moradores, usuários do espaço e responsáveis pela manutenção. Este estudo considera uma **praça simulada de referência**; não houve levantamento de campo, instalação ou medição.
+Uma praça comunitária precisa de iluminação noturna adequada, pois a praça utiliza de lâmpadas amarelas que consomem bastante energia e ficando sempre ligadas durante todo o dia, levando a um maior gasto de energia e consequentemente elevando o custo para a prefeitura, além de que essas lâmpadas utilizam mercúrio, afetando na saúde dos moradores da região.
+
+Nossa solução é utilizar sensores de presença e lâmpadas de LED para que se possa ter um menor desperdício e menores custos para a prefeitura. Os beneficiários são moradores, usuários do espaço e responsáveis pela manutenção, pois as lâmpadas de LED não utilizam mercúrio sendo assim, menos prejudiciais a saúde. Este estudo considera uma **praça simulada de referência**; não houve levantamento de campo, instalação ou medição.
 
 Comparamos a referência e três alternativas para a mesma necessidade de iluminação, condicionada à validação fotométrica:
 
