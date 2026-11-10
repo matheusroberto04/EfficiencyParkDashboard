@@ -6,7 +6,7 @@ Módulo energético do **Neighborhood Action Dashboard — CitizenTech**. Global
 
 **[Apresentação e animação — apresentacao.html](apresentacao.html)** · [Dashboard Python](app.py) · [Premissas editáveis e fontes](dados.json) · [Valores extraídos do HTML original](referencias/html_original_dados.json) · [Roteiro do vídeo](roteiro_video.md)
 
-O dashboard agora parte dos **valores do HTML original**: 12 postes, lâmpada de sódio de 100 W + reator de 15 W, LED de 60 W, sensores, dimerização e três alternativas. O professor pode alterar os parâmetros pela barra lateral, observar o recálculo e restaurar os padrões com um botão.
+O dashboard agora parte dos **valores do HTML **: 12 postes, lâmpada de sódio de 100 W + reator de 15 W, LED de 60 W, sensores, dimerização e três alternativas. Pode-se alterar os parâmetros pela barra lateral, observar o recálculo e restaurar os padrões com um botão.
 
 Para usar apenas a apresentação, baixe o ZIP em **Code → Download ZIP**, extraia a pasta e abra `apresentacao.html` no navegador. O GitHub mostra o código do HTML; a cópia local executa os controles. Para alterar as premissas, use o Python conforme as instruções abaixo.
 
@@ -31,7 +31,7 @@ Comparamos a referência e três alternativas para a mesma necessidade de ilumin
 | A2 | LED com sensores, painel e bateria por poste; sistema isolado. |
 | A3 | A1 + painéis no quiosque, com troca de energia pela rede e crédito financeiro hipotético. |
 
-**Estágio atual:** software de simulação funcional, com campos editáveis, cálculos, gráficos, indicadores, checagens, animação de presença, JSON e apresentação HTML. Sensores físicos, ESP32, comunicação e acionamento automático são a **arquitetura proposta**, ainda não implantada. O modelo estima o efeito energético da presença e da dimerização; a animação não mede movimento real nem determina a fração de presença dos cálculos.
+O software é uma  simulação funcional, com campos editáveis, cálculos, gráficos, indicadores, checagens, animação de presença, JSON e apresentação HTML. Sensores físicos, ESP32, comunicação e acionamento automático são a **arquitetura proposta**. O modelo estima o efeito energético da presença e da dimerização; a animação não mede movimento real nem determina a fração de presença dos cálculos.
 
 ## Rodar no Windows
 
@@ -60,7 +60,7 @@ Abra a **Local URL** informada no terminal, normalmente `http://localhost:8501`.
 
 Se aparecer `Could not open requirements file`, confira se o terminal está na pasta correta e se o ZIP foi extraído. Para `No module named streamlit`, reinstale as dependências usando o Python da `.venv` e execute com esse mesmo Python.
 
-## Testes que o professor pode fazer na interface
+## Testes que podem ser feitos na interface
 
 1. Abra o painel e confira o cenário padrão: **491,3 kWh** atuais e **177,6 kWh** com LED + sensores em 30 dias, redução de demanda de **63,9%**.
 2. Altere **Quantidade de postes** de 12 para 24: a demanda e os equipamentos por poste dobram. A capacidade do quiosque é compartilhada e só muda se o campo de kWp for alterado.
@@ -69,7 +69,7 @@ Se aparecer `Could not open requirements file`, confira se o terminal está na p
 5. Altere tarifa, crédito de A3, capacidades ou custos e observe os resultados. Geração FV e compra física da rede são mostradas separadamente.
 6. Clique em **Restaurar valores do HTML original** para recuperar o exemplo.
 7. Salve o JSON e use **Carregar uma simulação salva → Aplicar arquivo** para recuperar exatamente as entradas. O JSON deve pertencer à versão atual do modelo (versão 2).
-8. Baixe a **apresentação HTML desta simulação**. Ela preserva o estilo e a animação do HTML original, mas recebe os resultados recalculados pelo Python.
+8. Baixe a **apresentação HTML desta simulação**. Ela preserva o estilo e a animação do HTML , mas recebe os resultados recalculados pelo Python.
 
 As alterações são locais à sessão e não sobrescrevem `dados.json` nem o GitHub. Uma nova sessão começa com os padrões; para persistir as entradas, salve o JSON.
 
@@ -79,23 +79,23 @@ O arquivo `referencias/html_original_dados.json` contém os dados extraídos do 
 
 | Parâmetro inicial | Valor | Fundamentação e limite |
 | --- | --- | --- |
-| Postes / noite / período | 12 / 11,8667 h / 30 dias | Premissas do HTML original, não medições nem duração regulamentar afirmada pelo projeto. |
+| Postes / noite / período | 12 / 11,8667 h / 30 dias | Premissas, não medições nem duração regulamentar afirmada pelo projeto. |
 | Referência convencional | 100 W + 15 W de reator | Categoria de sódio; 15 W são estimativa do estudo. Fluxo nominal de referência 10.600 lm. |
 | LED | 60 W / 9.000 lm | Categoria existente com especificação declarada pelo vendedor em F4; não comprova equivalência fotométrica ou dimerização do produto. Validar driver, óptica e iluminação mínima. |
 | Uso intenso | 5 h/noite | Hipótese de luz total antes do modo de presença. Limitada automaticamente ao total da noite. |
 | Espera / presença na madrugada | 30% / 20% | Hipóteses editáveis. Potência é aproximada como proporcional ao nível de dimerização. |
 | IoT | 0,5 W por poste, 24 h/dia | Carga auxiliar hipotética, incluída na demanda das alternativas. |
 | Tarifa | R$ 0,43416/kWh | TUSD + TE B4a Enel SP: (259,83 + 174,33) / 1.000, tabela consultada em 09/11/2026. Sem adicionais; confirmar enquadramento. |
-| FV A2 / bateria | 200 Wp / 1,28 kWh por ponto | Capacidade de ensaio do HTML. Não define módulos, tensão, controlador, conversores ou produto comercial compatível. |
+| FV A2 / bateria | 200 Wp / 1,28 kWh por ponto | Capacidade de ensaio. Não define módulos, tensão, controlador, conversores ou produto comercial compatível. |
 | HSP conservadora / média | 3,8 / 4,9 h/dia | Condições de ensaio, não média meteorológica comprovada de uma praça ou de junho. |
 | Rendimento FV / descarga / saída do banco | 75% / 90% / 95% | Hipóteses de balanço e armazenamento, não limites certificados do fabricante. |
 | FV no quiosque | 1,6 kWp | Capacidade compartilhada, hipotética e editável. |
-| Crédito unitário de A3 | R$ 0,356211/kWh | Hipótese financeira herdada do HTML. Não é cálculo regulatório nem garantia de faturamento ou aprovação da compensação. |
-| A1 / A2 instalados | R$ 925 / R$ 4.600 por ponto | Estimativas do HTML, com equipamentos e instalação no escopo considerado. Sem orçamento comercial local. |
-| FV A3 instalado | R$ 5.500/kWp | Estimativa do HTML: 1,6 × 5.500 = R$ 8.800 adicionais a A1. |
+| Crédito unitário de A3 | R$ 0,356211/kWh | Hipótese financeira . Não é cálculo regulatório nem garantia de faturamento ou aprovação da compensação. |
+| A1 / A2 instalados | R$ 925 / R$ 4.600 por ponto | Com equipamentos e instalação no escopo considerado. Sem orçamento comercial local. |
+| FV A3 instalado | R$ 5.500/kWp | Estimativa: 1,6 × 5.500 = R$ 8.800 adicionais a A1. |
 | Manutenção anual | Atual 37,50; A1 10; A2 60 R$/ponto; FV 93,75 R$/kWp | Hipóteses do estudo, não histórico de manutenção. |
 | Reposição A2 | R$ 1.000/ponto nos anos 4 e 8 do ensaio de 10 anos | Cronograma orçamentário escolhido para reproduzir os R$ 24.000 do HTML; não é vida útil certificada. Evento exatamente no fim do horizonte não é incluído. |
-| Fator CO₂ | 0,0545 kg/kWh | Preservado do HTML original, com referência indicada de 2024. Não representa um fator atual de 2026; consultar MCTI e ajustar conforme o objetivo. |
+| Fator CO₂ | 0,0545 kg/kWh | Com referência indicada de 2024. Não representa um fator atual de 2026; consultar MCTI e ajustar conforme o objetivo. |
 
 As referências de tarifa e características **não validam os preços completos, rendimentos, HSP, presença ou cronograma de reposições**. Todos esses itens permanecem identificados como estimativas. A documentação do MME fundamenta os conceitos, não os coeficientes do ensaio.
 
@@ -137,7 +137,7 @@ O percentual de FV local é um **balanço anual**, não fornecimento direto notu
 
 O indicador de CO₂ usa o fator adotado para estimar a operação ou o saldo energético anual. No caso de A3, a dedução da geração é uma aproximação de balanço, **não um inventário certificado, crédito de carbono ou análise de ciclo de vida**. A emissão associada à importação física da rede também permanece disponível nos resultados JSON.
 
-## Resultados que reproduzem o HTML original
+## Resultados que reproduzem o HTML
 
 Referência de 30 dias; custos e retornos condicionados às premissas:
 
