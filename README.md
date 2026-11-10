@@ -172,7 +172,7 @@ A apresentação preserva a animação original das lâmpadas reagindo à passag
 
 ## Apresentação e exportação
 
-O botão do dashboard gera um HTML autossuficiente com **as entradas atuais e os resultados do mesmo `calculos.py`**. Abra o arquivo baixado no navegador, use as setas para trocar de cena e F para tela cheia. A apresentação tem nove cenas, roteiro e cronômetro. O botão de dashboard local depende do Streamlit iniciado no mesmo computador.
+O botão do dashboard gera um HTML autossuficiente com **as entradas atuais e os resultados do mesmo `calculos.py`**. Abra o arquivo baixado no navegador, use as setas para trocar de cena e F para tela cheia. A apresentação tem nove cenas, sem roteiro ou controles de leitura no HTML. O roteiro de apoio permanece separado em `roteiro_video.md`. O botão de dashboard local depende do Streamlit iniciado no mesmo computador.
 
 Para regenerar a versão de referência do repositório após editar os dados ou o template:
 

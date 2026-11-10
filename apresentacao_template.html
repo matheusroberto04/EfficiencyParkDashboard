@@ -103,9 +103,9 @@ h1, h2, h3 { text-wrap: balance; }
 
 /* tokens dos gráficos: no painel seguem o tema; no palco, a noite */
 .vista { --c-hoje: var(--hoje); --c-novo: var(--novo); --c-rede: var(--rede); --c-solar: var(--solar); --c-ink: var(--ink); --c-ink2: var(--ink-2); --c-muted: var(--muted); --c-grid: var(--line); --c-axis: var(--axis); --c-surface: var(--surface); --c-good: var(--good-ink); --c-wash: var(--novo-wash); }
-.palco, .gaveta { --c-hoje: var(--n-hoje); --c-novo: var(--n-novo); --c-rede: var(--n-rede); --c-solar: var(--n-solar); --c-ink: var(--n-ink); --c-ink2: var(--n-ink-2); --c-muted: var(--n-muted); --c-grid: var(--n-line); --c-axis: var(--n-axis); --c-surface: var(--n-card); --c-good: var(--n-novo); --c-wash: var(--n-novo-wash); }
+.palco { --c-hoje: var(--n-hoje); --c-novo: var(--n-novo); --c-rede: var(--n-rede); --c-solar: var(--n-solar); --c-ink: var(--n-ink); --c-ink2: var(--n-ink-2); --c-muted: var(--n-muted); --c-grid: var(--n-line); --c-axis: var(--n-axis); --c-surface: var(--n-card); --c-good: var(--n-novo); --c-wash: var(--n-novo-wash); }
 
-/* ---------- faixa noturna (topo do painel e do roteiro) ---------- */
+/* ---------- faixa noturna (topo do painel) ---------- */
 .faixa { background: radial-gradient(900px 380px at 82% 0%, rgba(230, 238, 255, 0.09), transparent 62%), var(--n-stage); color: var(--n-ink); }
 .faixa-in { max-width: 1240px; margin: 0 auto; padding-block: 40px 38px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 28px 40px; align-items: center; }
 .faixa-in > * { min-width: 0; }
@@ -164,22 +164,7 @@ td.rec, th.rec { background: var(--novo-wash); }
 .nota { font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 110ch; }
 .nota a { color: var(--ink-2); }
 
-/* ---------- roteiro ---------- */
-.passos { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 12px; margin: 14px 0 0; padding: 0; list-style: none; counter-reset: passo; }
-.passos li { background: var(--surface-2); border: 1px solid var(--ring); border-radius: 12px; padding: 14px 16px; font-size: 14.5px; color: var(--ink-2); counter-increment: passo; }
-.passos li::before { content: counter(passo); display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--ink); color: var(--surface); font: 700 13px/1 var(--f-body); margin-right: 8px; }
-.passos b, .passos kbd { color: var(--ink); }
-kbd { font: 500 12.5px/1 var(--f-mono); border: 1px solid var(--axis); border-bottom-width: 2px; border-radius: 5px; padding: 2px 6px; background: var(--surface); }
-.falas { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
-.fala-item { display: grid; grid-template-columns: 62px minmax(0, 1fr); gap: 4px 16px; background: var(--surface); border: 1px solid var(--ring); border-radius: 14px; padding: 18px 20px; box-shadow: var(--sombra); }
-.fala-num { grid-row: span 3; font: 700 44px/0.9 var(--f-display); color: var(--muted); }
-.fala-cab { display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: baseline; }
-.fala-cab h3 { font: 600 22px/1.15 var(--f-display); letter-spacing: 0.01em; }
-.fala-tempo { font: 500 13px/1 var(--f-mono); color: var(--muted); }
-.fala-acao { font-size: 13.5px; color: var(--muted); margin: 0; }
-.fala-txt { font-size: 19px; line-height: 1.55; margin: 6px 0 0; max-width: 70ch; }
-.deixa { display: inline-block; font: 700 0.62em/1 var(--f-body); letter-spacing: 0.05em; text-transform: uppercase; background: var(--deixa); color: var(--n-stage); border-radius: 6px; padding: 0.38em 0.55em; vertical-align: 0.18em; white-space: nowrap; }
-@media (max-width: 560px) { .fala-item { grid-template-columns: 1fr; } .fala-num { grid-row: auto; font-size: 30px; } }
+kbd { font: 500 12.5px/1 var(--f-mono); border: 1px solid var(--axis); border-radius: 5px; padding: 2px 6px; }
 
 /* ---------- apresentação ---------- */
 html.apresentando, html.apresentando body { overflow: hidden; }
@@ -346,26 +331,6 @@ html.apresentando, html.apresentando body { overflow: hidden; }
 .apres.limpo .barra, .apres.limpo .progresso { display: none; }
 .aviso { position: fixed; top: calc(16px + env(safe-area-inset-top, 0px)); left: 50%; transform: translateX(-50%); background: var(--n-card-2); color: var(--n-ink); border: 1px solid var(--n-borda); border-radius: 12px; padding: 12px 16px; font-size: 14.5px; z-index: 80; max-width: min(560px, calc(100vw - 32px)); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4); }
 
-/* teleprompter na mesma janela (quando não dá para abrir outra) */
-.gaveta { position: fixed; top: 0; right: 0; bottom: 0; width: min(460px, 100vw); background: var(--n-card); border-left: 1px solid var(--n-line); z-index: 70; overflow-y: auto; color: var(--n-ink); padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); padding-right: env(safe-area-inset-right, 0px); }
-.gaveta-aviso { margin: 0; padding: 12px 22px; font-size: 13px; color: var(--n-ink-2); background: var(--n-card-2); border-bottom: 1px solid var(--n-line); }
-.tp { padding: 20px 22px 24px; display: grid; gap: 16px; }
-.tp-topo { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; justify-content: space-between; }
-.tp-cena { font: 600 12.5px/1.2 var(--f-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--n-ink-2); }
-.tp-tit { font: 700 28px/1.05 var(--f-display); letter-spacing: 0.01em; display: block; margin-top: 4px; }
-.tp-tempo { font: 500 14px/1.5 var(--f-mono); color: var(--n-ink-2); text-align: right; }
-.tp-tempo b { color: var(--n-ink); font-weight: 500; }
-.tp-tempo .alerta { color: var(--sodio); }
-.tp-tempo .estouro { color: #ff7a7a; }
-.tp-fala { font-size: var(--tp-fs, 26px); line-height: 1.5; margin: 0; text-wrap: pretty; }
-.tp-acao { font-size: 14.5px; color: var(--n-ink-2); margin: 0; }
-.tp-prox { border-top: 1px solid var(--n-line); padding-top: 12px; font-size: 14.5px; color: var(--n-ink-2); margin: 0; }
-.tp-prox b { color: var(--n-ink); }
-.tp-botoes { display: flex; flex-wrap: wrap; gap: 8px; }
-.tp-botoes button { background: var(--n-card-2); border: 1px solid var(--n-line); color: var(--n-ink); border-radius: 10px; padding: 10px 14px; cursor: pointer; font-weight: 600; font-size: 14px; }
-.tp-botoes button.prim { background: var(--led); color: var(--n-stage); border-color: transparent; }
-.tp-ajuda { font-size: 12.5px; color: var(--n-muted); margin: 0; }
-
 .dica { position: fixed; pointer-events: none; background: var(--n-card-2); color: var(--n-ink); border: 1px solid var(--n-borda); font: 500 13px/1.45 var(--f-body); padding: 8px 11px; border-radius: 9px; white-space: nowrap; opacity: 0; transform: translate(-50%, calc(-100% - 12px)); transition: opacity 0.12s; z-index: 90; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); }
 .dica b { font-weight: 650; }
 .dica .lin { display: flex; gap: 8px; align-items: center; }
@@ -391,7 +356,6 @@ html.apresentando, html.apresentando body { overflow: hidden; }
         <p class="faixa-sub" id="faixaSub"></p>
         <div class="acoes">
           <a class="btn btn-luz" href="#apresentacao"><svg class="icone" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>Apresentar para o vídeo</a>
-          <a class="btn btn-fantasma" href="#roteiro">Roteiro e falas</a>
           <button class="btn btn-fantasma" id="btnTema" type="button">Alternar tema</button>
         </div>
       </div>
@@ -461,36 +425,6 @@ html.apresentando, html.apresentando body { overflow: hidden; }
   </main>
 </div>
 
-<!-- ================= ROTEIRO ================= -->
-<div class="vista" id="vRoteiro" hidden>
-  <header class="faixa faixa-curta">
-    <div class="faixa-in">
-      <div>
-        <p class="olho"><a href="#painel" style="text-decoration:none">← Voltar ao painel</a></p>
-        <h1>Roteiro do vídeo</h1>
-        <p class="faixa-sub" id="rotSub"></p>
-        <div class="acoes">
-          <a class="btn btn-luz" href="#apresentacao"><svg class="icone" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>Ensaiar com a apresentação</a>
-          <button class="btn btn-fantasma" id="btnCopiar" type="button">Copiar todas as falas</button>
-        </div>
-      </div>
-    </div>
-  </header>
-  <main class="miolo">
-    <section class="bloco">
-      <h2>Como gravar sem erro</h2>
-      <ol class="passos">
-        <li>Abra o arquivo <b>index.html</b> no Chrome e clique em <b>Apresentar para o vídeo</b>. Aperte <kbd>F</kbd> para a tela cheia.</li>
-        <li>Aperte <kbd>R</kbd>: o roteiro abre numa janela separada. Ponha essa janela ao lado ou no segundo monitor.</li>
-        <li>No roteiro, clique em <b>Iniciar cronômetro</b> e ensaie uma vez. As setas <kbd>→</kbd> <kbd>←</kbd> passam as cenas nas duas janelas.</li>
-        <li>Grave só a janela da apresentação (no OBS: <b>Captura de janela</b>). Na cena 7, aperte <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> quando aparecerem as marcações.</li>
-      </ol>
-    </section>
-    <ol class="falas" id="listaFalas"></ol>
-    <p class="nota">As falas são geradas por <code>apresentacao.py</code> com os mesmos números do cálculo. Texto em destaque, como <span class="deixa">clique em A1</span>, é ação na tela e não é para ler. Tempo estimado para uma fala calma; o limite do vídeo é 3:00.</p>
-  </main>
-</div>
-
 <!-- ================= APRESENTAÇÃO ================= -->
 <div class="apres" id="vApres" hidden>
   <div class="palco" id="palco" aria-live="polite"></div>
@@ -499,17 +433,12 @@ html.apresentando, html.apresentando body { overflow: hidden; }
     <span class="ctr" id="ctr">1 / 9</span>
     <button type="button" id="bProx" aria-label="Próxima cena"><svg class="icone" viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     <span class="sep"></span>
-    <button type="button" id="bRoteiro">Roteiro <kbd style="border-color:var(--n-line);background:transparent;color:var(--n-ink-2)">R</kbd></button>
     <button type="button" id="bTela">Tela cheia <kbd style="border-color:var(--n-line);background:transparent;color:var(--n-ink-2)">F</kbd></button>
     <button type="button" id="bLimpo">Esconder barra <kbd style="border-color:var(--n-line);background:transparent;color:var(--n-ink-2)">H</kbd></button>
     <span class="sep"></span>
     <button type="button" id="bSair">Sair</button>
   </div>
   <div class="progresso"><i id="prog"></i></div>
-  <aside class="gaveta" id="gaveta" hidden aria-label="Roteiro">
-    <p class="gaveta-aviso">Este painel aparece na gravação. Para gravar sem ele, abra o arquivo <b>index.html</b> direto no Chrome: lá a tecla R abre o roteiro numa janela separada. Ou leia as falas pelo celular.</p>
-    <div class="tp" id="tpGaveta"></div>
-  </aside>
 </div>
 
 <div class="aviso" id="aviso" hidden role="status"></div>
@@ -520,10 +449,6 @@ html.apresentando, html.apresentando body { overflow: hidden; }
 window.SERS_DADOS = __SERS_DADOS__;
 </script>
 <script>
-// Gerado por apresentacao.py a partir de dados.json - nao editar a mao
-window.SERS_ROTEIRO = __SERS_ROTEIRO__;
-</script>
-<script>
 (function () {
   "use strict";
   var D = window.SERS_DADOS;
@@ -531,7 +456,6 @@ window.SERS_ROTEIRO = __SERS_ROTEIRO__;
     document.body.insertAdjacentHTML("afterbegin", '<p class="erro-dados">Não encontrei o arquivo <b>dados.js</b> ao lado deste index.html. Rode <code>python apresentacao.py</code> na pasta sers/.</p>');
     return;
   }
-  var R = window.SERS_ROTEIRO || { cenas: [], total_s: 0, limite_s: 180 };
   var P = D.parametros;
   var C = {};
   D.cenarios.forEach(function (c) { C[c.codigo] = c; });
@@ -542,7 +466,6 @@ window.SERS_ROTEIRO = __SERS_ROTEIRO__;
   function nf(x, d) { if (x === null || x === undefined || !Number.isFinite(Number(x))) return "—"; d = d || 0; return Number(x).toLocaleString("pt-BR", { minimumFractionDigits: d, maximumFractionDigits: d }); }
   function rs(x, d) { return "R$ " + nf(x, d || 0); }
   function mil(x) { return "R$ " + nf(x / 1000, 1) + " mil"; }
-  function mmss(s) { s = Math.max(0, Math.floor(s)); return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); }
   function horasMin(h) { var total = Math.round(h * 60); return Math.floor(total / 60) + " h " + String(total % 60).padStart(2, "0") + " min"; }
   function guardar(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
   function ler(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
@@ -552,7 +475,6 @@ window.SERS_ROTEIRO = __SERS_ROTEIRO__;
     var a = $("#aviso"); a.textContent = txt; a.hidden = false;
     clearTimeout(avisoT); avisoT = setTimeout(function () { a.hidden = true; }, ms || 4200);
   }
-  function deixas(txt) { return txt.replace(/\[([^\]]+)\]/g, '<span class="deixa">$1</span>'); }
 
   var ALTS = {
     A1: { cod: "A1", nome: "LED + sensores", fonte: "Rede elétrica" },
@@ -998,12 +920,11 @@ window.SERS_ROTEIRO = __SERS_ROTEIRO__;
     }
   };
   var ORDEM_PADRAO = ["capa", "problema", "consumo", "sensor", "alternativas", "diagrama", "dashboard", "beneficios", "fim"];
-  var cenas = (R.cenas && R.cenas.length ? R.cenas.map(function (c) { return c.id; }) : ORDEM_PADRAO).filter(function (id) { return CENAS[id]; });
-  var falaDe = {};
-  (R.cenas || []).forEach(function (c) { falaDe[c.id] = c; });
+  var cenas = ORDEM_PADRAO;
+  var TITULOS_CENAS = { capa: "Abertura", problema: "Problema comunitário", consumo: "Análise energética", sensor: "LED e sensores simulados", alternativas: "Três alternativas", diagrama: "Arquitetura proposta", dashboard: "Demonstração do dashboard", beneficios: "Benefícios e limitações", fim: "Encerramento" };
 
   var palco = $("#palco");
-  palco.innerHTML = cenas.map(function (id) { return '<section class="cena cena-' + id + '" data-id="' + id + '" aria-label="' + ((falaDe[id] && falaDe[id].titulo) || id) + '">' + CENAS[id]() + "</section>"; }).join("");
+  palco.innerHTML = cenas.map(function (id) { return '<section class="cena cena-' + id + '" data-id="' + id + '" aria-label="' + TITULOS_CENAS[id] + '">' + CENAS[id]() + "</section>"; }).join("");
   var secoes = $$(".cena", palco);
 
   var est = { cena: 0, altCena: "A3", ativo: false };
@@ -1056,122 +977,13 @@ window.SERS_ROTEIRO = __SERS_ROTEIRO__;
     aoEntrar(cenas[i], s);
     $("#ctr").textContent = (i + 1) + " / " + cenas.length;
     $("#prog").style.width = ((i + 1) / cenas.length) * 100 + "%";
-    crono.cenaInicio = tempoTotal();
-    atualizarTP(true);
   }
-  function prox() { if (!crono.rodando && crono.acum === 0 && est.cena === 0) iniciarCrono(); ir(est.cena + 1); }
+  function prox() { ir(est.cena + 1); }
   function ant() { ir(est.cena - 1); }
 
   function escala() {
     var w = innerWidth, h = innerHeight;
     palco.style.setProperty("--s", Math.min(w / 1600, h / 900).toFixed(4));
-  }
-
-  /* ---------- cronômetro e roteiro (teleprompter) ---------- */
-  var crono = { rodando: false, t0: 0, acum: 0, cenaInicio: 0 };
-  function tempoTotal() { return (crono.acum + (crono.rodando ? performance.now() - crono.t0 : 0)) / 1000; }
-  function iniciarCrono() { if (crono.rodando) return; crono.rodando = true; crono.t0 = performance.now(); crono.cenaInicio = tempoTotal(); atualizarTP(true); }
-  function pausarCrono() { if (!crono.rodando) return; crono.acum += performance.now() - crono.t0; crono.rodando = false; atualizarTP(true); }
-  function zerarCrono() { crono = { rodando: false, t0: 0, acum: 0, cenaInicio: 0 }; atualizarTP(true); }
-
-  function tpEsqueleto() {
-    return '<div class="tp-topo"><div><span class="tp-cena" data-tp="num"></span><span class="tp-tit" data-tp="tit"></span></div>' +
-      '<div class="tp-tempo">total <b data-tp="total">0:00</b> / ' + mmss(R.limite_s || 180) + '<br>cena <b data-tp="cena">0:00</b> · meta <span data-tp="meta"></span></div></div>' +
-      '<p class="tp-fala" data-tp="fala"></p>' +
-      '<p class="tp-acao" data-tp="acao"></p>' +
-      '<div class="tp-botoes"><button type="button" data-tp-b="ant">← Anterior</button><button type="button" class="prim" data-tp-b="prox">Próxima →</button>' +
-      '<button type="button" data-tp-b="crono">Iniciar cronômetro</button><button type="button" data-tp-b="zerar">Zerar</button>' +
-      '<button type="button" data-tp-b="menor" aria-label="Diminuir letra">A−</button><button type="button" data-tp-b="maior" aria-label="Aumentar letra">A+</button></div>' +
-      '<p class="tp-prox" data-tp="prox"></p>' +
-      '<p class="tp-ajuda">Teclas: → próxima · ← anterior · 1, 2 e 3 escolhem a alternativa na cena 7 · Home volta ao início</p>';
-  }
-  var tpJanela = null, tpFonte = +(ler("sers-tp-fonte") || 0) || 28;
-  function raizesTP() {
-    var r = [];
-    if (tpJanela && !tpJanela.closed) { var t = tpJanela.document.getElementById("tp"); if (t) r.push(t); }
-    if (!$("#gaveta").hidden) r.push($("#tpGaveta"));
-    return r;
-  }
-  function atualizarTP(tudo) {
-    var raizes = raizesTP(); if (!raizes.length) return;
-    var id = cenas[est.cena], f = falaDe[id] || { titulo: id, fala: "", acao: "", segundos: 0 };
-    var prx = cenas[est.cena + 1], fp = prx ? falaDe[prx] : null;
-    var total = tempoTotal(), naCena = total - crono.cenaInicio, lim = R.limite_s || 180;
-    raizes.forEach(function (r) {
-      var q = function (k) { return r.querySelector('[data-tp="' + k + '"]'); };
-      if (tudo) {
-        q("num").textContent = "Cena " + (est.cena + 1) + " de " + cenas.length;
-        q("tit").textContent = f.titulo;
-        q("fala").innerHTML = deixas(f.fala || "(sem fala para esta cena)");
-        q("acao").textContent = "Na tela: " + (f.acao || "");
-        q("meta").textContent = "≈ " + (f.segundos || 0) + " s";
-        q("prox").innerHTML = fp ? "<b>A seguir · " + fp.titulo + ":</b> " + fp.fala.replace(/\[[^\]]+\]\s*/g, "").split(/(?<=[.!?])\s/)[0] : "<b>Última cena.</b> Depois de falar, espere 2 segundos e pare a gravação.";
-        var bc = r.querySelector('[data-tp-b="crono"]'); bc.textContent = crono.rodando ? "Pausar cronômetro" : (crono.acum ? "Continuar cronômetro" : "Iniciar cronômetro");
-        r.style.setProperty("--tp-fs", tpFonte + "px");
-      }
-      var bt = q("total"); bt.textContent = mmss(total); bt.className = total > lim ? "estouro" : total > lim - 15 ? "alerta" : "";
-      var bce = q("cena"); bce.textContent = mmss(naCena); bce.className = f.segundos && naCena > f.segundos + 4 ? "alerta" : "";
-    });
-  }
-  setInterval(function () { if (crono.rodando) atualizarTP(false); }, 250);
-
-  function ligarTP(raiz, doc) {
-    raiz.addEventListener("click", function (e) {
-      var b = e.target.closest("[data-tp-b]"); if (!b) return;
-      var a = b.dataset.tpB;
-      if (a === "prox") prox();
-      else if (a === "ant") ant();
-      else if (a === "crono") crono.rodando ? pausarCrono() : iniciarCrono();
-      else if (a === "zerar") zerarCrono();
-      else if (a === "maior" || a === "menor") { tpFonte = Math.max(18, Math.min(48, tpFonte + (a === "maior" ? 2 : -2))); guardar("sers-tp-fonte", tpFonte); atualizarTP(true); }
-    });
-    if (doc) doc.addEventListener("keydown", teclas);
-  }
-  ligarTP($("#tpGaveta"));
-  $("#tpGaveta").innerHTML = tpEsqueleto();
-
-  var TP_CSS = "body{margin:0;background:#0a1120;color:#eef2f8;font:400 18px/1.5 'Public Sans',system-ui,-apple-system,'Segoe UI',sans-serif}" +
-    ".tp{padding:22px 26px 28px;display:grid;gap:16px}.tp-topo{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;justify-content:space-between}" +
-    ".tp-cena{font:600 13px/1.2 'Public Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#a9b5c8}" +
-    ".tp-tit{font:700 32px/1.05 'Barlow Condensed','Arial Narrow',sans-serif;display:block;margin-top:4px}" +
-    ".tp-tempo{font:500 15px/1.5 'IBM Plex Mono',ui-monospace,monospace;color:#a9b5c8;text-align:right}.tp-tempo b{color:#eef2f8;font-weight:500}.alerta{color:#ffad33!important}.estouro{color:#ff7a7a!important}" +
-    ".tp-fala{font-size:var(--tp-fs,28px);line-height:1.5;margin:0;text-wrap:pretty}" +
-    ".deixa{display:inline-block;font:700 .62em/1 'Public Sans',sans-serif;letter-spacing:.05em;text-transform:uppercase;background:#ffad33;color:#0a1120;border-radius:6px;padding:.38em .55em;vertical-align:.18em;white-space:nowrap}" +
-    ".tp-acao{font-size:15px;color:#a9b5c8;margin:0}.tp-prox{border-top:1px solid #22304a;padding-top:12px;font-size:15px;color:#a9b5c8;margin:0}.tp-prox b{color:#eef2f8}" +
-    ".tp-botoes{display:flex;flex-wrap:wrap;gap:8px}.tp-botoes button{background:#152139;border:1px solid #22304a;color:#eef2f8;border-radius:10px;padding:10px 14px;cursor:pointer;font:600 15px/1 'Public Sans',sans-serif}" +
-    ".tp-botoes button.prim{background:#e6eeff;color:#0a1120;border-color:transparent}.tp-ajuda{font-size:13px;color:#74819a;margin:0}button:focus-visible{outline:2px solid #6aa7f0;outline-offset:2px}";
-  function fontesParaJanela() {
-    var css = "";
-    try {
-      Array.prototype.forEach.call(document.styleSheets, function (folha) {
-        Array.prototype.forEach.call(folha.cssRules || [], function (r) { if (r.type === 5) css += r.cssText + "\n"; });
-      });
-    } catch (e) { css = ""; }
-    if (css) return "<style>" + css + "</style>";
-    try { return '<link rel="stylesheet" href="' + new URL("fontes.css", location.href).href + '">'; } catch (e) { return ""; }
-  }
-  function abrirRoteiro() {
-    if (tpJanela && !tpJanela.closed) { try { tpJanela.focus(); } catch (e) {} return; }
-    var w = null;
-    try { w = window.open("", "sers_roteiro", "popup=yes,width=860,height=860"); } catch (e) { w = null; }
-    if (w) {
-      try {
-        w.document.open();
-        w.document.write('<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Roteiro · Praça Comunitária</title>' +
-          fontesParaJanela() +
-          "<style>" + TP_CSS + '</style></head><body><div class="tp" id="tp">' + tpEsqueleto() + "</div></body></html>");
-        w.document.close();
-        ligarTP(w.document.getElementById("tp"), w.document);
-        tpJanela = w;
-        $("#gaveta").hidden = true;
-        atualizarTP(true);
-        avisar("Roteiro aberto em outra janela. Coloque-a ao lado ou no segundo monitor e grave só esta janela.");
-        return;
-      } catch (e) { try { w.close(); } catch (e2) {} }
-    }
-    $("#gaveta").hidden = !$("#gaveta").hidden;
-    atualizarTP(true);
-    if (!$("#gaveta").hidden) avisar("Não deu para abrir outra janela aqui, então o roteiro abriu ao lado. Aperte R para fechar.", 5200);
   }
 
   /* ---------- tela cheia, barra e cursor ---------- */
@@ -1205,16 +1017,13 @@ window.SERS_ROTEIRO = __SERS_ROTEIRO__;
     else if (k === "Home") { e.preventDefault(); ir(0); }
     else if (k === "End") { e.preventDefault(); ir(cenas.length - 1); }
     else if (k === "1" || k === "2" || k === "3") { if (cenas[est.cena] === "dashboard") { est.altCena = "A" + k; desenharCenaDash(); } }
-    else if (k === "r" || k === "R") { e.preventDefault(); abrirRoteiro(); }
     else if (k === "f" || k === "F") { e.preventDefault(); telaCheia(); }
     else if (k === "h" || k === "H") { e.preventDefault(); alternaBarra(); }
-    else if (k === "Escape") { $("#gaveta").hidden = true; }
   }
   document.addEventListener("keydown", teclas);
 
   $("#bProx").addEventListener("click", prox);
   $("#bAnt").addEventListener("click", ant);
-  $("#bRoteiro").addEventListener("click", abrirRoteiro);
   $("#bTela").addEventListener("click", telaCheia);
   $("#bLimpo").addEventListener("click", alternaBarra);
   $("#bSair").addEventListener("click", function () {
@@ -1223,12 +1032,11 @@ window.SERS_ROTEIRO = __SERS_ROTEIRO__;
   });
   $("#vApres").addEventListener("mousemove", acorda);
 
-  /* ---------- rotas: #painel, #apresentacao, #roteiro ---------- */
+  /* ---------- rotas: #painel, #apresentacao ---------- */
   function rota() {
     var h = location.hash.replace("#", "");
-    var apres = h === "apresentacao", roteiro = h === "roteiro";
-    $("#vPainel").hidden = apres || roteiro;
-    $("#vRoteiro").hidden = !roteiro;
+    var apres = h === "apresentacao";
+    $("#vPainel").hidden = apres;
     $("#vApres").hidden = !apres;
     document.documentElement.classList.toggle("apresentando", apres);
     if (apres) {
@@ -1236,13 +1044,10 @@ window.SERS_ROTEIRO = __SERS_ROTEIRO__;
       var q = parseInt(new URLSearchParams(location.search).get("cena"), 10);
       ir(isNaN(q) ? est.cena : q - 1, true);
       acorda();
-      if (new URLSearchParams(location.search).get("gaveta") === "1") { $("#gaveta").hidden = false; atualizarTP(true); }
     } else {
       est.ativo = false; pararAnim();
-      if (!$("#gaveta").hidden) $("#gaveta").hidden = true;
-      if (!roteiro) { scrollTo(0, 0); }
+      scrollTo(0, 0);
     }
-    if (roteiro) scrollTo(0, 0);
   }
   addEventListener("hashchange", rota);
   var redesenhoT;
@@ -1251,26 +1056,6 @@ window.SERS_ROTEIRO = __SERS_ROTEIRO__;
     clearTimeout(redesenhoT); redesenhoT = setTimeout(graficosPainel, 200);
   });
   document.addEventListener("fullscreenchange", function () { if (est.ativo) escala(); });
-
-  /* ---------- roteiro (lista) ---------- */
-  function roteiroLista() {
-    $("#rotSub").textContent = cenas.length + " cenas · duração estimada " + mmss(R.total_s || 0) + " · limite do vídeo " + mmss(R.limite_s || 180) + ". Cada cena é uma tela da apresentação; os números das falas vêm do mesmo cálculo da tela.";
-    $("#listaFalas").innerHTML = (R.cenas || []).map(function (c) {
-      return '<li class="fala-item"><span class="fala-num">' + c.n + '</span><div class="fala-cab"><h3>' + c.titulo + '</h3><span class="fala-tempo">≈ ' + c.segundos + " s · começa em " + mmss(c.inicio_s) + '</span></div><p class="fala-acao">Na tela: ' + c.acao + '</p><p class="fala-txt">' + deixas(c.fala) + "</p></li>";
-    }).join("");
-  }
-  $("#btnCopiar").addEventListener("click", function () {
-    var txt = (R.cenas || []).map(function (c) { return "CENA " + c.n + " - " + c.titulo.toUpperCase() + " (≈ " + c.segundos + " s)\n" + c.fala; }).join("\n\n");
-    var ok = function () { avisar("Falas copiadas. Cole no celular ou num documento para ler durante a gravação."); };
-    try {
-      navigator.clipboard.writeText(txt).then(ok, function () { selecionarFalas(); });
-    } catch (e) { selecionarFalas(); }
-  });
-  function selecionarFalas() {
-    var r = document.createRange(); r.selectNodeContents($("#listaFalas"));
-    var s = getSelection(); s.removeAllRanges(); s.addRange(r);
-    avisar("Não deu para copiar automaticamente. As falas estão selecionadas: use Ctrl+C.");
-  }
 
   /* ---------- tema ---------- */
   var temaSalvo = ler("sers-tema");
@@ -1295,7 +1080,6 @@ window.SERS_ROTEIRO = __SERS_ROTEIRO__;
   desenharPainel();
   graficosPainel();
   tabela();
-  roteiroLista();
   $("#notaPainel").innerHTML = "Todos os números são <b>projeções condicionadas às premissas</b> do grupo (dados.json), não resultados garantidos. Tarifa B4a da Enel SP: " + rs(P.tarifa_rs_kwh, 5) + "/kWh (REH ANEEL 3.596/2026, sem tributos). Iluminação de " + horasMin(P.horas_noite) + " por noite, premissa de duração da noite do estudo. Fator de emissão do SIN 2024: " + nf(P.fator_emissao, 4) + " kg CO₂/kWh. Os gráficos usam dados simulados, recalculados com as entradas atuais. Sensores reais e comunicação são etapas futuras. Os percentuais de presença e dimerização são premissas do modelo. O banco da série diária começa cheio e a carga é apresentada após o consumo noturno. Gerado em " + new Date(D.gerado_em + "T12:00").toLocaleDateString("pt-BR") + " por apresentacao.py.";
   rota();
 })();

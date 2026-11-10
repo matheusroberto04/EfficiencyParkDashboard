@@ -103,9 +103,9 @@ h1, h2, h3 { text-wrap: balance; }
 
 /* tokens dos gráficos: no painel seguem o tema; no palco, a noite */
 .vista { --c-hoje: var(--hoje); --c-novo: var(--novo); --c-rede: var(--rede); --c-solar: var(--solar); --c-ink: var(--ink); --c-ink2: var(--ink-2); --c-muted: var(--muted); --c-grid: var(--line); --c-axis: var(--axis); --c-surface: var(--surface); --c-good: var(--good-ink); --c-wash: var(--novo-wash); }
-.palco, .gaveta { --c-hoje: var(--n-hoje); --c-novo: var(--n-novo); --c-rede: var(--n-rede); --c-solar: var(--n-solar); --c-ink: var(--n-ink); --c-ink2: var(--n-ink-2); --c-muted: var(--n-muted); --c-grid: var(--n-line); --c-axis: var(--n-axis); --c-surface: var(--n-card); --c-good: var(--n-novo); --c-wash: var(--n-novo-wash); }
+.palco { --c-hoje: var(--n-hoje); --c-novo: var(--n-novo); --c-rede: var(--n-rede); --c-solar: var(--n-solar); --c-ink: var(--n-ink); --c-ink2: var(--n-ink-2); --c-muted: var(--n-muted); --c-grid: var(--n-line); --c-axis: var(--n-axis); --c-surface: var(--n-card); --c-good: var(--n-novo); --c-wash: var(--n-novo-wash); }
 
-/* ---------- faixa noturna (topo do painel e do roteiro) ---------- */
+/* ---------- faixa noturna (topo do painel) ---------- */
 .faixa { background: radial-gradient(900px 380px at 82% 0%, rgba(230, 238, 255, 0.09), transparent 62%), var(--n-stage); color: var(--n-ink); }
 .faixa-in { max-width: 1240px; margin: 0 auto; padding-block: 40px 38px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 28px 40px; align-items: center; }
 .faixa-in > * { min-width: 0; }
@@ -164,22 +164,7 @@ td.rec, th.rec { background: var(--novo-wash); }
 .nota { font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 110ch; }
 .nota a { color: var(--ink-2); }
 
-/* ---------- roteiro ---------- */
-.passos { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 12px; margin: 14px 0 0; padding: 0; list-style: none; counter-reset: passo; }
-.passos li { background: var(--surface-2); border: 1px solid var(--ring); border-radius: 12px; padding: 14px 16px; font-size: 14.5px; color: var(--ink-2); counter-increment: passo; }
-.passos li::before { content: counter(passo); display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--ink); color: var(--surface); font: 700 13px/1 var(--f-body); margin-right: 8px; }
-.passos b, .passos kbd { color: var(--ink); }
-kbd { font: 500 12.5px/1 var(--f-mono); border: 1px solid var(--axis); border-bottom-width: 2px; border-radius: 5px; padding: 2px 6px; background: var(--surface); }
-.falas { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
-.fala-item { display: grid; grid-template-columns: 62px minmax(0, 1fr); gap: 4px 16px; background: var(--surface); border: 1px solid var(--ring); border-radius: 14px; padding: 18px 20px; box-shadow: var(--sombra); }
-.fala-num { grid-row: span 3; font: 700 44px/0.9 var(--f-display); color: var(--muted); }
-.fala-cab { display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: baseline; }
-.fala-cab h3 { font: 600 22px/1.15 var(--f-display); letter-spacing: 0.01em; }
-.fala-tempo { font: 500 13px/1 var(--f-mono); color: var(--muted); }
-.fala-acao { font-size: 13.5px; color: var(--muted); margin: 0; }
-.fala-txt { font-size: 19px; line-height: 1.55; margin: 6px 0 0; max-width: 70ch; }
-.deixa { display: inline-block; font: 700 0.62em/1 var(--f-body); letter-spacing: 0.05em; text-transform: uppercase; background: var(--deixa); color: var(--n-stage); border-radius: 6px; padding: 0.38em 0.55em; vertical-align: 0.18em; white-space: nowrap; }
-@media (max-width: 560px) { .fala-item { grid-template-columns: 1fr; } .fala-num { grid-row: auto; font-size: 30px; } }
+kbd { font: 500 12.5px/1 var(--f-mono); border: 1px solid var(--axis); border-radius: 5px; padding: 2px 6px; }
 
 /* ---------- apresentação ---------- */
 html.apresentando, html.apresentando body { overflow: hidden; }
@@ -346,26 +331,6 @@ html.apresentando, html.apresentando body { overflow: hidden; }
 .apres.limpo .barra, .apres.limpo .progresso { display: none; }
 .aviso { position: fixed; top: calc(16px + env(safe-area-inset-top, 0px)); left: 50%; transform: translateX(-50%); background: var(--n-card-2); color: var(--n-ink); border: 1px solid var(--n-borda); border-radius: 12px; padding: 12px 16px; font-size: 14.5px; z-index: 80; max-width: min(560px, calc(100vw - 32px)); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4); }
 
-/* teleprompter na mesma janela (quando não dá para abrir outra) */
-.gaveta { position: fixed; top: 0; right: 0; bottom: 0; width: min(460px, 100vw); background: var(--n-card); border-left: 1px solid var(--n-line); z-index: 70; overflow-y: auto; color: var(--n-ink); padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); padding-right: env(safe-area-inset-right, 0px); }
-.gaveta-aviso { margin: 0; padding: 12px 22px; font-size: 13px; color: var(--n-ink-2); background: var(--n-card-2); border-bottom: 1px solid var(--n-line); }
-.tp { padding: 20px 22px 24px; display: grid; gap: 16px; }
-.tp-topo { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; justify-content: space-between; }
-.tp-cena { font: 600 12.5px/1.2 var(--f-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--n-ink-2); }
-.tp-tit { font: 700 28px/1.05 var(--f-display); letter-spacing: 0.01em; display: block; margin-top: 4px; }
-.tp-tempo { font: 500 14px/1.5 var(--f-mono); color: var(--n-ink-2); text-align: right; }
-.tp-tempo b { color: var(--n-ink); font-weight: 500; }
-.tp-tempo .alerta { color: var(--sodio); }
-.tp-tempo .estouro { color: #ff7a7a; }
-.tp-fala { font-size: var(--tp-fs, 26px); line-height: 1.5; margin: 0; text-wrap: pretty; }
-.tp-acao { font-size: 14.5px; color: var(--n-ink-2); margin: 0; }
-.tp-prox { border-top: 1px solid var(--n-line); padding-top: 12px; font-size: 14.5px; color: var(--n-ink-2); margin: 0; }
-.tp-prox b { color: var(--n-ink); }
-.tp-botoes { display: flex; flex-wrap: wrap; gap: 8px; }
-.tp-botoes button { background: var(--n-card-2); border: 1px solid var(--n-line); color: var(--n-ink); border-radius: 10px; padding: 10px 14px; cursor: pointer; font-weight: 600; font-size: 14px; }
-.tp-botoes button.prim { background: var(--led); color: var(--n-stage); border-color: transparent; }
-.tp-ajuda { font-size: 12.5px; color: var(--n-muted); margin: 0; }
-
 .dica { position: fixed; pointer-events: none; background: var(--n-card-2); color: var(--n-ink); border: 1px solid var(--n-borda); font: 500 13px/1.45 var(--f-body); padding: 8px 11px; border-radius: 9px; white-space: nowrap; opacity: 0; transform: translate(-50%, calc(-100% - 12px)); transition: opacity 0.12s; z-index: 90; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); }
 .dica b { font-weight: 650; }
 .dica .lin { display: flex; gap: 8px; align-items: center; }
@@ -391,7 +356,6 @@ html.apresentando, html.apresentando body { overflow: hidden; }
         <p class="faixa-sub" id="faixaSub"></p>
         <div class="acoes">
           <a class="btn btn-luz" href="#apresentacao"><svg class="icone" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>Apresentar para o vídeo</a>
-          <a class="btn btn-fantasma" href="#roteiro">Roteiro e falas</a>
           <button class="btn btn-fantasma" id="btnTema" type="button">Alternar tema</button>
         </div>
       </div>
@@ -461,36 +425,6 @@ html.apresentando, html.apresentando body { overflow: hidden; }
   </main>
 </div>
 
-<!-- ================= ROTEIRO ================= -->
-<div class="vista" id="vRoteiro" hidden>
-  <header class="faixa faixa-curta">
-    <div class="faixa-in">
-      <div>
-        <p class="olho"><a href="#painel" style="text-decoration:none">← Voltar ao painel</a></p>
-        <h1>Roteiro do vídeo</h1>
-        <p class="faixa-sub" id="rotSub"></p>
-        <div class="acoes">
-          <a class="btn btn-luz" href="#apresentacao"><svg class="icone" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>Ensaiar com a apresentação</a>
-          <button class="btn btn-fantasma" id="btnCopiar" type="button">Copiar todas as falas</button>
-        </div>
-      </div>
-    </div>
-  </header>
-  <main class="miolo">
-    <section class="bloco">
-      <h2>Como gravar sem erro</h2>
-      <ol class="passos">
-        <li>Abra o arquivo <b>index.html</b> no Chrome e clique em <b>Apresentar para o vídeo</b>. Aperte <kbd>F</kbd> para a tela cheia.</li>
-        <li>Aperte <kbd>R</kbd>: o roteiro abre numa janela separada. Ponha essa janela ao lado ou no segundo monitor.</li>
-        <li>No roteiro, clique em <b>Iniciar cronômetro</b> e ensaie uma vez. As setas <kbd>→</kbd> <kbd>←</kbd> passam as cenas nas duas janelas.</li>
-        <li>Grave só a janela da apresentação (no OBS: <b>Captura de janela</b>). Na cena 7, aperte <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> quando aparecerem as marcações.</li>
-      </ol>
-    </section>
-    <ol class="falas" id="listaFalas"></ol>
-    <p class="nota">As falas são geradas por <code>apresentacao.py</code> com os mesmos números do cálculo. Texto em destaque, como <span class="deixa">clique em A1</span>, é ação na tela e não é para ler. Tempo estimado para uma fala calma; o limite do vídeo é 3:00.</p>
-  </main>
-</div>
-
 <!-- ================= APRESENTAÇÃO ================= -->
 <div class="apres" id="vApres" hidden>
   <div class="palco" id="palco" aria-live="polite"></div>
@@ -499,17 +433,12 @@ html.apresentando, html.apresentando body { overflow: hidden; }
     <span class="ctr" id="ctr">1 / 9</span>
     <button type="button" id="bProx" aria-label="Próxima cena"><svg class="icone" viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     <span class="sep"></span>
-    <button type="button" id="bRoteiro">Roteiro <kbd style="border-color:var(--n-line);background:transparent;color:var(--n-ink-2)">R</kbd></button>
     <button type="button" id="bTela">Tela cheia <kbd style="border-color:var(--n-line);background:transparent;color:var(--n-ink-2)">F</kbd></button>
     <button type="button" id="bLimpo">Esconder barra <kbd style="border-color:var(--n-line);background:transparent;color:var(--n-ink-2)">H</kbd></button>
     <span class="sep"></span>
     <button type="button" id="bSair">Sair</button>
   </div>
   <div class="progresso"><i id="prog"></i></div>
-  <aside class="gaveta" id="gaveta" hidden aria-label="Roteiro">
-    <p class="gaveta-aviso">Este painel aparece na gravação. Para gravar sem ele, abra o arquivo <b>index.html</b> direto no Chrome: lá a tecla R abre o roteiro numa janela separada. Ou leia as falas pelo celular.</p>
-    <div class="tp" id="tpGaveta"></div>
-  </aside>
 </div>
 
 <div class="aviso" id="aviso" hidden role="status"></div>
@@ -520,10 +449,6 @@ html.apresentando, html.apresentando body { overflow: hidden; }
 window.SERS_DADOS = {"parametros": {"pontos": 12, "p_lampada_w": 100.0, "p_reator_w": 15.0, "p_led_w": 60.0, "fluxo_sodio_lm": 10600.0, "fluxo_led_lm": 9000.0, "mercurio_mg": 16.3, "horas_noite": 11.8667, "horas_uso_intenso": 5.0, "dim_pct": 30.0, "presenca_pct": 20.0, "p_iot_w": 0.5, "horas_iot": 24.0, "dias_mes": 30, "tarifa_rs_kwh": 0.43416, "fator_emissao": 0.0545, "horizonte_anos": 10, "painel_wp": 200.0, "bateria_kwh": 1.28, "descarga_pct": 90.0, "eficiencia_bateria_pct": 95.0, "autonomia_desejada": 2.0, "kwp_quiosque": 1.6, "hsp_pior_mes": 3.8, "hsp_media": 4.9, "rendimento_fv_pct": 75.0, "valor_credito_rs_kwh": 0.356211, "capex_a1_ponto": 925.0, "capex_a2_ponto": 4600.0, "capex_fv_kwp": 5500.0, "manut_atual_ponto_ano": 37.5, "manut_a1_ponto_ano": 10.0, "manut_a2_ponto_ano": 60.0, "manut_fv_kwp_ano": 93.75, "reposicao_a2_ponto": 1000.0, "intervalo_reposicao_anos": 4, "adicional_tarifa": 0.04463, "p_atual_w": 115.0, "hora_fim_intenso": 23.0, "horas_dimerizado": 5.49336, "e_a0_ponto_dia": 1.3646705, "e_led_ponto_dia": 0.48128087999999997, "e_iot_ponto_dia": 0.012, "e_alt_ponto_dia": 0.49328088}, "cenarios": [{"codigo": "A0", "nome": "Situação atual", "descricao": "Referência de sódio na rede, sem dimerização", "fonte_energia": "Rede elétrica (SIN)", "energia_demandada_kwh_mes": 491.28137999999996, "energia_demandada_kwh_ano": 5977.2567899999995, "consumo_rede_kwh_mes": 491.28137999999996, "consumo_rede_kwh_ano": 5977.2567899999995, "renovavel_kwh_ano": 0, "renovavel_kwh_mes": 0.0, "participacao_renovavel_pct": 0.0, "custo_energia_ano": 2595.0858079463997, "custo_energia_mes": 213.29472394079997, "capex": 0, "om_ano": 450.0, "reposicoes_horizonte": 0, "operacao_ano": 3045.0858079463997, "operacao_periodo": 250.28102531066298, "deficit_kwh_mes": 0.0, "energia_atendida_kwh_mes": 491.28137999999996, "atende_demanda": true, "horas_dimerizado_dia": 0, "emissoes_rede_kgco2_ano": 325.760495055, "emissoes_kgco2_ano": 325.760495055, "custo_energia_ano_bandeira_vermelha": 2861.8507784840995, "economia_kwh_mes": 0.0, "economia_rede_pct": 0.0, "reducao_demanda_pct": 0.0, "economia_rs_ano": 0.0, "economia_rs_mes": 0.0, "payback_anos": null, "custo_total_10_anos": 30450.858079463997, "emissoes_evitadas_kgco2_ano": 0.0}, {"codigo": "A1", "nome": "LED + sensores na rede", "descricao": "LED e sensores na rede elétrica; automação simulada", "fonte_energia": "Rede elétrica (SIN)", "energia_demandada_kwh_mes": 177.5811168, "energia_demandada_kwh_ano": 2160.5702544, "consumo_rede_kwh_mes": 177.5811168, "consumo_rede_kwh_ano": 2160.5702544, "renovavel_kwh_ano": 0, "renovavel_kwh_mes": 0.0, "participacao_renovavel_pct": 0.0, "custo_energia_ano": 938.033181650304, "custo_energia_mes": 77.09861766988799, "capex": 11100.0, "om_ano": 120.0, "reposicoes_horizonte": 0, "operacao_ano": 1058.033181650304, "operacao_periodo": 86.96163136851813, "deficit_kwh_mes": 0.0, "energia_atendida_kwh_mes": 177.5811168, "atende_demanda": true, "horas_dimerizado_dia": 5.49336, "emissoes_rede_kgco2_ano": 117.75107886480001, "emissoes_kgco2_ano": 117.75107886480001, "custo_energia_ano_bandeira_vermelha": 1034.459432104176, "economia_kwh_mes": 313.7002632, "economia_rede_pct": 63.8534811150384, "reducao_demanda_pct": 63.85348111503839, "economia_rs_ano": 1987.0526262960957, "economia_rs_mes": 163.31939394214484, "payback_anos": 5.586163070421851, "custo_total_10_anos": 21680.33181650304, "emissoes_evitadas_kgco2_ano": 208.00941619019997}, {"codigo": "A2", "nome": "Luminárias solares autônomas", "descricao": "LED e sensores com painel e bateria por poste; cenário isolado", "fonte_energia": "Solar isolado", "energia_demandada_kwh_mes": 177.5811168, "energia_demandada_kwh_ano": 2160.5702544, "consumo_rede_kwh_mes": 0, "consumo_rede_kwh_ano": 0, "renovavel_kwh_ano": 2160.5702544, "renovavel_kwh_mes": 177.5811168, "participacao_renovavel_pct": 100.0, "custo_energia_ano": 0.0, "custo_energia_mes": 0.0, "capex": 55200.0, "om_ano": 720.0, "reposicoes_horizonte": 24000.0, "operacao_ano": 720.0, "operacao_periodo": 59.17808219178082, "deficit_kwh_mes": 0.0, "energia_atendida_kwh_mes": 177.5811168, "atende_demanda": true, "horas_dimerizado_dia": 5.49336, "emissoes_rede_kgco2_ano": 0.0, "emissoes_kgco2_ano": 0.0, "custo_energia_ano_bandeira_vermelha": 0.0, "economia_kwh_mes": 491.28137999999996, "economia_rede_pct": 100.0, "reducao_demanda_pct": 63.85348111503839, "economia_rs_ano": 2325.0858079463997, "economia_rs_mes": 191.10294311888217, "payback_anos": 23.741059281057094, "custo_total_10_anos": 86400.0, "emissoes_evitadas_kgco2_ano": 325.760495055}, {"codigo": "A3", "nome": "LED + sensores + solar na rede", "descricao": "A1 e painéis no quiosque; compensação financeira hipotética em balanço anual", "fonte_energia": "Rede + FV local (balanço)", "energia_demandada_kwh_mes": 177.5811168, "energia_demandada_kwh_ano": 2160.5702544, "consumo_rede_kwh_mes": 177.5811168, "consumo_rede_kwh_ano": 2160.5702544, "renovavel_kwh_ano": 2146.2000000000003, "renovavel_kwh_mes": 176.40000000000003, "participacao_renovavel_pct": 99.33488603896427, "custo_energia_ano": 173.5331334503038, "custo_energia_mes": 14.262997269887984, "capex": 19900.0, "om_ano": 270.0, "reposicoes_horizonte": 0, "operacao_ano": 443.5331334503038, "operacao_periodo": 36.45477809180579, "deficit_kwh_mes": 0.0, "energia_atendida_kwh_mes": 177.5811168, "atende_demanda": true, "horas_dimerizado_dia": 5.49336, "emissoes_rede_kgco2_ano": 117.75107886480001, "emissoes_kgco2_ano": 0.7831788647999888, "custo_energia_ano_bandeira_vermelha": 269.9593839041758, "geracao_fv_kwh_ano": 2146.2000000000003, "credito_estimado_ano": 764.5000482000002, "economia_kwh_mes": 313.7002632, "economia_rede_pct": 63.8534811150384, "reducao_demanda_pct": 63.85348111503839, "economia_rs_ano": 2601.5526744960957, "economia_rs_mes": 213.8262472188572, "payback_anos": 7.649278138815507, "custo_total_10_anos": 24335.33133450304, "emissoes_evitadas_kgco2_ano": 324.9773161902}], "dimensionamento_solar": {"painel_necessario_wp": 173.0810105263158, "painel_escolhido_wp": 200.0, "margem_pior_mes_pct": 15.552826616754345, "bateria_necessaria_kwh": 1.1538734035087719, "bateria_escolhida_kwh": 1.28, "banco_util_kwh": 1.0944, "autonomia_noites": 2.2186142710416834, "geracao_util_poste_dia": 0.5700000000000001, "deficit_a2_kwh_mes": 0.0, "geracao_fv_quiosque_kwh_ano": 2146.2000000000003, "valor_credito_rs_kwh": 0.356211}, "perfil_noite": [{"hora": "18:00", "atual_w": 1380.0, "led_w": 720.0}, {"hora": "18:15", "atual_w": 1380.0, "led_w": 720.0}, {"hora": "18:30", "atual_w": 1380.0, "led_w": 720.0}, {"hora": "18:45", "atual_w": 1380.0, "led_w": 720.0}, {"hora": "19:00", "atual_w": 1380.0, "led_w": 720.0}, {"hora": "19:15", "atual_w": 1380.0, "led_w": 720.0}, {"hora": "19:30", "atual_w": 1380.0, "led_w": 720.0}, {"hora": "19:45", "atual_w": 1380.0, "led_w": 720.0}, {"hora": "20:00", "atual_w": 1380.0, "led_w": 720.0}, {"hora": "20:15", "atual_w": 1380.0, "led_w": 720.0}, {"hora": "20:30", "atual_w": 1380.0, "led_w": 720.0}, {"hora": "20:45", "atual_w": 1380.0, "led_w": 720.0}, {"hora": "21:00", "atual_w": 1380.0, "led_w": 720.0}, {"hora": "21:15", "atual_w": 1380.0, "led_w": 720.0}, {"hora": "21:30", "atual_w": 1380.0, "led_w": 720.0}, {"hora": "21:45", "atual_w": 1380.0, "led_w": 720.0}, {"hora": "22:00", "atual_w": 1380.0, "led_w": 720.0}, {"hora": "22:15", "atual_w": 1380.0, "led_w": 720.0}, {"hora": "22:30", "atual_w": 1380.0, "led_w": 720.0}, {"hora": "22:45", "atual_w": 1380.0, "led_w": 720.0}, {"hora": "23:00", "atual_w": 1380.0, "led_w": 316.8}, {"hora": "23:15", "atual_w": 1380.0, "led_w": 316.8}, {"hora": "23:30", "atual_w": 1380.0, "led_w": 316.8}, {"hora": "23:45", "atual_w": 1380.0, "led_w": 316.8}, {"hora": "00:00", "atual_w": 1380.0, "led_w": 316.8}, {"hora": "00:15", "atual_w": 1380.0, "led_w": 316.8}, {"hora": "00:30", "atual_w": 1380.0, "led_w": 316.8}, {"hora": "00:45", "atual_w": 1380.0, "led_w": 316.8}, {"hora": "01:00", "atual_w": 1380.0, "led_w": 316.8}, {"hora": "01:15", "atual_w": 1380.0, "led_w": 316.8}, {"hora": "01:30", "atual_w": 1380.0, "led_w": 316.8}, {"hora": "01:45", "atual_w": 1380.0, "led_w": 316.8}, {"hora": "02:00", "atual_w": 1380.0, "led_w": 316.8}, {"hora": "02:15", "atual_w": 1380.0, "led_w": 316.8}, {"hora": "02:30", "atual_w": 1380.0, "led_w": 316.8}, {"hora": "02:45", "atual_w": 1380.0, "led_w": 316.8}, {"hora": "03:00", "atual_w": 1380.0, "led_w": 316.8}, {"hora": "03:15", "atual_w": 1380.0, "led_w": 316.8}, {"hora": "03:30", "atual_w": 1380.0, "led_w": 316.8}, {"hora": "03:45", "atual_w": 1380.0, "led_w": 316.8}, {"hora": "04:00", "atual_w": 1380.0, "led_w": 316.8}, {"hora": "04:15", "atual_w": 1380.0, "led_w": 316.8}, {"hora": "04:30", "atual_w": 1380.0, "led_w": 316.8}, {"hora": "04:45", "atual_w": 1380.0, "led_w": 316.8}, {"hora": "05:00", "atual_w": 1380.0, "led_w": 316.8}, {"hora": "05:15", "atual_w": 1380.0, "led_w": 316.8}, {"hora": "05:30", "atual_w": 1380.0, "led_w": 316.8}, {"hora": "05:45", "atual_w": 1380.0, "led_w": 316.8}], "gerado_em": "2026-11-09", "versao_modelo": 2, "premissas_principais": {"pontos": 12, "horas_noite": 11.8667, "tarifa_rs_kwh": 0.43416, "fator_emissao": 0.0545, "dias_mes": 30, "horizonte_anos": 10}, "monitoramento_simulado": [{"data": "2026-11-01", "fracao_presenca_madrugada": 0.32299999999999995, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 6.345051026399999, "hsp_simulada": 5.95, "geracao_poste_solar_kwh": 0.8925000000000002, "soc_bateria_poste_pct": 56.51692004934211, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 7.1400000000000015}, {"data": "2026-11-02", "fracao_presenca_madrugada": 0.081, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 5.5075333608, "hsp_simulada": 4.71, "geracao_poste_solar_kwh": 0.7065, "soc_bateria_poste_pct": 62.256487384868414, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 5.652}, {"data": "2026-11-03", "fracao_presenca_madrugada": 0.20799999999999996, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 5.9470570944, "hsp_simulada": 5.459999999999999, "geracao_poste_solar_kwh": 0.819, "soc_bateria_poste_pct": 59.24440039473684, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 6.552}, {"data": "2026-11-04", "fracao_presenca_madrugada": 0.129, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 5.6736525671999996, "hsp_simulada": 3.92, "geracao_poste_solar_kwh": 0.5880000000000001, "soc_bateria_poste_pct": 61.11806080592106, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 4.704000000000001}, {"data": "2026-11-05", "fracao_presenca_madrugada": 0.193, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 5.895144842400001, "hsp_simulada": 3.2999999999999994, "geracao_poste_solar_kwh": 0.49499999999999994, "soc_bateria_poste_pct": 59.60015870065789, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 3.9599999999999995}, {"data": "2026-11-06", "fracao_presenca_madrugada": 0.17, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 5.8155460560000005, "hsp_simulada": 2.69, "geracao_poste_solar_kwh": 0.4035, "soc_bateria_poste_pct": 52.92837925986843, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 3.228}, {"data": "2026-11-07", "fracao_presenca_madrugada": 0.28, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 6.196235904, "hsp_simulada": 3.1700000000000004, "geracao_poste_solar_kwh": 0.4755000000000001, "soc_bateria_poste_pct": 49.56875820723687, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 3.8040000000000007}, {"data": "2026-11-08", "fracao_presenca_madrugada": 0.284, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 6.2100791712, "hsp_simulada": 6.69, "geracao_poste_solar_kwh": 1.0035, "soc_bateria_poste_pct": 57.44189164473684, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 8.028}, {"data": "2026-11-09", "fracao_presenca_madrugada": 0.251, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 6.0958722168, "hsp_simulada": 6.44, "geracao_poste_solar_kwh": 0.9660000000000002, "soc_bateria_poste_pct": 58.22455991776316, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 7.7280000000000015}, {"data": "2026-11-10", "fracao_presenca_madrugada": 0.09299999999999999, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 5.5490631624, "hsp_simulada": 5.64, "geracao_poste_solar_kwh": 0.846, "soc_bateria_poste_pct": 61.97188074013157, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 6.768}, {"data": "2026-11-11", "fracao_presenca_madrugada": 0.15, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 5.74632972, "hsp_simulada": 3.0999999999999996, "geracao_poste_solar_kwh": 0.465, "soc_bateria_poste_pct": 60.61999917763158, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 3.72}, {"data": "2026-11-12", "fracao_presenca_madrugada": 0.18899999999999997, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 5.881301575200001, "hsp_simulada": 5.86, "geracao_poste_solar_kwh": 0.879, "soc_bateria_poste_pct": 59.69502758223685, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 7.032}, {"data": "2026-11-13", "fracao_presenca_madrugada": 0.29399999999999993, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 6.2446873392, "hsp_simulada": 4.52, "geracao_poste_solar_kwh": 0.6779999999999999, "soc_bateria_poste_pct": 57.204719440789475, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 5.4239999999999995}, {"data": "2026-11-14", "fracao_presenca_madrugada": 0.348, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 6.431571446400001, "hsp_simulada": 1.0, "geracao_poste_solar_kwh": 0.15, "soc_bateria_poste_pct": 25.464235296052628, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 1.2}, {"data": "2026-11-15", "fracao_presenca_madrugada": 0.26, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 6.127019568, "hsp_simulada": 4.86, "geracao_poste_solar_kwh": 0.7290000000000001, "soc_bateria_poste_pct": 43.42599812500001, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 5.832000000000001}, {"data": "2026-11-16", "fracao_presenca_madrugada": 0.146, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 5.7324864528, "hsp_simulada": 6.3, "geracao_poste_solar_kwh": 0.945, "soc_bateria_poste_pct": 60.71486805921054, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 7.56}, {"data": "2026-11-17", "fracao_presenca_madrugada": 0.16599999999999998, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 5.801702788800001, "hsp_simulada": 6.29, "geracao_poste_solar_kwh": 0.9434999999999999, "soc_bateria_poste_pct": 60.2405236513158, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 7.547999999999999}, {"data": "2026-11-18", "fracao_presenca_madrugada": 0.236, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 6.043959964799999, "hsp_simulada": 3.48, "geracao_poste_solar_kwh": 0.522, "soc_bateria_poste_pct": 58.58031822368422, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 4.176}, {"data": "2026-11-19", "fracao_presenca_madrugada": 0.17, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 5.8155460560000005, "hsp_simulada": 4.76, "geracao_poste_solar_kwh": 0.714, "soc_bateria_poste_pct": 60.14565476973684, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 5.712}, {"data": "2026-11-20", "fracao_presenca_madrugada": 0.168, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 5.8086244224, "hsp_simulada": 3.7, "geracao_poste_solar_kwh": 0.555, "soc_bateria_poste_pct": 60.193089210526324, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 4.44}, {"data": "2026-11-21", "fracao_presenca_madrugada": 0.23499999999999996, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 6.0404991479999985, "hsp_simulada": 5.52, "geracao_poste_solar_kwh": 0.828, "soc_bateria_poste_pct": 58.60403544407895, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 6.624}, {"data": "2026-11-22", "fracao_presenca_madrugada": 0.23, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 6.023195063999998, "hsp_simulada": 4.12, "geracao_poste_solar_kwh": 0.618, "soc_bateria_poste_pct": 58.72262154605265, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 4.944}, {"data": "2026-11-23", "fracao_presenca_madrugada": 0.22399999999999998, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 6.002430163199999, "hsp_simulada": 5.93, "geracao_poste_solar_kwh": 0.8894999999999998, "soc_bateria_poste_pct": 58.86492486842106, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 7.115999999999999}, {"data": "2026-11-24", "fracao_presenca_madrugada": 0.18, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 5.850154223999999, "hsp_simulada": 3.14, "geracao_poste_solar_kwh": 0.4710000000000001, "soc_bateria_poste_pct": 57.5069600657895, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 3.7680000000000007}, {"data": "2026-11-25", "fracao_presenca_madrugada": 0.069, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 5.4660035592, "hsp_simulada": 5.0600000000000005, "geracao_poste_solar_kwh": 0.7590000000000002, "soc_bateria_poste_pct": 62.541094029605276, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 6.072000000000002}, {"data": "2026-11-26", "fracao_presenca_madrugada": 0.177, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 5.8397717736, "hsp_simulada": 6.25, "geracao_poste_solar_kwh": 0.9375, "soc_bateria_poste_pct": 59.979634226973694, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 7.5}, {"data": "2026-11-27", "fracao_presenca_madrugada": 0.231, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 6.0266558808, "hsp_simulada": 4.24, "geracao_poste_solar_kwh": 0.6360000000000001, "soc_bateria_poste_pct": 58.69890432565789, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 5.088000000000001}, {"data": "2026-11-28", "fracao_presenca_madrugada": 0.26899999999999996, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 6.158166919199999, "hsp_simulada": 4.87, "geracao_poste_solar_kwh": 0.7305000000000001, "soc_bateria_poste_pct": 57.7976499506579, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 5.844000000000001}, {"data": "2026-11-29", "fracao_presenca_madrugada": 0.284, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 6.2100791712, "hsp_simulada": 5.570000000000001, "geracao_poste_solar_kwh": 0.8355000000000002, "soc_bateria_poste_pct": 57.44189164473684, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 6.684000000000002}, {"data": "2026-11-30", "fracao_presenca_madrugada": 0.254, "consumo_atual_kwh": 16.376046, "consumo_led_sensor_kwh": 6.106254667199999, "hsp_simulada": 5.51, "geracao_poste_solar_kwh": 0.8265, "soc_bateria_poste_pct": 58.153408256578956, "deficit_a2_kwh": 0, "geracao_fv_quiosque_kwh": 6.612}], "fontes": [{"id": "F1", "titulo": "HTML original fornecido pela equipe — dados extraídos", "url": "referencias/html_original_dados.json", "uso": "Origem dos valores iniciais e dos resultados de referência. Custos e condições de operação são estimativas do estudo, não cotações de implantação."}, {"id": "F2", "titulo": "Enel São Paulo — tarifa B4a", "url": "https://www.enel.com.br/pt-saopaulo/Para_Voce/tarifa-de-energia-eletrica.html", "uso": "TUSD 259,83 + TE 174,33 R$/MWh = R$ 0,43416/kWh na tabela consultada em 09/11/2026. Sem tributos e adicionais; verificar enquadramento local."}, {"id": "F3", "titulo": "Signify — Philips MASTER SON-T PIA Plus 100 W", "url": "https://www.lighting.philips.com/content/signify-multibrand/aa/en/product/product-detail-page.928151709230_EU.html", "uso": "Referência da categoria de lâmpada de sódio e fluxo de 10.600 lm. Os 100 W do estudo são potência nominal arredondada; 15 W de reator são hipótese, não medição."}, {"id": "F4", "titulo": "Ledstronic — referência LED 60 W / 9.000 lm", "url": "https://ledstronic.com.br/produto/luminaria-rua-60w-led-24-volts-24v-ideal-painel-solar/", "uso": "Referência de potência e fluxo declarados pelo vendedor. Não comprova dimerização, equivalência fotométrica ou o custo dos conjuntos. Cada alternativa requer driver compatível com rede ou banco."}, {"id": "F5", "titulo": "MCTI/SIRENE — fatores e metodologia de CO₂ do SIN", "url": "https://www.gov.br/mcti/pt-br/acompanhe-o-mcti/sirene/dados-e-ferramentas/fatores-de-emissao", "uso": "Referência metodológica. O fator 0,0545 kg/kWh foi preservado do HTML original, identificado como referência de 2024; não é apresentado como fator atual de 2026."}, {"id": "F6", "titulo": "MME — Sistemas Híbridos: Soluções Energéticas para a Amazônia", "url": "https://www.gov.br/mme/pt-br/arquivos/solucoes-energeticas-para-a-amazonia-sistemas-hibridos.pdf", "uso": "Fundamentos de HSP, armazenamento e perdas. Não valida os coeficientes de rendimento nem o recurso solar de uma praça real."}], "premissas": [{"parametro": "Escopo", "origem": "Praça simulada com 12 pontos. Não houve medição ou instalação física. ESP32, sensores e comunicação representam arquitetura proposta; os gráficos são simulações."}, {"parametro": "Operação e sensores", "origem": "11,8667 h/noite e 5 h de uso intenso são premissas do HTML. Na madrugada, presença em 20% do tempo e potência em espera de 30%. O modelo aproxima potência como proporcional à dimerização; exige validação do driver e da iluminação mínima."}, {"parametro": "Iluminação e IoT", "origem": "Referência convencional 10.600 lm e LED 9.000 lm não certificam mesma iluminação no solo. Validar óptica, altura e uniformidade. IoT de 0,5 W opera 24 h/dia e entra na demanda; driver/controlador devem atender a cada fonte."}, {"parametro": "Solar", "origem": "HSP de 3,8 no ensaio conservador e 4,9 na média são hipóteses do HTML, não dados meteorológicos comprovados de junho ou de uma praça. Rendimento FV global de 75% inclui perdas até a carga. Banco útil usa descarga e eficiência para verificar armazenamento, sem descontar as perdas novamente da geração."}, {"parametro": "A2", "origem": "Solar isolado: não há compra de energia de apoio. O balanço compara geração, demanda e banco útil. Quando há déficit, economia operacional, retorno e redução equivalente de emissões ficam indisponíveis. Autonomia calculada pressupõe banco cheio e não garante sequência de noites nubladas."}, {"parametro": "A3", "origem": "A iluminação consome da rede à noite; FV gera de dia. O percentual representa cobertura FV em balanço anual, não fornecimento direto noturno nem composição renovável do SIN. Crédito de R$ 0,356211/kWh é hipótese financeira editável, sem cálculo regulatório de faturamento. Não se deve prometer implantação ou valor da fatura."}, {"parametro": "Custos", "origem": "A1 R$ 925/ponto; A2 R$ 4.600/ponto; FV R$ 5.500/kWp, incluindo instalação no escopo estimado. São hipóteses herdadas do HTML, a substituir por orçamento local. Manutenção anual é estimada por ponto e por kWp. Não há garantia de cobertura de todos os custos, tributos, encargos fixos ou obras."}, {"parametro": "Reposições e retorno", "origem": "Para reproduzir os R$ 24.000 do HTML em 10 anos, assume-se R$ 1.000 por ponto em reposições nos anos 4 e 8. É um cronograma orçamentário de ensaio, não vida útil certificada. Payback simples divide investimento por economia anual recorrente e exclui essas reposições; o custo no horizonte as inclui. Sem juros, inflação ou degradação."}, {"parametro": "Períodos e ambiente", "origem": "Energia do período usa dias selecionados; análise anual usa 365 dias. Manutenção do período = anual × dias/365. CO₂ refere-se à operação/balanço energético, não ciclo de vida, impacto zero ou crédito de carbono. A redução com FV no balanço é potencial contábil; não altera a importação física noturna de A3."}, {"parametro": "Séries diárias", "origem": "A série ilustrativa de novembro vem do HTML original. As diferenças diárias de presença e HSP são escaladas para as entradas atuais. Banco inicia cheio na série ilustrativa; dias sem recarga podem mostrar carga inicial disponível. O balanço de projeto de A2 não conta com carga inicial gratuita."}], "integrantes": [{"nome": "Matheus Roberto", "rm": "575653"}, {"nome": "Gustavo Oliveira Baptista", "rm": "575597"}, {"nome": "Ana Luísa Santos", "rm": "574806"}]};
 </script>
 <script>
-// Gerado por apresentacao.py a partir de dados.json - nao editar a mao
-window.SERS_ROTEIRO = {"gerado_em": "2026-11-09", "limite_s": 180, "total_s": 172, "cenas": [{"n": 1, "id": "capa", "titulo": "Abertura", "acao": "Mostrar esta cena e explicar as premissas; no dashboard, demonstrar o recálculo.", "fala": "Somos Matheus Roberto, Gustavo Oliveira Baptista e Ana Luísa Santos. O Efficiency Park compara eficiência energética e energia solar para uma praça simulada.", "segundos": 12, "inicio_s": 0}, {"n": 2, "id": "problema", "titulo": "Problema comunitário", "acao": "Mostrar esta cena e explicar as premissas; no dashboard, demonstrar o recálculo.", "fala": "O cenário tem 12 pontos de iluminação. A referência usa lâmpadas de 100 watts e reator de 15 watts. Buscamos reduzir a demanda e apoiar decisões dos moradores e responsáveis pela manutenção. Não houve medição da praça.", "segundos": 20, "inicio_s": 12}, {"n": 3, "id": "consumo", "titulo": "Análise energética", "acao": "Mostrar esta cena e explicar as premissas; no dashboard, demonstrar o recálculo.", "fala": "O consumo é potência vezes tempo, dividido por mil, considerando todos os pontos. Na referência, são 491,3 quilowatts-hora em 30 dias. Todos os cenários usam o mesmo período; a análise anual considera 365 dias.", "segundos": 22, "inicio_s": 32}, {"n": 4, "id": "sensor", "titulo": "LED e sensores simulados", "acao": "Mostrar esta cena e explicar as premissas; no dashboard, demonstrar o recálculo.", "fala": "Após 5,0 horas de luz total, o modelo considera espera a 30 por cento e presença em 20 por cento da madrugada. A redução de demanda estimada é 63,9 por cento, incluindo o consumo do módulo IoT. A animação é conceitual.", "segundos": 20, "inicio_s": 54}, {"n": 5, "id": "alternativas", "titulo": "Três alternativas", "acao": "Mostrar esta cena e explicar as premissas; no dashboard, demonstrar o recálculo.", "fala": "A1 usa LED e sensores na rede. A2 acrescenta painel e bateria por poste. A3 usa a rede à noite e geração no quiosque de dia, com crédito financeiro hipotético. Comparamos investimento, manutenção, reposições e custo no horizonte. A3 é uma proposta a validar, não uma vencedora universal.", "segundos": 25, "inicio_s": 74}, {"n": 6, "id": "diagrama", "titulo": "Arquitetura proposta", "acao": "Mostrar esta cena e explicar as premissas; no dashboard, demonstrar o recálculo.", "fala": "O diagrama relaciona fontes, luminárias, sensores, lógica de controle e processamento. O MVP calcula indicadores a partir de entradas manuais. Sensores reais, comunicação e acionamento representam a arquitetura planejada, não uma instalação já realizada.", "segundos": 18, "inicio_s": 99}, {"n": 7, "id": "dashboard", "titulo": "Demonstração do dashboard", "acao": "Mostrar esta cena e explicar as premissas; no dashboard, demonstrar o recálculo.", "fala": "No Python, o professor pode alterar os parâmetros e observar o recálculo. Em A2, falta de sol ou bateria gera alerta de déficit. Em A3, geração, importação física e crédito financeiro são separados. O HTML baixado usa exatamente os resultados dessa simulação.", "segundos": 25, "inicio_s": 117}, {"n": 8, "id": "beneficios", "titulo": "Benefícios e limitações", "acao": "Mostrar esta cena e explicar as premissas; no dashboard, demonstrar o recálculo.", "fala": "Esperamos reduzir a demanda e apoiar a decisão da comunidade. É necessário validar iluminação, condições solares e orçamento. Os coeficientes são editáveis e as séries são simuladas. O fator ambiental representa uma estimativa de operação ou balanço, sem análise de ciclo de vida.", "segundos": 20, "inicio_s": 142}, {"n": 9, "id": "fim", "titulo": "Encerramento", "acao": "Mostrar esta cena e explicar as premissas; no dashboard, demonstrar o recálculo.", "fala": "Os resultados são projeções condicionadas às premissas. O código, os dados e as instruções de teste estão no GitHub. Obrigado.", "segundos": 10, "inicio_s": 162}]};
-</script>
-<script>
 (function () {
   "use strict";
   var D = window.SERS_DADOS;
@@ -531,7 +456,6 @@ window.SERS_ROTEIRO = {"gerado_em": "2026-11-09", "limite_s": 180, "total_s": 17
     document.body.insertAdjacentHTML("afterbegin", '<p class="erro-dados">Não encontrei o arquivo <b>dados.js</b> ao lado deste index.html. Rode <code>python apresentacao.py</code> na pasta sers/.</p>');
     return;
   }
-  var R = window.SERS_ROTEIRO || { cenas: [], total_s: 0, limite_s: 180 };
   var P = D.parametros;
   var C = {};
   D.cenarios.forEach(function (c) { C[c.codigo] = c; });
@@ -542,7 +466,6 @@ window.SERS_ROTEIRO = {"gerado_em": "2026-11-09", "limite_s": 180, "total_s": 17
   function nf(x, d) { if (x === null || x === undefined || !Number.isFinite(Number(x))) return "—"; d = d || 0; return Number(x).toLocaleString("pt-BR", { minimumFractionDigits: d, maximumFractionDigits: d }); }
   function rs(x, d) { return "R$ " + nf(x, d || 0); }
   function mil(x) { return "R$ " + nf(x / 1000, 1) + " mil"; }
-  function mmss(s) { s = Math.max(0, Math.floor(s)); return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); }
   function horasMin(h) { var total = Math.round(h * 60); return Math.floor(total / 60) + " h " + String(total % 60).padStart(2, "0") + " min"; }
   function guardar(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
   function ler(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
@@ -552,7 +475,6 @@ window.SERS_ROTEIRO = {"gerado_em": "2026-11-09", "limite_s": 180, "total_s": 17
     var a = $("#aviso"); a.textContent = txt; a.hidden = false;
     clearTimeout(avisoT); avisoT = setTimeout(function () { a.hidden = true; }, ms || 4200);
   }
-  function deixas(txt) { return txt.replace(/\[([^\]]+)\]/g, '<span class="deixa">$1</span>'); }
 
   var ALTS = {
     A1: { cod: "A1", nome: "LED + sensores", fonte: "Rede elétrica" },
@@ -998,12 +920,11 @@ window.SERS_ROTEIRO = {"gerado_em": "2026-11-09", "limite_s": 180, "total_s": 17
     }
   };
   var ORDEM_PADRAO = ["capa", "problema", "consumo", "sensor", "alternativas", "diagrama", "dashboard", "beneficios", "fim"];
-  var cenas = (R.cenas && R.cenas.length ? R.cenas.map(function (c) { return c.id; }) : ORDEM_PADRAO).filter(function (id) { return CENAS[id]; });
-  var falaDe = {};
-  (R.cenas || []).forEach(function (c) { falaDe[c.id] = c; });
+  var cenas = ORDEM_PADRAO;
+  var TITULOS_CENAS = { capa: "Abertura", problema: "Problema comunitário", consumo: "Análise energética", sensor: "LED e sensores simulados", alternativas: "Três alternativas", diagrama: "Arquitetura proposta", dashboard: "Demonstração do dashboard", beneficios: "Benefícios e limitações", fim: "Encerramento" };
 
   var palco = $("#palco");
-  palco.innerHTML = cenas.map(function (id) { return '<section class="cena cena-' + id + '" data-id="' + id + '" aria-label="' + ((falaDe[id] && falaDe[id].titulo) || id) + '">' + CENAS[id]() + "</section>"; }).join("");
+  palco.innerHTML = cenas.map(function (id) { return '<section class="cena cena-' + id + '" data-id="' + id + '" aria-label="' + TITULOS_CENAS[id] + '">' + CENAS[id]() + "</section>"; }).join("");
   var secoes = $$(".cena", palco);
 
   var est = { cena: 0, altCena: "A3", ativo: false };
@@ -1056,122 +977,13 @@ window.SERS_ROTEIRO = {"gerado_em": "2026-11-09", "limite_s": 180, "total_s": 17
     aoEntrar(cenas[i], s);
     $("#ctr").textContent = (i + 1) + " / " + cenas.length;
     $("#prog").style.width = ((i + 1) / cenas.length) * 100 + "%";
-    crono.cenaInicio = tempoTotal();
-    atualizarTP(true);
   }
-  function prox() { if (!crono.rodando && crono.acum === 0 && est.cena === 0) iniciarCrono(); ir(est.cena + 1); }
+  function prox() { ir(est.cena + 1); }
   function ant() { ir(est.cena - 1); }
 
   function escala() {
     var w = innerWidth, h = innerHeight;
     palco.style.setProperty("--s", Math.min(w / 1600, h / 900).toFixed(4));
-  }
-
-  /* ---------- cronômetro e roteiro (teleprompter) ---------- */
-  var crono = { rodando: false, t0: 0, acum: 0, cenaInicio: 0 };
-  function tempoTotal() { return (crono.acum + (crono.rodando ? performance.now() - crono.t0 : 0)) / 1000; }
-  function iniciarCrono() { if (crono.rodando) return; crono.rodando = true; crono.t0 = performance.now(); crono.cenaInicio = tempoTotal(); atualizarTP(true); }
-  function pausarCrono() { if (!crono.rodando) return; crono.acum += performance.now() - crono.t0; crono.rodando = false; atualizarTP(true); }
-  function zerarCrono() { crono = { rodando: false, t0: 0, acum: 0, cenaInicio: 0 }; atualizarTP(true); }
-
-  function tpEsqueleto() {
-    return '<div class="tp-topo"><div><span class="tp-cena" data-tp="num"></span><span class="tp-tit" data-tp="tit"></span></div>' +
-      '<div class="tp-tempo">total <b data-tp="total">0:00</b> / ' + mmss(R.limite_s || 180) + '<br>cena <b data-tp="cena">0:00</b> · meta <span data-tp="meta"></span></div></div>' +
-      '<p class="tp-fala" data-tp="fala"></p>' +
-      '<p class="tp-acao" data-tp="acao"></p>' +
-      '<div class="tp-botoes"><button type="button" data-tp-b="ant">← Anterior</button><button type="button" class="prim" data-tp-b="prox">Próxima →</button>' +
-      '<button type="button" data-tp-b="crono">Iniciar cronômetro</button><button type="button" data-tp-b="zerar">Zerar</button>' +
-      '<button type="button" data-tp-b="menor" aria-label="Diminuir letra">A−</button><button type="button" data-tp-b="maior" aria-label="Aumentar letra">A+</button></div>' +
-      '<p class="tp-prox" data-tp="prox"></p>' +
-      '<p class="tp-ajuda">Teclas: → próxima · ← anterior · 1, 2 e 3 escolhem a alternativa na cena 7 · Home volta ao início</p>';
-  }
-  var tpJanela = null, tpFonte = +(ler("sers-tp-fonte") || 0) || 28;
-  function raizesTP() {
-    var r = [];
-    if (tpJanela && !tpJanela.closed) { var t = tpJanela.document.getElementById("tp"); if (t) r.push(t); }
-    if (!$("#gaveta").hidden) r.push($("#tpGaveta"));
-    return r;
-  }
-  function atualizarTP(tudo) {
-    var raizes = raizesTP(); if (!raizes.length) return;
-    var id = cenas[est.cena], f = falaDe[id] || { titulo: id, fala: "", acao: "", segundos: 0 };
-    var prx = cenas[est.cena + 1], fp = prx ? falaDe[prx] : null;
-    var total = tempoTotal(), naCena = total - crono.cenaInicio, lim = R.limite_s || 180;
-    raizes.forEach(function (r) {
-      var q = function (k) { return r.querySelector('[data-tp="' + k + '"]'); };
-      if (tudo) {
-        q("num").textContent = "Cena " + (est.cena + 1) + " de " + cenas.length;
-        q("tit").textContent = f.titulo;
-        q("fala").innerHTML = deixas(f.fala || "(sem fala para esta cena)");
-        q("acao").textContent = "Na tela: " + (f.acao || "");
-        q("meta").textContent = "≈ " + (f.segundos || 0) + " s";
-        q("prox").innerHTML = fp ? "<b>A seguir · " + fp.titulo + ":</b> " + fp.fala.replace(/\[[^\]]+\]\s*/g, "").split(/(?<=[.!?])\s/)[0] : "<b>Última cena.</b> Depois de falar, espere 2 segundos e pare a gravação.";
-        var bc = r.querySelector('[data-tp-b="crono"]'); bc.textContent = crono.rodando ? "Pausar cronômetro" : (crono.acum ? "Continuar cronômetro" : "Iniciar cronômetro");
-        r.style.setProperty("--tp-fs", tpFonte + "px");
-      }
-      var bt = q("total"); bt.textContent = mmss(total); bt.className = total > lim ? "estouro" : total > lim - 15 ? "alerta" : "";
-      var bce = q("cena"); bce.textContent = mmss(naCena); bce.className = f.segundos && naCena > f.segundos + 4 ? "alerta" : "";
-    });
-  }
-  setInterval(function () { if (crono.rodando) atualizarTP(false); }, 250);
-
-  function ligarTP(raiz, doc) {
-    raiz.addEventListener("click", function (e) {
-      var b = e.target.closest("[data-tp-b]"); if (!b) return;
-      var a = b.dataset.tpB;
-      if (a === "prox") prox();
-      else if (a === "ant") ant();
-      else if (a === "crono") crono.rodando ? pausarCrono() : iniciarCrono();
-      else if (a === "zerar") zerarCrono();
-      else if (a === "maior" || a === "menor") { tpFonte = Math.max(18, Math.min(48, tpFonte + (a === "maior" ? 2 : -2))); guardar("sers-tp-fonte", tpFonte); atualizarTP(true); }
-    });
-    if (doc) doc.addEventListener("keydown", teclas);
-  }
-  ligarTP($("#tpGaveta"));
-  $("#tpGaveta").innerHTML = tpEsqueleto();
-
-  var TP_CSS = "body{margin:0;background:#0a1120;color:#eef2f8;font:400 18px/1.5 'Public Sans',system-ui,-apple-system,'Segoe UI',sans-serif}" +
-    ".tp{padding:22px 26px 28px;display:grid;gap:16px}.tp-topo{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;justify-content:space-between}" +
-    ".tp-cena{font:600 13px/1.2 'Public Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#a9b5c8}" +
-    ".tp-tit{font:700 32px/1.05 'Barlow Condensed','Arial Narrow',sans-serif;display:block;margin-top:4px}" +
-    ".tp-tempo{font:500 15px/1.5 'IBM Plex Mono',ui-monospace,monospace;color:#a9b5c8;text-align:right}.tp-tempo b{color:#eef2f8;font-weight:500}.alerta{color:#ffad33!important}.estouro{color:#ff7a7a!important}" +
-    ".tp-fala{font-size:var(--tp-fs,28px);line-height:1.5;margin:0;text-wrap:pretty}" +
-    ".deixa{display:inline-block;font:700 .62em/1 'Public Sans',sans-serif;letter-spacing:.05em;text-transform:uppercase;background:#ffad33;color:#0a1120;border-radius:6px;padding:.38em .55em;vertical-align:.18em;white-space:nowrap}" +
-    ".tp-acao{font-size:15px;color:#a9b5c8;margin:0}.tp-prox{border-top:1px solid #22304a;padding-top:12px;font-size:15px;color:#a9b5c8;margin:0}.tp-prox b{color:#eef2f8}" +
-    ".tp-botoes{display:flex;flex-wrap:wrap;gap:8px}.tp-botoes button{background:#152139;border:1px solid #22304a;color:#eef2f8;border-radius:10px;padding:10px 14px;cursor:pointer;font:600 15px/1 'Public Sans',sans-serif}" +
-    ".tp-botoes button.prim{background:#e6eeff;color:#0a1120;border-color:transparent}.tp-ajuda{font-size:13px;color:#74819a;margin:0}button:focus-visible{outline:2px solid #6aa7f0;outline-offset:2px}";
-  function fontesParaJanela() {
-    var css = "";
-    try {
-      Array.prototype.forEach.call(document.styleSheets, function (folha) {
-        Array.prototype.forEach.call(folha.cssRules || [], function (r) { if (r.type === 5) css += r.cssText + "\n"; });
-      });
-    } catch (e) { css = ""; }
-    if (css) return "<style>" + css + "</style>";
-    try { return '<link rel="stylesheet" href="' + new URL("fontes.css", location.href).href + '">'; } catch (e) { return ""; }
-  }
-  function abrirRoteiro() {
-    if (tpJanela && !tpJanela.closed) { try { tpJanela.focus(); } catch (e) {} return; }
-    var w = null;
-    try { w = window.open("", "sers_roteiro", "popup=yes,width=860,height=860"); } catch (e) { w = null; }
-    if (w) {
-      try {
-        w.document.open();
-        w.document.write('<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Roteiro · Praça Comunitária</title>' +
-          fontesParaJanela() +
-          "<style>" + TP_CSS + '</style></head><body><div class="tp" id="tp">' + tpEsqueleto() + "</div></body></html>");
-        w.document.close();
-        ligarTP(w.document.getElementById("tp"), w.document);
-        tpJanela = w;
-        $("#gaveta").hidden = true;
-        atualizarTP(true);
-        avisar("Roteiro aberto em outra janela. Coloque-a ao lado ou no segundo monitor e grave só esta janela.");
-        return;
-      } catch (e) { try { w.close(); } catch (e2) {} }
-    }
-    $("#gaveta").hidden = !$("#gaveta").hidden;
-    atualizarTP(true);
-    if (!$("#gaveta").hidden) avisar("Não deu para abrir outra janela aqui, então o roteiro abriu ao lado. Aperte R para fechar.", 5200);
   }
 
   /* ---------- tela cheia, barra e cursor ---------- */
@@ -1205,16 +1017,13 @@ window.SERS_ROTEIRO = {"gerado_em": "2026-11-09", "limite_s": 180, "total_s": 17
     else if (k === "Home") { e.preventDefault(); ir(0); }
     else if (k === "End") { e.preventDefault(); ir(cenas.length - 1); }
     else if (k === "1" || k === "2" || k === "3") { if (cenas[est.cena] === "dashboard") { est.altCena = "A" + k; desenharCenaDash(); } }
-    else if (k === "r" || k === "R") { e.preventDefault(); abrirRoteiro(); }
     else if (k === "f" || k === "F") { e.preventDefault(); telaCheia(); }
     else if (k === "h" || k === "H") { e.preventDefault(); alternaBarra(); }
-    else if (k === "Escape") { $("#gaveta").hidden = true; }
   }
   document.addEventListener("keydown", teclas);
 
   $("#bProx").addEventListener("click", prox);
   $("#bAnt").addEventListener("click", ant);
-  $("#bRoteiro").addEventListener("click", abrirRoteiro);
   $("#bTela").addEventListener("click", telaCheia);
   $("#bLimpo").addEventListener("click", alternaBarra);
   $("#bSair").addEventListener("click", function () {
@@ -1223,12 +1032,11 @@ window.SERS_ROTEIRO = {"gerado_em": "2026-11-09", "limite_s": 180, "total_s": 17
   });
   $("#vApres").addEventListener("mousemove", acorda);
 
-  /* ---------- rotas: #painel, #apresentacao, #roteiro ---------- */
+  /* ---------- rotas: #painel, #apresentacao ---------- */
   function rota() {
     var h = location.hash.replace("#", "");
-    var apres = h === "apresentacao", roteiro = h === "roteiro";
-    $("#vPainel").hidden = apres || roteiro;
-    $("#vRoteiro").hidden = !roteiro;
+    var apres = h === "apresentacao";
+    $("#vPainel").hidden = apres;
     $("#vApres").hidden = !apres;
     document.documentElement.classList.toggle("apresentando", apres);
     if (apres) {
@@ -1236,13 +1044,10 @@ window.SERS_ROTEIRO = {"gerado_em": "2026-11-09", "limite_s": 180, "total_s": 17
       var q = parseInt(new URLSearchParams(location.search).get("cena"), 10);
       ir(isNaN(q) ? est.cena : q - 1, true);
       acorda();
-      if (new URLSearchParams(location.search).get("gaveta") === "1") { $("#gaveta").hidden = false; atualizarTP(true); }
     } else {
       est.ativo = false; pararAnim();
-      if (!$("#gaveta").hidden) $("#gaveta").hidden = true;
-      if (!roteiro) { scrollTo(0, 0); }
+      scrollTo(0, 0);
     }
-    if (roteiro) scrollTo(0, 0);
   }
   addEventListener("hashchange", rota);
   var redesenhoT;
@@ -1251,26 +1056,6 @@ window.SERS_ROTEIRO = {"gerado_em": "2026-11-09", "limite_s": 180, "total_s": 17
     clearTimeout(redesenhoT); redesenhoT = setTimeout(graficosPainel, 200);
   });
   document.addEventListener("fullscreenchange", function () { if (est.ativo) escala(); });
-
-  /* ---------- roteiro (lista) ---------- */
-  function roteiroLista() {
-    $("#rotSub").textContent = cenas.length + " cenas · duração estimada " + mmss(R.total_s || 0) + " · limite do vídeo " + mmss(R.limite_s || 180) + ". Cada cena é uma tela da apresentação; os números das falas vêm do mesmo cálculo da tela.";
-    $("#listaFalas").innerHTML = (R.cenas || []).map(function (c) {
-      return '<li class="fala-item"><span class="fala-num">' + c.n + '</span><div class="fala-cab"><h3>' + c.titulo + '</h3><span class="fala-tempo">≈ ' + c.segundos + " s · começa em " + mmss(c.inicio_s) + '</span></div><p class="fala-acao">Na tela: ' + c.acao + '</p><p class="fala-txt">' + deixas(c.fala) + "</p></li>";
-    }).join("");
-  }
-  $("#btnCopiar").addEventListener("click", function () {
-    var txt = (R.cenas || []).map(function (c) { return "CENA " + c.n + " - " + c.titulo.toUpperCase() + " (≈ " + c.segundos + " s)\n" + c.fala; }).join("\n\n");
-    var ok = function () { avisar("Falas copiadas. Cole no celular ou num documento para ler durante a gravação."); };
-    try {
-      navigator.clipboard.writeText(txt).then(ok, function () { selecionarFalas(); });
-    } catch (e) { selecionarFalas(); }
-  });
-  function selecionarFalas() {
-    var r = document.createRange(); r.selectNodeContents($("#listaFalas"));
-    var s = getSelection(); s.removeAllRanges(); s.addRange(r);
-    avisar("Não deu para copiar automaticamente. As falas estão selecionadas: use Ctrl+C.");
-  }
 
   /* ---------- tema ---------- */
   var temaSalvo = ler("sers-tema");
@@ -1295,7 +1080,6 @@ window.SERS_ROTEIRO = {"gerado_em": "2026-11-09", "limite_s": 180, "total_s": 17
   desenharPainel();
   graficosPainel();
   tabela();
-  roteiroLista();
   $("#notaPainel").innerHTML = "Todos os números são <b>projeções condicionadas às premissas</b> do grupo (dados.json), não resultados garantidos. Tarifa B4a da Enel SP: " + rs(P.tarifa_rs_kwh, 5) + "/kWh (REH ANEEL 3.596/2026, sem tributos). Iluminação de " + horasMin(P.horas_noite) + " por noite, premissa de duração da noite do estudo. Fator de emissão do SIN 2024: " + nf(P.fator_emissao, 4) + " kg CO₂/kWh. Os gráficos usam dados simulados, recalculados com as entradas atuais. Sensores reais e comunicação são etapas futuras. Os percentuais de presença e dimerização são premissas do modelo. O banco da série diária começa cheio e a carga é apresentada após o consumo noturno. Gerado em " + new Date(D.gerado_em + "T12:00").toLocaleDateString("pt-BR") + " por apresentacao.py.";
   rota();
 })();
